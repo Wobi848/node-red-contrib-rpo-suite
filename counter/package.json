@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-counter",
+  "name": "node-red-contrib-rpo-counter",
   "version": "1.0.0",
   "description": "Up/down counter with configurable limits, step, wrap and alarm modes",
   "repository": {
