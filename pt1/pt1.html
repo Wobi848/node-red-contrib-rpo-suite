@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pt1', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:     { value: '' },
+            T1:       { value: 60 },
+            T1Unit:   { value: 's' },
+            decimals: { value: 2 }
+        },
+        inputs:  1,
+        outputs: 1,
+        icon:    'font-awesome/fa-filter',
+        label:   function() { return this.name || ('PT1 T1=' + this.T1 + this.T1Unit); },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="pt1">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-T1"><i class="fa fa-clock-o"></i> <span data-i18n="pt1.label.T1"></span></label>
+        <input type="number" id="node-input-T1" min="0" style="width:50%">
+        <select id="node-input-T1Unit" style="width:18%; margin-left:4px">
+            <option value="s">s</option>
+            <option value="min">min</option>
+            <option value="h">h</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> <span data-i18n="pt1.label.decimals"></span></label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="pt1">
+    <p>PT1 first-order low-pass filter. Smooths noisy measurement values with a configurable time constant <strong>T1</strong>.</p>
+
+    <h3>Formula</h3>
+    <pre>y(t) = y(t-1) + (dt / (T1 + dt)) × (x(t) - y(t-1))</pre>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Raw measurement value to filter.</dd>
+        <dt class="optional">T1 <span class="property-type">number</span></dt>
+        <dd>Override time constant (in seconds) for this message only.</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to reset filter state — next input passes through directly.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Filtered (smoothed) value.</dd>
+        <dt>pt1 <span class="property-type">object</span></dt>
+        <dd><code>{ input, output, T1, dt, decimals, initialized }</code></dd>
+    </dl>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>The first message always passes through unfiltered (no previous state).</li>
+        <li>Set T1 = 0 to disable filtering (passthrough mode).</li>
+        <li>Larger T1 = more smoothing but slower response to changes.</li>
+        <li>The node uses actual elapsed time (dt) between messages — no fixed interval needed.</li>
+    </ul>
+</script>

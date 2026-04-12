@@ -1,0 +1,83 @@
+[
+    {
+        "id": "hy_comment",
+        "type": "comment",
+        "z": "flow_hysteresis",
+        "name": "=== Threshold Hysteresis - Basic Example ===",
+        "info": "Demonstrates hysteresis control:\n- Inject a numeric temperature value\n- Node outputs true when value exceeds high threshold\n- Node outputs false when value drops below low threshold\n- No toggling in the dead band between thresholds",
+        "x": 280,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "hy_inject_high",
+        "type": "inject",
+        "z": "flow_hysteresis",
+        "name": "Temp = 26°C (above high)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "26",
+        "payloadType": "num",
+        "x": 160,
+        "y": 100,
+        "wires": [["hy_node"]]
+    },
+    {
+        "id": "hy_inject_mid",
+        "type": "inject",
+        "z": "flow_hysteresis",
+        "name": "Temp = 22°C (dead band)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "22",
+        "payloadType": "num",
+        "x": 160,
+        "y": 160,
+        "wires": [["hy_node"]]
+    },
+    {
+        "id": "hy_inject_low",
+        "type": "inject",
+        "z": "flow_hysteresis",
+        "name": "Temp = 18°C (below low)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "18",
+        "payloadType": "num",
+        "x": 160,
+        "y": 220,
+        "wires": [["hy_node"]]
+    },
+    {
+        "id": "hy_node",
+        "type": "hysteresis",
+        "z": "flow_hysteresis",
+        "name": "Cooling Control",
+        "highThreshold": "25",
+        "lowThreshold": "20",
+        "x": 420,
+        "y": 160,
+        "wires": [["hy_debug"]]
+    },
+    {
+        "id": "hy_debug",
+        "type": "debug",
+        "z": "flow_hysteresis",
+        "name": "Cooling ON/OFF",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 620,
+        "y": 160,
+        "wires": []
+    }
+]

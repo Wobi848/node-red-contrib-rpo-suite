@@ -1,0 +1,45 @@
+{
+  "name": "node-red-contrib-counter",
+  "version": "1.0.0",
+  "description": "Up/down counter with configurable limits, step, wrap and alarm modes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "counter.js",
+    "counter.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "counter",
+    "count",
+    "up",
+    "down",
+    "increment"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": "1.0.0",
+    "nodes": {
+      "counter": "counter.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

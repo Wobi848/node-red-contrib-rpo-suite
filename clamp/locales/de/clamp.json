@@ -1,0 +1,10 @@
+{
+  "clamp": {
+    "label": {
+      "name": "Name",
+      "min": "Min",
+      "max": "Max",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

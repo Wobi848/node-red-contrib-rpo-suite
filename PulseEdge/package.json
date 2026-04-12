@@ -1,0 +1,44 @@
+{
+  "name": "node-red-contrib-pulse-edge",
+  "version": "1.0.1",
+  "description": "Node-RED node for edge detection - outputs pulse on rising/falling edge",
+  "files": [
+    "pulse-edge.js",
+    "pulse-edge.html",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "edge",
+    "pulse",
+    "rising",
+    "falling",
+    "trigger"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "pulse-edge": "pulse-edge.js"
+    },
+    "version": ">=4.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  }
+}

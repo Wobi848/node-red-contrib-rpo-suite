@@ -1,0 +1,83 @@
+[
+    {
+        "id": "cl_comment",
+        "type": "comment",
+        "z": "flow_clamp",
+        "name": "=== Clamp - Basic Example ===",
+        "info": "Demonstrates value clamping:\n- Values below min are clamped to min\n- Values above max are clamped to max\n- Values within range pass through unchanged\n- Useful to limit setpoints, outputs, or sensor values",
+        "x": 240,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "cl_inject_low",
+        "type": "inject",
+        "z": "flow_clamp",
+        "name": "Value = -5 (too low)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "-5",
+        "payloadType": "num",
+        "x": 140,
+        "y": 100,
+        "wires": [["cl_node"]]
+    },
+    {
+        "id": "cl_inject_ok",
+        "type": "inject",
+        "z": "flow_clamp",
+        "name": "Value = 50 (within range)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 140,
+        "y": 160,
+        "wires": [["cl_node"]]
+    },
+    {
+        "id": "cl_inject_high",
+        "type": "inject",
+        "z": "flow_clamp",
+        "name": "Value = 150 (too high)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "150",
+        "payloadType": "num",
+        "x": 140,
+        "y": 220,
+        "wires": [["cl_node"]]
+    },
+    {
+        "id": "cl_node",
+        "type": "clamp",
+        "z": "flow_clamp",
+        "name": "Clamp 0–100",
+        "min": "0",
+        "max": "100",
+        "x": 380,
+        "y": 160,
+        "wires": [["cl_debug"]]
+    },
+    {
+        "id": "cl_debug",
+        "type": "debug",
+        "z": "flow_clamp",
+        "name": "Clamped Output",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 560,
+        "y": 160,
+        "wires": []
+    }
+]

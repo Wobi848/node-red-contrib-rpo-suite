@@ -1,0 +1,57 @@
+[
+  {
+    "id": "ton-toff-example-tab",
+    "type": "tab",
+    "label": "ton-toff Basic Example",
+    "disabled": false,
+    "info": "Demonstrates TON (on-delay) and TOFF (off-delay) timer behaviour.\nSend true/false to the inject node to trigger the timer."
+  },
+  {
+    "id": "n-inject-true",
+    "type": "inject",
+    "z": "ton-toff-example-tab",
+    "name": "Send TRUE",
+    "props": [{"p": "payload"}],
+    "repeat": "",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 120,
+    "y": 120,
+    "wires": [["n-ton"]]
+  },
+  {
+    "id": "n-inject-false",
+    "type": "inject",
+    "z": "ton-toff-example-tab",
+    "name": "Send FALSE",
+    "props": [{"p": "payload"}],
+    "repeat": "",
+    "payload": "false",
+    "payloadType": "bool",
+    "x": 120,
+    "y": 180,
+    "wires": [["n-ton"]]
+  },
+  {
+    "id": "n-ton",
+    "type": "ton-toff",
+    "z": "ton-toff-example-tab",
+    "name": "5s ON-delay / 2s OFF-delay",
+    "onDelay": "5",
+    "offDelay": "2",
+    "delayUnit": "s",
+    "x": 350,
+    "y": 150,
+    "wires": [["n-debug"]]
+  },
+  {
+    "id": "n-debug",
+    "type": "debug",
+    "z": "ton-toff-example-tab",
+    "name": "Output",
+    "active": true,
+    "x": 570,
+    "y": 150,
+    "wires": []
+  }
+]

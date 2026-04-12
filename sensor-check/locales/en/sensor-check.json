@@ -1,0 +1,13 @@
+{
+  "sensor-check": {
+    "label": {
+      "min": "Min (plausibility)",
+      "max": "Max (plausibility)",
+      "fallback": "Fallback Value",
+      "useFallback": "Use Fallback",
+      "timeout": "Timeout",
+      "timeoutHint": "s (0 = disabled)",
+      "hysteresis": "Hysteresis"
+    }
+  }
+}

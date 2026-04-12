@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    RED.nodes.registerType('debounce', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "debounceTime": {
+                        "value": 200
+                },
+                "mode": {
+                        "value": "trailing"
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-shield',
+        label: function() { return this.name || 'debounce'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="debounce">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-debounceTime"><i class="fa fa-clock-o"></i> Debounce Time (ms)</label>
+        <input type="number" id="node-input-debounceTime" min="1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <select id="node-input-mode" style="width:70%">
+            <option value="trailing">Trailing (after last input)</option>
+            <option value="leading">Leading (first input immediately)</option>
+            <option value="both">Both (first + last)</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="debounce">
+    <p>Waits until input is stable for the configured time before forwarding. Prevents multiple rapid outputs.</p>
+    <h3>Modes</h3>
+    <ul>
+        <li><b>Trailing</b>: forwards after the last input, once stable</li>
+        <li><b>Leading</b>: forwards first input immediately, then blocks until stable</li>
+        <li><b>Both</b>: forwards first AND last input</li>
+    </ul>
+    <h3>Overrides</h3>
+    <ul>
+        <li><code>msg.debounceTime</code> — override time for this message</li>
+        <li><code>msg.flush = true</code> — immediately forward pending message</li>
+    </ul>
+</script>

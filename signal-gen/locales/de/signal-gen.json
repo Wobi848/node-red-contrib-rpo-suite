@@ -1,0 +1,25 @@
+{
+  "signal-gen": {
+    "label": "Signalgenerator",
+    "waveform": "Wellenform",
+    "waveform_opt": {
+      "sine": "Sinus",
+      "square": "Rechteck",
+      "sawtooth": "Sägezahn",
+      "triangle": "Dreieck",
+      "noise": "Rauschen"
+    },
+    "frequency": "Frequenz (Hz)",
+    "amplitude": "Amplitude",
+    "offset": "Offset",
+    "intervalMs": "Intervall (ms)",
+    "autoStart": "Auto-Start",
+    "tip": "Generiert periodische Wellenformen. 'start', 'stop' oder 'reset' senden zum Steuern.",
+    "input": {
+      "payload": "'start', 'stop' oder 'reset' zur Steuerung"
+    },
+    "output": {
+      "payload": "Aktueller Wellenformwert"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+<script type="text/javascript">
+    RED.nodes.registerType('int-bits', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "mode": {
+                        "value": "int-to-bits"
+                },
+                "bits": {
+                        "value": 8
+                },
+                "order": {
+                        "value": "LSB"
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-microchip',
+        label: function() { return this.name || 'int-bits'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="int-bits">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-exchange"></i> Mode</label>
+        <select id="node-input-mode" style="width:70%">
+            <option value="int-to-bits">Integer → Bits</option>
+            <option value="bits-to-int">Bits → Integer</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-bits"><i class="fa fa-list-ol"></i> Bit Count</label>
+        <select id="node-input-bits" style="width:70%">
+            <option value="4">4 bits</option>
+            <option value="8">8 bits</option>
+            <option value="16">16 bits</option>
+            <option value="32">32 bits</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-order"><i class="fa fa-sort"></i> Bit Order</label>
+        <select id="node-input-order" style="width:70%">
+            <option value="LSB">LSB first (bit0 = LSB)</option>
+            <option value="MSB">MSB first</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="int-bits">
+    <p>Converts between integers and individual bits (boolean array).</p>
+    <h3>int-to-bits</h3>
+    <p>Input: integer → Output: array of booleans [bit0...bitN]</p>
+    <h3>bits-to-int</h3>
+    <p>Input: object <code>{ bit0: true, bit2: true }</code> → Output: integer (5)</p>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload</dt><dd>Array (int-to-bits) or integer (bits-to-int)</dd>
+        <dt>intBits <span class="property-type">object</span></dt><dd>{ mode, input, bits/result, bitCount, order }</dd>
+    </dl>
+</script>

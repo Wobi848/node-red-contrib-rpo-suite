@@ -1,0 +1,22 @@
+{
+  "heat-curve": {
+    "label": {
+      "name": "Name",
+      "mode": "Mode",
+      "slope": "Slope",
+      "designOutdoor": "Design Outdoor",
+      "designFlow": "Design Flow",
+      "roomTemp": "Room Temp",
+      "shift": "Shift",
+      "minFlow": "Min Flow",
+      "maxFlow": "Max Flow",
+      "setbackDelta": "Setback Delta",
+      "summerLockout": "Summer Lockout",
+      "decimals": "Decimals"
+    },
+    "option": {
+      "slope": "Slope",
+      "design": "Design"
+    }
+  }
+}

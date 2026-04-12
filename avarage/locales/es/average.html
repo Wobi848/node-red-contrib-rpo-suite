@@ -1,0 +1,62 @@
+<script type="text/html" data-help-name="average">
+    <p>Calcula un promedio móvil sobre los últimos N mensajes o una ventana de tiempo.</p>
+
+    <h3>Modos</h3>
+    <ul>
+        <li><b>Cantidad:</b> Promedio sobre los últimos N mensajes (ventana deslizante)</li>
+        <li><b>Tiempo:</b> Promedio sobre todos los valores recibidos en los últimos X segundos/minutos/horas</li>
+    </ul>
+
+    <h3>Ejemplos</h3>
+    <pre>
+Modo cantidad, ventana=3:
+  Input 10 → buffer [10]         → Output 10.0
+  Input 20 → buffer [10,20]      → Output 15.0
+  Input 30 → buffer [10,20,30]   → Output 20.0
+  Input 40 → buffer [20,30,40]   → Output 30.0
+
+Modo tiempo, ventana=5min:
+  Todos los valores de los últimos 5 minutos se promedian</pre>
+
+    <h3>Entradas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Valor numérico para promediar</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(opcional)</i> <code>true</code> = limpiar buffer</dd>
+    </dl>
+
+    <h3>Salidas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>El promedio calculado</dd>
+        <dt>average <span class="property-type">object</span></dt>
+        <dd>Detalles: { input, output, count, min, max, mode, window, decimals }</dd>
+    </dl>
+
+    <h3>Configuración</h3>
+    <dl class="message-properties">
+        <dt>Modo</dt>
+        <dd>Cantidad (N mensajes) o Tiempo (duración)</dd>
+        <dt>Ventana</dt>
+        <dd>Número de mensajes o valor de tiempo</dd>
+        <dt>Unidad</dt>
+        <dd>Segundos/Minutos/Horas (solo modo tiempo)</dd>
+        <dt>Decimales</dt>
+        <dd>Número de decimales (0-10, por defecto: 2)</dd>
+    </dl>
+
+    <h3>Casos de uso</h3>
+    <ul>
+        <li><b>Sensor:</b> Suavizar lecturas ruidosas</li>
+        <li><b>Energía:</b> Consumo promedio de energía</li>
+        <li><b>Temperatura:</b> Promedio de temperatura móvil</li>
+    </ul>
+
+    <h3>Estado del Nodo</h3>
+    <ul>
+        <li><b>Ø 30.00 (3 values)</b> - Promedio actual</li>
+        <li><b>Ø 18.50 (3/10)</b> - Buffer llenándose</li>
+        <li><b>Ø 25.00 (last 5min, 12 values)</b> - Modo tiempo</li>
+    </ul>
+</script>

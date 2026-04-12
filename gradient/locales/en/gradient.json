@@ -1,0 +1,21 @@
+{
+  "gradient": {
+    "label": "Gradient",
+    "unit": "Output unit",
+    "unit_opt": {
+      "per_s": "/s",
+      "per_min": "/min",
+      "per_h": "/h"
+    },
+    "smoothing": "Smoothing (samples)",
+    "decimals": "Decimal places",
+    "alarmRate": "Alarm rate (0=off)",
+    "tip": "Calculates rate of change between consecutive values.",
+    "input": {
+      "payload": "Numeric value (timestamp is taken automatically)"
+    },
+    "output": {
+      "payload": "Smoothed gradient; msg.gradient = { current, previous, gradient, unit, dt, smoothed, alarm, alarmRate }"
+    }
+  }
+}

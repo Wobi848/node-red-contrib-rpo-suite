@@ -1,0 +1,30 @@
+wir müssen gleich nochmal zu clamp gehen, konnte nicht publishen...
+
+PS C:\Coding\NodeRedPlugin\clamp> npm publish
+npm notice 
+npm notice 📦  node-red-contrib-clamp@1.0.0
+npm notice === Tarball Contents ===
+npm notice 1.8kB README.md
+npm notice 3.4kB clamp.html
+npm notice 3.3kB clamp.js
+npm notice 2.1kB locales/de/clamp.html
+npm notice 139B  locales/de/clamp.json
+npm notice 133B  locales/en/clamp.json
+npm notice 2.1kB locales/es/clamp.html
+npm notice 138B  locales/es/clamp.json
+npm notice 658B  package.json
+npm notice === Tarball Details ===
+npm notice name:          node-red-contrib-clamp
+npm notice version:       1.0.0
+npm notice filename:      node-red-contrib-clamp-1.0.0.tgz
+npm notice package size:  3.9 kB
+npm notice unpacked size: 13.7 kB
+npm notice shasum:        5390d237543089329fe9e2b6206450c43080d83b
+npm notice integrity:     sha512-drYQiUesGOP9D[...]ohbwO6OH1XovQ==
+npm notice total files:   9
+npm notice
+npm notice Publishing to https://registry.npmjs.org/ with tag latest and default access
+npm ERR! code E429
+npm ERR! 429 Too Many Requests - PUT https://registry.npmjs.org/node-red-contrib-clamp - Could not publish, as user undefined: rate limited exceeded
+
+npm ERR! A complete log of this run can be found in: C:\Users\Rappo\AppData\Local\npm-cache\_logs\2026-03-22T10_52_24_571Z-debug-0.log

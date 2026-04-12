@@ -1,0 +1,24 @@
+{
+  "edge-filter": {
+    "label": "Flankenfilter",
+    "window": "Fenstergröße",
+    "windowUnit": "Fenstereinheit",
+    "windowUnit_opt": {
+      "ms": "ms",
+      "s": "s",
+      "min": "min"
+    },
+    "mode": "Filtermodus",
+    "mode_opt": {
+      "time": "Zeitfenster",
+      "changed": "Bei Änderung"
+    },
+    "tip": "Blockiert wiederholte Nachrichten innerhalb des Fensters.",
+    "input": {
+      "payload": "Beliebiger Wert"
+    },
+    "output": {
+      "payload": "Weitergeleiteter Wert (erster im Fenster)"
+    }
+  }
+}

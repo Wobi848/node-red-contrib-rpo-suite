@@ -1,0 +1,14 @@
+{
+  "ring-counter": {
+    "label": "Contador anular",
+    "size": "Tamaño del anillo",
+    "initialIndex": "Índice inicial",
+    "tip": "Contador de índice circular. Topics: advance, retreat, set, reset.",
+    "input": {
+      "payload": "Cualquier valor verdadero para avanzar; topic controla dirección"
+    },
+    "output": {
+      "payload": "Índice anular actual (0 a tamaño-1)"
+    }
+  }
+}

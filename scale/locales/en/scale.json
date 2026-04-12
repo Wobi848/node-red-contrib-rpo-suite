@@ -1,0 +1,14 @@
+{
+  "scale": {
+    "label": {
+      "name": "Name",
+      "inputRange": "Input Range",
+      "outputRange": "Output Range",
+      "min": "Min",
+      "max": "Max",
+      "clamp": "Clamp",
+      "clampHint": "Limit output to range",
+      "decimals": "Decimals"
+    }
+  }
+}

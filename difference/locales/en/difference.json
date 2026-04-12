@@ -1,0 +1,12 @@
+{
+  "difference": {
+    "label": {
+      "name": "Name",
+      "topicA": "Topic A",
+      "topicB": "Topic B",
+      "absolute": "Absolute",
+      "absoluteHint": "Output |A - B|",
+      "decimals": "Decimals"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+<script type="text/javascript">
+    RED.nodes.registerType('hysteresis', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            name: { value: "" },
+            setpoint: { value: "50" },
+            hysteresis: { value: "5" },
+            mode: { value: "high" },
+            initialState: { value: "undefined" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-exchange",
+        label: function() {
+            return this.name || "hysteresis";
+        },
+        paletteLabel: "hysteresis"
+    });
+</script>
+
+<script type="text/html" data-template-name="hysteresis">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-setpoint"><i class="fa fa-crosshairs"></i> Setpoint</label>
+        <input type="text" id="node-input-setpoint" placeholder="50">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> Hysteresis (±)</label>
+        <input type="text" id="node-input-hysteresis" placeholder="5">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <select id="node-input-mode">
+            <option value="high">High (ON when above setpoint)</option>
+            <option value="low">Low (ON when below setpoint)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialState"><i class="fa fa-play"></i> Initial State</label>
+        <select id="node-input-initialState">
+            <option value="undefined">Undefined (wait for first input)</option>
+            <option value="true">ON (true)</option>
+            <option value="false">OFF (false)</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="hysteresis">
+    <p>Hysteresis node for threshold-based boolean output with deadband.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>The numeric value to evaluate (e.g., temperature, pressure, humidity)</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd>The current state (true/false) based on hysteresis logic</dd>
+        <dt>value <span class="property-type">number</span></dt>
+        <dd>The input value that was evaluated</dd>
+        <dt>previousState <span class="property-type">boolean</span></dt>
+        <dd>The state before this evaluation</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Setpoint</dt>
+        <dd>The target value around which hysteresis is applied</dd>
+        <dt>Hysteresis (±)</dt>
+        <dd>The deadband range. Thresholds are calculated as setpoint ± hysteresis</dd>
+        <dt>Mode</dt>
+        <dd><b>High</b>: Output is ON when value is above setpoint (e.g., cooling)<br>
+            <b>Low</b>: Output is ON when value is below setpoint (e.g., heating)</dd>
+    </dl>
+
+    <h3>Examples</h3>
+
+    <h4>Cooling (Mode: High)</h4>
+    <p>Setpoint: 50, Hysteresis: 5 → ON ≥ 50, OFF ≤ 45</p>
+    <pre>
+Input: 40 → OFF (≤ 45)
+Input: 47 → OFF (between, stays)
+Input: 50 → ON  (≥ 50)
+Input: 47 → ON  (between, stays)
+Input: 45 → OFF (≤ 45)</pre>
+
+    <h4>Heating (Mode: Low)</h4>
+    <p>Setpoint: 50, Hysteresis: 5 → ON ≤ 50, OFF ≥ 55</p>
+    <pre>
+Input: 60 → OFF (≥ 55)
+Input: 52 → OFF (between, stays)
+Input: 50 → ON  (≤ 50)
+Input: 52 → ON  (between, stays)
+Input: 55 → OFF (≥ 55)</pre>
+
+    <h3>Node Status</h3>
+    <p>The node displays the current value and state (ON/OFF) in the editor.</p>
+</script>

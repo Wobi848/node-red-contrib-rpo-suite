@@ -1,0 +1,168 @@
+<script type="text/javascript">
+  RED.nodes.registerType("scale", {
+    category: 'rpo',
+    color: "#D4600A",
+    defaults: {
+      name: { value: "" },
+      inMin: { value: 0 },
+      inMax: { value: 10 },
+      outMin: { value: 0 },
+      outMax: { value: 100 },
+      clamp: { value: false },
+      decimals: { value: 2 },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-arrows-h",
+    label: function () {
+      return this.name || "scale";
+    },
+    paletteLabel: "scale",
+  });
+</script>
+
+<script type="text/html" data-template-name="scale">
+  <div class="form-row">
+    <label for="node-input-name"
+      ><i class="fa fa-tag"></i>
+      <span data-i18n="scale.label.name">Name</span></label
+    >
+    <input
+      type="text"
+      id="node-input-name"
+      data-i18n="[placeholder]scale.label.name"
+    />
+  </div>
+  <div class="form-row">
+    <label
+      ><i class="fa fa-sign-in"></i>
+      <span data-i18n="scale.label.inputRange">Input Range</span></label
+    >
+  </div>
+  <div class="form-row" style="margin-left: 20px;">
+    <label for="node-input-inMin" style="width: 50px;"
+      ><span data-i18n="scale.label.min">Min</span></label
+    >
+    <input
+      type="number"
+      id="node-input-inMin"
+      style="width: 80px; margin-right: 20px;"
+    />
+    <label for="node-input-inMax" style="width: 50px;"
+      ><span data-i18n="scale.label.max">Max</span></label
+    >
+    <input type="number" id="node-input-inMax" style="width: 80px;" />
+  </div>
+  <div class="form-row">
+    <label
+      ><i class="fa fa-sign-out"></i>
+      <span data-i18n="scale.label.outputRange">Output Range</span></label
+    >
+  </div>
+  <div class="form-row" style="margin-left: 20px;">
+    <label for="node-input-outMin" style="width: 50px;"
+      ><span data-i18n="scale.label.min">Min</span></label
+    >
+    <input
+      type="number"
+      id="node-input-outMin"
+      style="width: 80px; margin-right: 20px;"
+    />
+    <label for="node-input-outMax" style="width: 50px;"
+      ><span data-i18n="scale.label.max">Max</span></label
+    >
+    <input type="number" id="node-input-outMax" style="width: 80px;" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-clamp"
+      ><i class="fa fa-compress"></i>
+      <span data-i18n="scale.label.clamp">Clamp</span></label
+    >
+    <input
+      type="checkbox"
+      id="node-input-clamp"
+      style="width: auto; margin-left: 0;"
+    />
+    <span style="margin-left: 5px; color: #888;" data-i18n="scale.label.clampHint">
+      Limit output to range
+    </span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-decimals"
+      ><i class="fa fa-hashtag"></i>
+      <span data-i18n="scale.label.decimals">Decimals</span></label
+    >
+    <input
+      type="number"
+      id="node-input-decimals"
+      min="0"
+      max="10"
+      style="width: 60px;"
+    />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="scale">
+  <p>Maps a numeric value from one range to another using linear interpolation.</p>
+
+  <h3>Behavior</h3>
+  <ul>
+    <li>Linear mapping from input range to output range</li>
+    <li>Works with inverted ranges (e.g. 100→0)</li>
+    <li>Optional clamping to output range</li>
+    <li>Output on every message</li>
+  </ul>
+
+  <h3>Formula</h3>
+  <pre>output = (input - inMin) / (inMax - inMin) * (outMax - outMin) + outMin</pre>
+
+  <h3>Examples</h3>
+  <pre>
+0-10 → 0-100:    Input 5  → Output 50
+4-20mA → 0-100%: Input 12 → Output 50
+0-10V → 100-0%:  Input 5  → Output 50 (inverted)</pre>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Numeric value to scale</dd>
+    <dt>inMin/inMax <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Override input range</dd>
+    <dt>outMin/outMax <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Override output range</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>The scaled value</dd>
+    <dt>scale <span class="property-type">object</span></dt>
+    <dd>Detailed info: { input, output, inMin, inMax, outMin, outMax, clamped, decimals }</dd>
+  </dl>
+
+  <h3>Configuration</h3>
+  <dl class="message-properties">
+    <dt>Input Range</dt>
+    <dd>Min and Max of input range (default: 0-10)</dd>
+    <dt>Output Range</dt>
+    <dd>Min and Max of output range (default: 0-100)</dd>
+    <dt>Clamp</dt>
+    <dd>Limit output to range bounds (default: off)</dd>
+    <dt>Decimals</dt>
+    <dd>Number of decimal places (0-10, default: 2)</dd>
+  </dl>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><b>4-20mA:</b> Sensor signal to percentage</li>
+    <li><b>0-10V:</b> Analog signal to engineering units</li>
+    <li><b>Inverted:</b> Reverse valve position (100%=closed)</li>
+  </ul>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>12 → 50.00</b> - Scaled value</li>
+    <li><b>22 → 100.00 (clamped)</b> - Output was clamped</li>
+    <li><b>Invalid range</b> - inMin equals inMax</li>
+  </ul>
+</script>

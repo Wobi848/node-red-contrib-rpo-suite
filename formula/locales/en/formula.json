@@ -1,0 +1,25 @@
+{
+  "formula": {
+    "label": {
+      "formula": "Formula",
+      "minVars": "Min. variables",
+      "minVarsHint": "(0 = all)",
+      "decimals": "Decimal places",
+      "varsHint": "Variables:",
+      "varsHintText": "Each letter/name in the formula is a variable. Set it by sending a message with msg.topic = variable name and msg.payload = number.",
+      "mathHint": "Math functions available:",
+      "mathHintText": "sin, cos, tan, asin, acos, atan, abs, sqrt, cbrt, pow, exp, log, log2, log10, floor, ceil, round, min, max, sign — and constants: pi, e"
+    },
+    "help": {
+      "desc": "Evaluates a math formula with named variables. Each msg.topic sets one variable. When enough variables are available the formula is evaluated and the result sent.",
+      "inputs": "Inputs",
+      "payload": "Numeric value for the variable named by msg.topic",
+      "topic": "Variable name (must match a name used in the formula)",
+      "reset": "Set to true to clear all stored variable values",
+      "outputs": "Outputs",
+      "output": "Result of the formula evaluation",
+      "formulaObj": "{ formula, variables, result, decimals }",
+      "examplesTitle": "Formula examples"
+    }
+  }
+}

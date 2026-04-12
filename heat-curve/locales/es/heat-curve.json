@@ -1,0 +1,22 @@
+{
+  "heat-curve": {
+    "label": {
+      "name": "Nombre",
+      "mode": "Modo",
+      "slope": "Pendiente",
+      "designOutdoor": "Diseño Exterior",
+      "designFlow": "Diseño Flujo",
+      "roomTemp": "Temp Sala",
+      "shift": "Desplazamiento",
+      "minFlow": "Flujo Mín",
+      "maxFlow": "Flujo Máx",
+      "setbackDelta": "Reducción",
+      "summerLockout": "Bloqueo Verano",
+      "decimals": "Decimales"
+    },
+    "option": {
+      "slope": "Pendiente",
+      "design": "Diseño"
+    }
+  }
+}

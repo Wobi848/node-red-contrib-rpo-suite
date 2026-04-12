@@ -1,0 +1,23 @@
+{
+  "sort": {
+    "label": "Sort",
+    "mode": "Sort mode",
+    "mode_opt": {
+      "numeric": "Numeric",
+      "alpha": "Alphabetic"
+    },
+    "order": "Order",
+    "order_opt": {
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "topN": "Top N (0=all)",
+    "tip": "Sorts an array payload numerically or alphabetically.",
+    "input": {
+      "payload": "Array of numbers or strings to sort"
+    },
+    "output": {
+      "payload": "Sorted array; msg.originalIndices = index mapping"
+    }
+  }
+}

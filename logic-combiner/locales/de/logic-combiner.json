@@ -1,0 +1,63 @@
+{
+    "logic-combiner": {
+        "label": {
+            "name": "Name",
+            "minTopics": "Min. Topics",
+            "initialValue": "Startwert",
+            "topics": "Topics",
+            "operator": "Operator",
+            "topic": "Topic",
+            "not": "NOT"
+        },
+        "placeholder": {
+            "all": "alle"
+        },
+        "option": {
+            "none": "Keiner"
+        },
+        "button": {
+            "addTopic": "Topic hinzufügen"
+        },
+        "status": {
+            "noTopics": "Keine Topics konfiguriert",
+            "waiting": "Warte (__received__/__min__ Topics)",
+            "result": "→ __result__ (__received__/__total__ Topics)"
+        },
+        "warning": {
+            "topicRequired": "msg.topic ist erforderlich",
+            "topicNotConfigured": "Topic '__topic__' nicht konfiguriert"
+        },
+        "help": {
+            "description": "Kombiniert mehrere Boolean-Inputs mit individuellen AND/OR Operatoren.",
+            "behavior": "Verhalten",
+            "behaviorList": [
+                "Jeder Input wird per <code>msg.topic</code> identifiziert",
+                "Pro Topic konfigurierbar: Operator (AND/OR), Label, Invertierung",
+                "Berechnung erfolgt sequentiell in der konfigurierten Reihenfolge",
+                "Output sobald minTopics erreicht"
+            ],
+            "example": "Beispiel",
+            "inputs": "Eingaben",
+            "payloadDesc": "Wert wird auf truthy/falsy geprüft",
+            "topicDesc": "<b>Erforderlich</b> - Muss einem konfigurierten Topic entsprechen",
+            "resetDesc": "<i>(optional)</i> <code>true</code> = alle Werte zurücksetzen",
+            "falsyValues": "Falsy-Werte",
+            "truthyValues": "Truthy-Werte",
+            "truthyDesc": "Alles andere: <code>true</code>, <code>1</code>, <code>\"on\"</code>, etc.",
+            "outputs": "Ausgaben",
+            "outputDesc": "<code>true</code> oder <code>false</code>",
+            "configuration": "Konfiguration",
+            "minTopicsDesc": "Anzahl Topics bevor Output gesendet wird",
+            "initialValueDesc": "Initialwert für Topics (optional)",
+            "topicsDesc": "Liste mit: Operator (AND/OR), Topic, Label, NOT (Invertierung)",
+            "useCases": "Anwendungsbeispiele",
+            "complex": "Komplex",
+            "safety": "Sicherheit",
+            "alarm": "Alarm",
+            "nodeStatus": "Node Status",
+            "resultActive": "Ergebnis aktiv",
+            "resultInactive": "Ergebnis inaktiv",
+            "notEnoughData": "Noch nicht genug Daten"
+        }
+    }
+}

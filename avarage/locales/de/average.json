@@ -1,0 +1,15 @@
+{
+  "average": {
+    "label": {
+      "name": "Name",
+      "mode": "Modus",
+      "window": "Fenster",
+      "windowUnit": "Einheit",
+      "decimals": "Dezimalstellen"
+    },
+    "option": {
+      "count": "Anzahl",
+      "time": "Zeit"
+    }
+  }
+}

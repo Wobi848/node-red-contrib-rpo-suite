@@ -1,0 +1,107 @@
+<script type="text/javascript">
+    RED.nodes.registerType('multi-stat', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            name: { value: "" },
+            decimals: { value: "2" },
+            minTopics: { value: "1" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-bar-chart",
+        label: function() {
+            return this.name || "multi-stat";
+        },
+        paletteLabel: "multi-stat"
+    });
+</script>
+
+<script type="text/html" data-template-name="multi-stat">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-calculator"></i> Decimals</label>
+        <input type="text" id="node-input-decimals" style="width: 60px;" placeholder="2">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minTopics"><i class="fa fa-filter"></i> Min. Topics</label>
+        <input type="text" id="node-input-minTopics" style="width: 60px;" placeholder="1">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="multi-stat">
+    <p>Calculates Min/Max/Avg across multiple sources (topics).</p>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Each source is identified by <code>msg.topic</code></li>
+        <li>Stores only the latest value per topic (no history)</li>
+        <li>On each input: update value → recalculate statistics → output</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre>
+Input: topic="room1", payload=21.5
+Input: topic="room2", payload=19.8
+Input: topic="room3", payload=23.1
+
+Output:
+{
+  min: 19.8,
+  max: 23.1,
+  avg: 21.47,
+  count: 3,
+  values: { room1: 21.5, room2: 19.8, room3: 23.1 }
+}</pre>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numeric value</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd><b>Required</b> - Unique source ID</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = clear all values</dd>
+        <dt>remove <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = remove this topic</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload.min <span class="property-type">number</span></dt>
+        <dd>Lowest value across all topics</dd>
+        <dt>payload.max <span class="property-type">number</span></dt>
+        <dd>Highest value across all topics</dd>
+        <dt>payload.avg <span class="property-type">number</span></dt>
+        <dd>Average across all topics</dd>
+        <dt>payload.count <span class="property-type">number</span></dt>
+        <dd>Number of topics</dd>
+        <dt>payload.values <span class="property-type">object</span></dt>
+        <dd>All topic-value pairs</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Decimals</dt>
+        <dd>Decimal places for min/max/avg</dd>
+        <dt>Min. Topics</dt>
+        <dd>Minimum topics before first output</dd>
+    </dl>
+
+    <h3>Use Cases</h3>
+    <ul>
+        <li><b>Room temperatures:</b> Min/Max/Avg across all rooms</li>
+        <li><b>Sensor network:</b> Aggregated readings</li>
+        <li><b>Load balancing:</b> Min/Max across servers</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>Idle</b> - Waiting for data</li>
+        <li><b>Waiting (1/3 Topics)</b> - minTopics not yet reached</li>
+        <li><b>3 Topics | Min 19.8 Max 23.1 Avg 21.5</b> - Active statistics</li>
+    </ul>
+</script>

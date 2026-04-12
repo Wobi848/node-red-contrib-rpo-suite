@@ -1,0 +1,19 @@
+{
+  "rate-limiter": {
+    "label": "Ratenbegren­zung",
+    "maxRate": "Maximale Rate",
+    "unit": "Einheit",
+    "unit_opt": {
+      "per_s": "/s",
+      "per_min": "/min",
+      "per_h": "/h"
+    },
+    "tip": "Begrenzt die maximale Änderungsrate pro Zeiteinheit.",
+    "input": {
+      "payload": "Numerischer Eingabewert"
+    },
+    "output": {
+      "payload": "Ratenbegrenzter numerischer Wert"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+<script type="text/html" data-help-name="heat-curve">
+  <p>Berechnet die Heizungs-Vorlauftemperatur basierend auf der Außentemperatur mittels konfigurierbarer Heizkurve.</p>
+
+  <h3>Funktionen</h3>
+  <ul>
+    <li>Steilheit- oder Auslegungsmodus für Kurveneinstellung</li>
+    <li>Nachtabsenkung (reduziert Vorlauftemperatur)</li>
+    <li>Sommerabschaltung (deaktiviert Heizung über Schwellwert)</li>
+    <li>Zwei Ausgänge: Vorlauftemp + Heizung aktiv Boolean</li>
+  </ul>
+
+  <h3>Formel</h3>
+  <pre>Vorlauf = Raumtemp + Steilheit × (Raumtemp - Außentemp) + Niveau
+
+Mit Absenkung: Vorlauf = Vorlauf - Absenkung</pre>
+
+  <h3>Eingaben</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Außentemperatur in °C (nutzt letzten Wert wenn weggelassen)</dd>
+    <dt>setback <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> true = Nachtabsenkung aktivieren. Kann einzeln gesendet werden um Absenkung mit letzter Außentemp umzuschalten.</dd>
+  </dl>
+
+  <h3>Ausgänge</h3>
+  <p><b>Ausgang 1 - Vorlauftemperatur:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number|null</span></dt>
+    <dd>Vorlauftemperatur-Sollwert (null bei Sommerabschaltung)</dd>
+    <dt>heatCurve <span class="property-type">object</span></dt>
+    <dd>Detaillierte Infos inkl. Absenkung und Abschaltstatus</dd>
+  </dl>
+  <p><b>Ausgang 2 - Heizung aktiv:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">boolean</span></dt>
+    <dd>true = Heizung aktiv, false = Sommerabschaltung</dd>
+  </dl>
+
+  <h3>Konfiguration</h3>
+  <dl class="message-properties">
+    <dt>Modus</dt>
+    <dd>Steilheit (manuell) oder Auslegung (berechnet)</dd>
+    <dt>Absenkung</dt>
+    <dd>Nachtabsenkung in Kelvin (Standard: 10K)</dd>
+    <dt>Sommerabschaltung</dt>
+    <dd>Außentemperatur ab der Heizung deaktiviert wird (Standard: 18°C)</dd>
+  </dl>
+
+  <h3>Laufzeit-Überschreibungen</h3>
+  <p>Alle Konfigurationswerte können per msg-Eigenschaften überschrieben werden:</p>
+  <dl class="message-properties">
+    <dt>msg.setback <span class="property-type">boolean</span></dt>
+    <dd>Nachtabsenkung aktivieren (true/false). Zustand bleibt bis zur expliziten Änderung.</dd>
+    <dt>msg.setbackDelta <span class="property-type">number</span></dt>
+    <dd>Absenkung in Kelvin</dd>
+    <dt>msg.summerLockout <span class="property-type">number</span></dt>
+    <dd>Sommerabschaltung Schwellwert in °C</dd>
+    <dt>msg.slope <span class="property-type">number</span></dt>
+    <dd>Heizkurven-Steilheit (überschreibt Auslegungsmodus)</dd>
+    <dt>msg.designOutdoor <span class="property-type">number</span></dt>
+    <dd>Auslegungsaußentemperatur in °C</dd>
+    <dt>msg.designFlow <span class="property-type">number</span></dt>
+    <dd>Auslegungsvorlauftemperatur in °C</dd>
+    <dt>msg.roomTemp <span class="property-type">number</span></dt>
+    <dd>Raumtemperatur-Sollwert in °C</dd>
+    <dt>msg.shift <span class="property-type">number</span></dt>
+    <dd>Parallelverschiebung in °C</dd>
+    <dt>msg.minFlow <span class="property-type">number</span></dt>
+    <dd>Minimale Vorlauftemperatur in °C</dd>
+    <dt>msg.maxFlow <span class="property-type">number</span></dt>
+    <dd>Maximale Vorlauftemperatur in °C</dd>
+  </dl>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>-10°C → 50.0°C</b> - Normaler Heizbetrieb</li>
+    <li><b>-10°C → 40.0°C (setback)</b> - Nachtabsenkung aktiv</li>
+    <li><b>20°C → locked out</b> - Sommerabschaltung</li>
+    <li><b>-20°C → 75.0°C (clamped max)</b> - Auf Grenzwert begrenzt</li>
+  </ul>
+</script>

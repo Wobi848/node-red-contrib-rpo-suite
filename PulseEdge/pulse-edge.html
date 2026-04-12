@@ -1,0 +1,93 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pulse-edge', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            name: { value: "" },
+            mode: { value: "rising" },
+            initialState: { value: "undefined" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-bolt",
+        label: function() {
+            return this.name || "pulse edge";
+        },
+        paletteLabel: "pulse edge"
+    });
+</script>
+
+<script type="text/html" data-template-name="pulse-edge">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-bolt"></i> Edge Mode</label>
+        <select id="node-input-mode">
+            <option value="rising">Rising Edge (↑ false→true)</option>
+            <option value="falling">Falling Edge (↓ true→false)</option>
+            <option value="both">Both Edges (↑↓)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialState"><i class="fa fa-play"></i> Initial State</label>
+        <select id="node-input-initialState">
+            <option value="undefined">Undefined (wait for first input)</option>
+            <option value="true">HIGH (true)</option>
+            <option value="false">LOW (false)</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="pulse-edge">
+    <p>Edge detection node - outputs a pulse when a rising or falling edge is detected.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean | 0 | 1</span></dt>
+        <dd>The value to monitor for edges (boolean or 0/1)</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd>Always <code>true</code> when an edge is detected</dd>
+        <dt>edge <span class="property-type">string</span></dt>
+        <dd>"rising" or "falling" - which edge was detected</dd>
+        <dt>previousState <span class="property-type">boolean</span></dt>
+        <dd>The state before the edge</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Edge Mode</dt>
+        <dd>
+            <b>Rising</b>: Pulse on false→true (P-trigger)<br>
+            <b>Falling</b>: Pulse on true→false (N-trigger)<br>
+            <b>Both</b>: Pulse on any change
+        </dd>
+        <dt>Initial State</dt>
+        <dd>Assumed previous state for the first message. If "undefined", the first message only sets the internal state without output.</dd>
+    </dl>
+
+    <h3>Examples</h3>
+
+    <h4>Rising Edge Mode</h4>
+    <pre>
+Input: false → no output (sets state)
+Input: true  → OUTPUT (rising edge!)
+Input: true  → no output (no change)
+Input: false → no output (falling, ignored)
+Input: true  → OUTPUT (rising edge!)</pre>
+
+    <h4>Both Edges Mode</h4>
+    <pre>
+Input: false → no output (sets state)
+Input: true  → OUTPUT (rising edge!)
+Input: false → OUTPUT (falling edge!)
+Input: true  → OUTPUT (rising edge!)</pre>
+
+    <h3>Node Status</h3>
+    <p>Shows current state (HIGH/LOW) and configured mode (↑/↓/↑↓).</p>
+</script>

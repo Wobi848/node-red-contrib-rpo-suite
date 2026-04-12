@@ -1,0 +1,81 @@
+<script type="text/html" data-help-name="heat-curve">
+  <p>Calcula la temperatura de impulsión de calefacción basada en la temperatura exterior mediante una curva de calefacción configurable.</p>
+
+  <h3>Funciones</h3>
+  <ul>
+    <li>Modo pendiente o diseño para configuración de curva</li>
+    <li>Reducción nocturna (reduce temperatura de flujo)</li>
+    <li>Bloqueo de verano (desactiva calefacción sobre umbral)</li>
+    <li>Dos salidas: Temp flujo + Boolean calefacción activa</li>
+  </ul>
+
+  <h3>Fórmula</h3>
+  <pre>tempFlujo = tempSala + pendiente × (tempSala - tempExterior) + desplazamiento
+
+Con reducción: tempFlujo = tempFlujo - reducción</pre>
+
+  <h3>Entradas</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Temperatura exterior en °C (usa último valor si se omite)</dd>
+    <dt>setback <span class="property-type">boolean</span></dt>
+    <dd><i>(opcional)</i> true = activar reducción nocturna. Se puede enviar solo para cambiar reducción usando última temp exterior.</dd>
+  </dl>
+
+  <h3>Salidas</h3>
+  <p><b>Salida 1 - Temperatura de Flujo:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number|null</span></dt>
+    <dd>Temperatura de impulsión (null si bloqueo de verano)</dd>
+    <dt>heatCurve <span class="property-type">object</span></dt>
+    <dd>Info detallada incluyendo estado de reducción y bloqueo</dd>
+  </dl>
+  <p><b>Salida 2 - Calefacción Activa:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">boolean</span></dt>
+    <dd>true = calefacción activa, false = bloqueo de verano</dd>
+  </dl>
+
+  <h3>Configuración</h3>
+  <dl class="message-properties">
+    <dt>Modo</dt>
+    <dd>Pendiente (manual) o Diseño (calculado)</dd>
+    <dt>Reducción</dt>
+    <dd>Reducción nocturna en Kelvin (defecto: 10K)</dd>
+    <dt>Bloqueo Verano</dt>
+    <dd>Temperatura exterior sobre la cual se desactiva calefacción (defecto: 18°C)</dd>
+  </dl>
+
+  <h3>Sobrescrituras en Tiempo de Ejecución</h3>
+  <p>Todos los valores de configuración pueden ser sobrescritos mediante propiedades de msg:</p>
+  <dl class="message-properties">
+    <dt>msg.setback <span class="property-type">boolean</span></dt>
+    <dd>Activar reducción nocturna (true/false). Estado se mantiene hasta cambio explícito.</dd>
+    <dt>msg.setbackDelta <span class="property-type">number</span></dt>
+    <dd>Reducción en Kelvin</dd>
+    <dt>msg.summerLockout <span class="property-type">number</span></dt>
+    <dd>Umbral de bloqueo de verano en °C</dd>
+    <dt>msg.slope <span class="property-type">number</span></dt>
+    <dd>Pendiente de curva (sobrescribe modo diseño)</dd>
+    <dt>msg.designOutdoor <span class="property-type">number</span></dt>
+    <dd>Temperatura exterior de diseño en °C</dd>
+    <dt>msg.designFlow <span class="property-type">number</span></dt>
+    <dd>Temperatura de flujo de diseño en °C</dd>
+    <dt>msg.roomTemp <span class="property-type">number</span></dt>
+    <dd>Temperatura de sala en °C</dd>
+    <dt>msg.shift <span class="property-type">number</span></dt>
+    <dd>Desplazamiento paralelo en °C</dd>
+    <dt>msg.minFlow <span class="property-type">number</span></dt>
+    <dd>Temperatura mínima de flujo en °C</dd>
+    <dt>msg.maxFlow <span class="property-type">number</span></dt>
+    <dd>Temperatura máxima de flujo en °C</dd>
+  </dl>
+
+  <h3>Estado del Nodo</h3>
+  <ul>
+    <li><b>-10°C → 50.0°C</b> - Calefacción normal</li>
+    <li><b>-10°C → 40.0°C (setback)</b> - Reducción nocturna activa</li>
+    <li><b>20°C → locked out</b> - Bloqueo de verano</li>
+    <li><b>-20°C → 75.0°C (clamped max)</b> - Limitado al máximo</li>
+  </ul>
+</script>

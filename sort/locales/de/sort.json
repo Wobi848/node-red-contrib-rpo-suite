@@ -1,0 +1,23 @@
+{
+  "sort": {
+    "label": "Sortieren",
+    "mode": "Sortiermodus",
+    "mode_opt": {
+      "numeric": "Numerisch",
+      "alpha": "Alphabetisch"
+    },
+    "order": "Reihenfolge",
+    "order_opt": {
+      "asc": "Aufsteigend",
+      "desc": "Absteigend"
+    },
+    "topN": "Top N (0=alle)",
+    "tip": "Sortiert ein Array-Payload numerisch oder alphabetisch.",
+    "input": {
+      "payload": "Array von Zahlen oder Strings zum Sortieren"
+    },
+    "output": {
+      "payload": "Sortiertes Array; msg.originalIndices = Index-Mapping"
+    }
+  }
+}

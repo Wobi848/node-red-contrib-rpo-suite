@@ -1,0 +1,95 @@
+<script type="text/javascript">
+    RED.nodes.registerType('counter', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "direction": {
+                        "value": "up"
+                },
+                "step": {
+                        "value": 1
+                },
+                "initialValue": {
+                        "value": 0
+                },
+                "min": {
+                        "value": 0
+                },
+                "max": {
+                        "value": 100
+                },
+                "onLimit": {
+                        "value": "stop"
+                },
+                "persistent": {
+                        "value": false
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-sort-numeric-asc',
+        label: function() { return this.name || 'counter'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="counter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-direction"><i class="fa fa-arrows-v"></i> Direction</label>
+        <select id="node-input-direction" style="width:70%">
+            <option value="up">Up</option>
+            <option value="down">Down</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-step"><i class="fa fa-plus"></i> Step</label>
+        <input type="number" id="node-input-step" min="0" step="0.1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialValue"><i class="fa fa-flag-o"></i> Initial Value</label>
+        <input type="number" id="node-input-initialValue" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-min"><i class="fa fa-arrow-down"></i> Min</label>
+        <input type="number" id="node-input-min" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-max"><i class="fa fa-arrow-up"></i> Max</label>
+        <input type="number" id="node-input-max" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-onLimit"><i class="fa fa-ban"></i> On Limit</label>
+        <select id="node-input-onLimit" style="width:70%">
+            <option value="stop">Stop at limit</option>
+            <option value="wrap">Wrap around</option>
+            <option value="alarm">Alarm output</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-hdd-o"></i> Persistent</label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto;margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="counter">
+    <p>Up/down counter with configurable step, limits and limit behavior.</p>
+    <h3>Topic-based Control</h3>
+    <ul>
+        <li><code>msg.topic = "up"</code> — count up</li>
+        <li><code>msg.topic = "down"</code> — count down</li>
+        <li><code>msg.topic = "reset"</code> — reset to initial value</li>
+        <li><code>msg.topic = "set"</code> + <code>msg.payload = N</code> — set to value</li>
+    </ul>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current count</dd>
+        <dt>counter <span class="property-type">object</span></dt><dd>{ count, direction, step, min, max, atLimit, limitType }</dd>
+    </dl>
+</script>

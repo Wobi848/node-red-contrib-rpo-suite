@@ -1,0 +1,80 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sensor-check', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:        { value: '' },
+            min:         { value: -50 },
+            max:         { value: 150 },
+            fallback:    { value: 0 },
+            useFallback: { value: true },
+            timeout:     { value: 0 },
+            hysteresis:  { value: 0 }
+        },
+        inputs:  1,
+        outputs: 2,
+        icon:    'font-awesome/fa-heartbeat',
+        label:   function() { return this.name || 'sensor check'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['Value / fallback', 'Fault alarm']
+    });
+</script>
+
+<script type="text/html" data-template-name="sensor-check">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-min"><i class="fa fa-arrow-down"></i> <span data-i18n="sensor-check.label.min"></span></label>
+        <input type="number" id="node-input-min" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-max"><i class="fa fa-arrow-up"></i> <span data-i18n="sensor-check.label.max"></span></label>
+        <input type="number" id="node-input-max" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-fallback"><i class="fa fa-life-ring"></i> <span data-i18n="sensor-check.label.fallback"></span></label>
+        <input type="number" id="node-input-fallback" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-useFallback"><i class="fa fa-share"></i> <span data-i18n="sensor-check.label.useFallback"></span></label>
+        <input type="checkbox" id="node-input-useFallback" style="display:inline-block; width:auto; vertical-align:top; margin-top:4px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="fa fa-clock-o"></i> <span data-i18n="sensor-check.label.timeout"></span></label>
+        <input type="number" id="node-input-timeout" min="0" style="width:70%">
+        <span style="margin-left:5px; color:#aaa;" data-i18n="sensor-check.label.timeoutHint"></span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> <span data-i18n="sensor-check.label.hysteresis"></span></label>
+        <input type="number" id="node-input-hysteresis" min="0" step="0.1" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="sensor-check">
+    <p>Monitors a sensor value for plausibility. Detects out-of-range values and timeouts, outputs a fallback value and alarm signal.</p>
+
+    <h3>Outputs</h3>
+    <ol>
+        <li><b>Value / fallback</b> — original value when OK, fallback value when fault.</li>
+        <li><b>Fault alarm</b> — boolean <code>true</code> = fault, <code>false</code> = OK + <code>msg.sensorCheck</code> details.</li>
+    </ol>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Current sensor value to check.</dd>
+        <dt class="optional">acknowledge <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to acknowledge and reset the fault state.</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Min / Max</dt><dd>Plausibility range. Values outside trigger a fault.</dd>
+        <dt>Fallback</dt><dd>Value sent on Output 1 when a fault is detected.</dd>
+        <dt>Use Fallback</dt><dd>If unchecked, Output 1 is blocked (null) during faults.</dd>
+        <dt>Timeout</dt><dd>Seconds without a message before a timeout fault is triggered. Set 0 to disable.</dd>
+        <dt>Hysteresis</dt><dd>Band applied when leaving a fault state to prevent alarm flickering.</dd>
+    </dl>
+</script>

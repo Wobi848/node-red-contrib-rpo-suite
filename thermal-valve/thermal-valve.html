@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('thermal-valve', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:         { value: '' },
+            cycleTime:    { value: 300 },
+            cycleTimeUnit:{ value: 's' },
+            minOnTime:    { value: 0 },
+            minOffTime:   { value: 0 },
+            invert:       { value: false }
+        },
+        inputs:  1,
+        outputs: 1,
+        icon:    'font-awesome/fa-thermometer-quarter',
+        label:   function() { return this.name || ('thermal valve ' + this.cycleTime + this.cycleTimeUnit); },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="thermal-valve">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-cycleTime"><i class="fa fa-refresh"></i> <span data-i18n="thermal-valve.label.cycleTime"></span></label>
+        <input type="number" id="node-input-cycleTime" min="1" style="width:50%">
+        <select id="node-input-cycleTimeUnit" style="width:18%; margin-left:4px">
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOnTime"><i class="fa fa-toggle-on"></i> <span data-i18n="thermal-valve.label.minOnTime"></span></label>
+        <input type="number" id="node-input-minOnTime" min="0" style="width:70%">
+        <span style="margin-left:5px;color:#aaa;">s</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOffTime"><i class="fa fa-toggle-off"></i> <span data-i18n="thermal-valve.label.minOffTime"></span></label>
+        <input type="number" id="node-input-minOffTime" min="0" style="width:70%">
+        <span style="margin-left:5px;color:#aaa;">s</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-invert"><i class="fa fa-exchange"></i> <span data-i18n="thermal-valve.label.invert"></span></label>
+        <input type="checkbox" id="node-input-invert" style="display:inline-block; width:auto; vertical-align:top; margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="thermal-valve">
+    <p>PWM controller for thermal actuator valves (Thermostellantrieb). Converts a 0–100% analog input to a timed ON/OFF signal based on a configurable cycle time.</p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Valve position: 0 = fully closed, 100 = fully open.</dd>
+        <dt class="optional">bypass <span class="property-type">boolean</span></dt>
+        <dd>Force valve ON (<code>true</code>) or OFF (<code>false</code>), ignoring the PWM cycle.</dd>
+        <dt class="optional">clearBypass <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to return to normal PWM control.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd><code>true</code> = valve open (actuator energized), <code>false</code> = valve closed. Output fires only on state change.</dd>
+        <dt>thermalValve <span class="property-type">object</span></dt>
+        <dd><code>{ input, output, onTime, offTime, cycleTime, cyclePosition, bypass, inverted }</code></dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Cycle Time</dt><dd>Full ON/OFF cycle duration (typical: 3–15 minutes for thermal valves).</dd>
+        <dt>Min ON Time</dt><dd>Minimum time the valve must stay open. If calculated ON time is less, valve stays closed (rounds to 0%).</dd>
+        <dt>Min OFF Time</dt><dd>Minimum time the valve must stay closed. If calculated OFF time is less, valve stays open (rounds to 100%).</dd>
+        <dt>Invert</dt><dd>Inverts the output signal (useful for normally-open actuators).</dd>
+    </dl>
+</script>

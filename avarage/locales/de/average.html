@@ -1,0 +1,62 @@
+<script type="text/html" data-help-name="average">
+    <p>Berechnet einen gleitenden Durchschnitt über die letzten N Nachrichten oder ein Zeitfenster.</p>
+
+    <h3>Modi</h3>
+    <ul>
+        <li><b>Anzahl:</b> Durchschnitt über die letzten N Nachrichten (Schiebefenster)</li>
+        <li><b>Zeit:</b> Durchschnitt über alle Werte innerhalb der letzten X Sekunden/Minuten/Stunden</li>
+    </ul>
+
+    <h3>Beispiele</h3>
+    <pre>
+Anzahl-Modus, Fenster=3:
+  Input 10 → Puffer [10]         → Output 10.0
+  Input 20 → Puffer [10,20]      → Output 15.0
+  Input 30 → Puffer [10,20,30]   → Output 20.0
+  Input 40 → Puffer [20,30,40]   → Output 30.0
+
+Zeit-Modus, Fenster=5min:
+  Alle Werte der letzten 5 Minuten werden gemittelt</pre>
+
+    <h3>Eingaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numerischer Wert für den Durchschnitt</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = Puffer leeren</dd>
+    </dl>
+
+    <h3>Ausgaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Der berechnete Durchschnitt</dd>
+        <dt>average <span class="property-type">object</span></dt>
+        <dd>Details: { input, output, count, min, max, mode, window, decimals }</dd>
+    </dl>
+
+    <h3>Konfiguration</h3>
+    <dl class="message-properties">
+        <dt>Modus</dt>
+        <dd>Anzahl (N Nachrichten) oder Zeit (Dauer)</dd>
+        <dt>Fenster</dt>
+        <dd>Anzahl der Nachrichten oder Zeitwert</dd>
+        <dt>Einheit</dt>
+        <dd>Sekunden/Minuten/Stunden (nur Zeit-Modus)</dd>
+        <dt>Dezimalstellen</dt>
+        <dd>Anzahl der Dezimalstellen (0-10, Standard: 2)</dd>
+    </dl>
+
+    <h3>Anwendungsbeispiele</h3>
+    <ul>
+        <li><b>Sensor:</b> Verrauschte Messwerte glätten</li>
+        <li><b>Energie:</b> Durchschnittlicher Stromverbrauch</li>
+        <li><b>Temperatur:</b> Gleitender Temperaturdurchschnitt</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>Ø 30.00 (3 values)</b> - Aktueller Durchschnitt</li>
+        <li><b>Ø 18.50 (3/10)</b> - Puffer füllt sich</li>
+        <li><b>Ø 25.00 (last 5min, 12 values)</b> - Zeit-Modus</li>
+    </ul>
+</script>

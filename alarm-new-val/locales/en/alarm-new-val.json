@@ -1,0 +1,21 @@
+{
+  "alarm-new-val": {
+    "label": "Alarm New Value",
+    "mode": "Trigger mode",
+    "mode_opt": {
+      "always": "Always",
+      "changed": "On change only"
+    },
+    "pulseMs": "Pulse duration (ms)",
+    "tip": "Passes value and emits a timed pulse on the second output.",
+    "input": {
+      "payload": "Any value"
+    },
+    "output1": {
+      "payload": "Passed-through input value"
+    },
+    "output2": {
+      "payload": "true on new value pulse, then false after pulse duration"
+    }
+  }
+}

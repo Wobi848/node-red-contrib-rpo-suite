@@ -1,0 +1,12 @@
+{
+  "toggle": {
+    "label": {
+      "initialState": "Initial State",
+      "persistent": "Persistent"
+    },
+    "options": {
+      "on": "ON (true)",
+      "off": "OFF (false)"
+    }
+  }
+}

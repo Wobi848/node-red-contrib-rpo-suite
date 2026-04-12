@@ -1,0 +1,128 @@
+<script type="text/javascript">
+    RED.nodes.registerType('weekly-schedule', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:     { value: '' },
+            schedule: { value: [] },
+            onValue:  { value: true },
+            offValue: { value: false },
+            timezone: { value: '' }
+        },
+        inputs:  1,
+        outputs: 2,
+        icon:    'font-awesome/fa-calendar',
+        label:   function() { return this.name || 'weekly schedule'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['Current state', 'On state change'],
+        oneditprepare: function() {
+            var node = this;
+            var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+            $('#node-input-schedule-list').editableList({
+                addItem: function(container, i, data) {
+                    data = data || {};
+                    container.css({ overflow: 'hidden', whiteSpace: 'nowrap' });
+                    var row = $('<div style="display:flex;gap:6px;align-items:center;width:100%"></div>').appendTo(container);
+
+                    var daySelect = $('<select style="flex:1"></select>');
+                    for (var d = 0; d < 7; d++) {
+                        var opt = $('<option></option>').val(d).text(DAYS[d]);
+                        if (data.day !== undefined && parseInt(data.day) === d) opt.prop('selected', true);
+                        daySelect.append(opt);
+                    }
+
+                    var fromInput = $('<input type="time" style="flex:1" value="' + (data.from || '06:00') + '">');
+                    var toInput   = $('<input type="time" style="flex:1" value="' + (data.to   || '22:00') + '">');
+
+                    $('<span>Day</span>').appendTo(row);
+                    daySelect.appendTo(row);
+                    $('<span>From</span>').appendTo(row);
+                    fromInput.appendTo(row);
+                    $('<span>To</span>').appendTo(row);
+                    toInput.appendTo(row);
+
+                    container.data('daySelect', daySelect);
+                    container.data('fromInput', fromInput);
+                    container.data('toInput',   toInput);
+                },
+                removable: true,
+                sortable:  true
+            });
+
+            var items = node.schedule || [];
+            for (var i = 0; i < items.length; i++) {
+                $('#node-input-schedule-list').editableList('addItem', items[i]);
+            }
+        },
+        oneditsave: function() {
+            var node = this;
+            var items = $('#node-input-schedule-list').editableList('items');
+            node.schedule = [];
+            items.each(function() {
+                var container = $(this);
+                node.schedule.push({
+                    day:  parseInt(container.data('daySelect').val()),
+                    from: container.data('fromInput').val(),
+                    to:   container.data('toInput').val()
+                });
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="weekly-schedule">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-calendar"></i> <span data-i18n="weekly-schedule.label.schedule"></span></label>
+        <ol id="node-input-schedule-list" style="margin-bottom:0"></ol>
+    </div>
+    <div class="form-row">
+        <label for="node-input-onValue"><i class="fa fa-check-circle"></i> <span data-i18n="weekly-schedule.label.onValue"></span></label>
+        <input type="text" id="node-input-onValue" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-offValue"><i class="fa fa-times-circle"></i> <span data-i18n="weekly-schedule.label.offValue"></span></label>
+        <input type="text" id="node-input-offValue" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-timezone"><i class="fa fa-globe"></i> <span data-i18n="weekly-schedule.label.timezone"></span></label>
+        <input type="text" id="node-input-timezone" style="width:70%" placeholder="(system default)">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="weekly-schedule">
+    <p>Weekly scheduler with configurable time windows per day. Outputs <code>true</code>/<code>false</code> (or custom values) based on current time.</p>
+
+    <h3>Outputs</h3>
+    <ol>
+        <li><b>Current state</b> — fires on every input message with the current active/inactive state.</li>
+        <li><b>State change</b> — fires only when the state changes (on→off or off→on), checked every 10 seconds.</li>
+    </ol>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt class="optional">override <span class="property-type">boolean</span></dt>
+        <dd>Force ON (<code>true</code>) or OFF (<code>false</code>) regardless of schedule.</dd>
+        <dt class="optional">clearOverride <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to remove override and return to schedule.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Configured ON or OFF value.</dd>
+        <dt>schedule <span class="property-type">object</span></dt>
+        <dd><code>{ active, day, time, override }</code></dd>
+    </dl>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>Midnight crossing is supported: set "From" after "To" (e.g. 22:00–06:00).</li>
+        <li>Multiple windows per day: add multiple entries with the same day.</li>
+        <li>Trigger Output 1 by injecting any message (e.g. on Node-RED start).</li>
+    </ul>
+</script>

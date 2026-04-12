@@ -1,0 +1,21 @@
+{
+  "gradient": {
+    "label": "Gradiente",
+    "unit": "Unidad de salida",
+    "unit_opt": {
+      "per_s": "/s",
+      "per_min": "/min",
+      "per_h": "/h"
+    },
+    "smoothing": "Suavizado (muestras)",
+    "decimals": "Decimales",
+    "alarmRate": "Tasa de alarma (0=off)",
+    "tip": "Calcula la tasa de cambio entre valores consecutivos.",
+    "input": {
+      "payload": "Valor numérico (marca de tiempo tomada automáticamente)"
+    },
+    "output": {
+      "payload": "Gradiente suavizado; msg.gradient = { current, previous, gradient, unit, dt, smoothed, alarm, alarmRate }"
+    }
+  }
+}

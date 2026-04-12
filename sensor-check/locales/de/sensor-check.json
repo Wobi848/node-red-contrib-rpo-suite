@@ -1,0 +1,13 @@
+{
+  "sensor-check": {
+    "label": {
+      "min": "Min (Plausibilität)",
+      "max": "Max (Plausibilität)",
+      "fallback": "Ersatzwert",
+      "useFallback": "Ersatzwert verwenden",
+      "timeout": "Timeout",
+      "timeoutHint": "s (0 = deaktiviert)",
+      "hysteresis": "Hysterese"
+    }
+  }
+}

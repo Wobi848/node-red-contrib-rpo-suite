@@ -1,0 +1,46 @@
+{
+  "name": "node-red-contrib-ton-toff",
+  "version": "1.0.2",
+  "description": "Node-RED TON/TOFF timer - On-Delay and Off-Delay timer functions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "ton-toff.js",
+    "ton-toff.html",
+    "examples/"
+  ],
+  "keywords": [
+    "node-red",
+    "timer",
+    "ton",
+    "toff",
+    "delay",
+    "on-delay",
+    "off-delay",
+    "plc"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "ton-toff": "ton-toff.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

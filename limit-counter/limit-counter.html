@@ -1,0 +1,65 @@
+<script type="text/javascript">
+    RED.nodes.registerType('limit-counter', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "threshold": {
+                        "value": 0
+                },
+                "limit": {
+                        "value": 3
+                },
+                "hysteresis": {
+                        "value": 0
+                },
+                "persistent": {
+                        "value": false
+                }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-exclamation-triangle',
+        outputLabels: ["Count + info","Alarm boolean"],
+        label: function() { return this.name || 'limit-counter'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="limit-counter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-threshold"><i class="fa fa-level-up"></i> Threshold</label>
+        <input type="number" id="node-input-threshold" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-limit"><i class="fa fa-exclamation-triangle"></i> Alarm Limit</label>
+        <input type="number" id="node-input-limit" min="1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> Hysteresis</label>
+        <input type="number" id="node-input-hysteresis" min="0" step="0.1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-hdd-o"></i> Persistent</label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto;margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="limit-counter">
+    <p>Counts threshold crossings and outputs an alarm when the count reaches the configured limit.</p>
+    <h3>Output 1</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current crossing count</dd>
+        <dt>limitCounter <span class="property-type">object</span></dt><dd>{ count, limit, threshold, hysteresis, alarm, lastValue }</dd>
+    </dl>
+    <h3>Output 2</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = alarm (count >= limit)</dd>
+    </dl>
+</script>

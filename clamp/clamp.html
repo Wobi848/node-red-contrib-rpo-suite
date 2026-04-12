@@ -1,0 +1,121 @@
+<script type="text/javascript">
+  RED.nodes.registerType("clamp", {
+    category: 'rpo',
+    color: "#D4600A",
+    defaults: {
+      name: { value: "" },
+      min: { value: 0 },
+      max: { value: 100 },
+      decimals: { value: 2 },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-compress",
+    label: function () {
+      return this.name || "clamp";
+    },
+    paletteLabel: "clamp",
+  });
+</script>
+
+<script type="text/html" data-template-name="clamp">
+  <div class="form-row">
+    <label for="node-input-name"
+      ><i class="fa fa-tag"></i>
+      <span data-i18n="clamp.label.name">Name</span></label
+    >
+    <input
+      type="text"
+      id="node-input-name"
+      data-i18n="[placeholder]clamp.label.name"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-min"
+      ><i class="fa fa-arrow-down"></i>
+      <span data-i18n="clamp.label.min">Min</span></label
+    >
+    <input type="number" id="node-input-min" style="width: 100px;" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-max"
+      ><i class="fa fa-arrow-up"></i>
+      <span data-i18n="clamp.label.max">Max</span></label
+    >
+    <input type="number" id="node-input-max" style="width: 100px;" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-decimals"
+      ><i class="fa fa-hashtag"></i>
+      <span data-i18n="clamp.label.decimals">Decimals</span></label
+    >
+    <input
+      type="number"
+      id="node-input-decimals"
+      min="0"
+      max="10"
+      style="width: 60px;"
+    />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="clamp">
+  <p>Limits a numeric value to a configured min/max range.</p>
+
+  <h3>Behavior</h3>
+  <ul>
+    <li>Input &lt; min → Output = min</li>
+    <li>Input &gt; max → Output = max</li>
+    <li>Input in range → Output = input unchanged</li>
+    <li>Output on every message</li>
+  </ul>
+
+  <h3>Examples</h3>
+  <pre>
+min=0, max=100:
+  Input 120  → Output 100 (clamped)
+  Input -5   → Output 0   (clamped)
+  Input 42   → Output 42  (passthrough)</pre>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Numeric value to clamp</dd>
+    <dt>min <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Override minimum</dd>
+    <dt>max <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Override maximum</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>The clamped value</dd>
+    <dt>clamp <span class="property-type">object</span></dt>
+    <dd>Detailed info: { input, output, min, max, clamped, clampedAt }</dd>
+  </dl>
+
+  <h3>Configuration</h3>
+  <dl class="message-properties">
+    <dt>Min</dt>
+    <dd>Lower bound (default: 0)</dd>
+    <dt>Max</dt>
+    <dd>Upper bound (default: 100)</dd>
+    <dt>Decimals</dt>
+    <dd>Number of decimal places (0-10, default: 2)</dd>
+  </dl>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><b>Sensor:</b> Limit sensor readings to valid range</li>
+    <li><b>Control:</b> Constrain output to safe limits</li>
+    <li><b>UI:</b> Ensure slider values stay within bounds</li>
+  </ul>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>42 (in range)</b> - Value passed through</li>
+    <li><b>100 (clamped, was 120)</b> - Value was clamped</li>
+    <li><b>Invalid range</b> - min >= max</li>
+  </ul>
+</script>

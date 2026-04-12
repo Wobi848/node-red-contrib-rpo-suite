@@ -1,0 +1,61 @@
+<script type="text/html" data-help-name="difference">
+    <p>Berechnet die Differenz zwischen zwei numerischen Eingabewerten.</p>
+
+    <h3>Verhalten</h3>
+    <ul>
+        <li>Input A identifiziert durch konfigurierbares Topic (Standard: "a")</li>
+        <li>Input B identifiziert durch konfigurierbares Topic (Standard: "b")</li>
+        <li>Ergebnis = A - B</li>
+        <li>Output bei jeder neuen Nachricht, sobald beide Werte bekannt sind</li>
+    </ul>
+
+    <h3>Beispiel</h3>
+    <pre>
+topic="a", payload=24.5  → gespeichert als A
+topic="b", payload=18.2  → gespeichert als B
+Ausgabe: 24.5 - 18.2 = 6.3</pre>
+
+    <h3>Eingaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numerischer Wert für A oder B</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd><b>Erforderlich</b> - Muss Topic A oder Topic B entsprechen</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = beide Werte zurücksetzen</dd>
+    </dl>
+
+    <h3>Ausgaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Die berechnete Differenz (A - B)</dd>
+        <dt>inputs <span class="property-type">object</span></dt>
+        <dd>Detaillierte Info: { a: {...}, b: {...}, result, absolute }</dd>
+    </dl>
+
+    <h3>Konfiguration</h3>
+    <dl class="message-properties">
+        <dt>Topic A</dt>
+        <dd>Topic-Name für Input A (Standard: "a")</dd>
+        <dt>Topic B</dt>
+        <dd>Topic-Name für Input B (Standard: "b")</dd>
+        <dt>Absolut</dt>
+        <dd>Absoluten Wert |A - B| ausgeben (Standard: aus)</dd>
+        <dt>Dezimalstellen</dt>
+        <dd>Anzahl der Dezimalstellen (0-10, Standard: 2)</dd>
+    </dl>
+
+    <h3>Anwendungsbeispiele</h3>
+    <ul>
+        <li><b>Temperatur:</b> Differenz zwischen zwei Sensoren</li>
+        <li><b>Energie:</b> Verbrauchsdifferenz zwischen Ablesungen</li>
+        <li><b>Füllstand:</b> Wasserstandsdifferenz</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>a(24.5) - b(18.2) = 6.3</b> - Ergebnis berechnet</li>
+        <li><b>Warte auf a...</b> - Input A fehlt</li>
+        <li><b>Warte auf a und b...</b> - Beide Inputs fehlen</li>
+    </ul>
+</script>

@@ -1,0 +1,60 @@
+<script type="text/html" data-help-name="clamp">
+    <p>Begrenzt einen numerischen Wert auf einen konfigurierten Min/Max-Bereich.</p>
+
+    <h3>Verhalten</h3>
+    <ul>
+        <li>Input &lt; min → Output = min</li>
+        <li>Input &gt; max → Output = max</li>
+        <li>Input im Bereich → Output = input unverändert</li>
+        <li>Ausgabe bei jeder Nachricht</li>
+    </ul>
+
+    <h3>Beispiele</h3>
+    <pre>
+min=0, max=100:
+  Input 120  → Output 100 (begrenzt)
+  Input -5   → Output 0   (begrenzt)
+  Input 42   → Output 42  (durchgereicht)</pre>
+
+    <h3>Eingaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numerischer Wert zum Begrenzen</dd>
+        <dt>min <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Minimum überschreiben</dd>
+        <dt>max <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Maximum überschreiben</dd>
+    </dl>
+
+    <h3>Ausgaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Der begrenzte Wert</dd>
+        <dt>clamp <span class="property-type">object</span></dt>
+        <dd>Details: { input, output, min, max, clamped, clampedAt }</dd>
+    </dl>
+
+    <h3>Konfiguration</h3>
+    <dl class="message-properties">
+        <dt>Min</dt>
+        <dd>Untere Grenze (Standard: 0)</dd>
+        <dt>Max</dt>
+        <dd>Obere Grenze (Standard: 100)</dd>
+        <dt>Dezimalstellen</dt>
+        <dd>Anzahl der Dezimalstellen (0-10, Standard: 2)</dd>
+    </dl>
+
+    <h3>Anwendungsbeispiele</h3>
+    <ul>
+        <li><b>Sensor:</b> Sensorwerte auf gültigen Bereich begrenzen</li>
+        <li><b>Steuerung:</b> Ausgabe auf sichere Grenzen beschränken</li>
+        <li><b>UI:</b> Schieberegler-Werte im Bereich halten</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>42 (in range)</b> - Wert durchgereicht</li>
+        <li><b>100 (clamped, was 120)</b> - Wert wurde begrenzt</li>
+        <li><b>Invalid range</b> - min >= max</li>
+    </ul>
+</script>

@@ -1,0 +1,79 @@
+[
+    {
+        "id": "pe_comment",
+        "type": "comment",
+        "z": "flow_pulse_edge",
+        "name": "=== Pulse Edge - Basic Example ===",
+        "info": "Demonstrates edge detection:\n- Rising edge: triggers a pulse when input changes false→true\n- Falling edge: triggers a pulse when input changes true→false\n- Use to detect button presses, door open/close, etc.",
+        "x": 260,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "pe_inject_true",
+        "type": "inject",
+        "z": "flow_pulse_edge",
+        "name": "Signal ON (true)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 140,
+        "y": 100,
+        "wires": [["pe_node"]]
+    },
+    {
+        "id": "pe_inject_false",
+        "type": "inject",
+        "z": "flow_pulse_edge",
+        "name": "Signal OFF (false)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 140,
+        "y": 160,
+        "wires": [["pe_node"]]
+    },
+    {
+        "id": "pe_node",
+        "type": "pulse-edge",
+        "z": "flow_pulse_edge",
+        "name": "Door Sensor",
+        "risingEdge": true,
+        "fallingEdge": true,
+        "x": 360,
+        "y": 130,
+        "wires": [["pe_debug_rising"], ["pe_debug_falling"]]
+    },
+    {
+        "id": "pe_debug_rising",
+        "type": "debug",
+        "z": "flow_pulse_edge",
+        "name": "Rising Edge (Door Opened)",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 580,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "pe_debug_falling",
+        "type": "debug",
+        "z": "flow_pulse_edge",
+        "name": "Falling Edge (Door Closed)",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 580,
+        "y": 160,
+        "wires": []
+    }
+]

@@ -1,0 +1,45 @@
+{
+  "name": "node-red-contrib-mmm-store",
+  "version": "1.0.0",
+  "description": "Min/Max/Mean persistent store - tracks statistics across Node-RED restarts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "mmm-store.js",
+    "mmm-store.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "min",
+    "max",
+    "mean",
+    "statistics",
+    "persistent"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": "1.0.0",
+    "nodes": {
+      "mmm-store": "mmm-store.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

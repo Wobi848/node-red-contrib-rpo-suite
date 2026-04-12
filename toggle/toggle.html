@@ -1,0 +1,71 @@
+<script type="text/javascript">
+    RED.nodes.registerType('toggle', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:         { value: '' },
+            initialState: { value: 'false' },
+            persistent:   { value: false }
+        },
+        inputs:  1,
+        outputs: 1,
+        icon:    'font-awesome/fa-toggle-on',
+        label:   function() { return this.name || 'toggle'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="toggle">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialState"><i class="fa fa-power-off"></i> <span data-i18n="toggle.label.initialState"></span></label>
+        <select id="node-input-initialState" style="width:70%">
+            <option value="false" data-i18n="toggle.options.off"></option>
+            <option value="true"  data-i18n="toggle.options.on"></option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-hdd-o"></i> <span data-i18n="toggle.label.persistent"></span></label>
+        <input type="checkbox" id="node-input-persistent" style="display:inline-block; width:auto; vertical-align:top; margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="toggle">
+    <p>Toggles a boolean output on every <strong>truthy</strong> input. Acts like a push button that converts to a latching switch.</p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Truthy value → toggles output. Falsy value → ignored silently.</dd>
+        <dt class="optional">set <span class="property-type">boolean</span></dt>
+        <dd>Force output to a specific value without toggling.</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to reset output to the configured initial state.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd>Current state after toggle: <code>true</code> or <code>false</code>.</dd>
+        <dt>toggle <span class="property-type">object</span></dt>
+        <dd><code>{ state, previous, toggleCount }</code></dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Initial State</dt>
+        <dd>State when the node is deployed or restarted (default: OFF).</dd>
+        <dt>Persistent</dt>
+        <dd>If checked, the state is retained across Node-RED restarts using the context filesystem store.</dd>
+    </dl>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>Send any truthy value (e.g. <code>1</code>, <code>true</code>, <code>"on"</code>) to toggle.</li>
+        <li>Use <code>msg.set = true</code> to force ON, <code>msg.set = false</code> to force OFF.</li>
+        <li>Use <code>msg.reset = true</code> to return to the initial state.</li>
+    </ul>
+</script>

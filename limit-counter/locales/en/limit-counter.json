@@ -1,0 +1,18 @@
+{
+  "limit-counter": {
+    "label": "Limit Counter",
+    "threshold": "Threshold",
+    "hysteresis": "Hysteresis",
+    "alarmCount": "Alarm count",
+    "tip": "Counts rising-edge threshold crossings and triggers alarm at alarm count.",
+    "input": {
+      "payload": "Numeric value to compare against threshold"
+    },
+    "output1": {
+      "payload": "Current crossing count"
+    },
+    "output2": {
+      "payload": "true when alarm count reached, false otherwise"
+    }
+  }
+}

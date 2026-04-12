@@ -1,0 +1,60 @@
+<script type="text/html" data-help-name="clamp">
+    <p>Limita un valor numérico a un rango mín/máx configurado.</p>
+
+    <h3>Comportamiento</h3>
+    <ul>
+        <li>Input &lt; min → Output = min</li>
+        <li>Input &gt; max → Output = max</li>
+        <li>Input en rango → Output = input sin cambios</li>
+        <li>Salida en cada mensaje</li>
+    </ul>
+
+    <h3>Ejemplos</h3>
+    <pre>
+min=0, max=100:
+  Input 120  → Output 100 (limitado)
+  Input -5   → Output 0   (limitado)
+  Input 42   → Output 42  (pasado)</pre>
+
+    <h3>Entradas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Valor numérico a limitar</dd>
+        <dt>min <span class="property-type">number</span></dt>
+        <dd><i>(opcional)</i> Sobrescribir mínimo</dd>
+        <dt>max <span class="property-type">number</span></dt>
+        <dd><i>(opcional)</i> Sobrescribir máximo</dd>
+    </dl>
+
+    <h3>Salidas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>El valor limitado</dd>
+        <dt>clamp <span class="property-type">object</span></dt>
+        <dd>Detalles: { input, output, min, max, clamped, clampedAt }</dd>
+    </dl>
+
+    <h3>Configuración</h3>
+    <dl class="message-properties">
+        <dt>Mín</dt>
+        <dd>Límite inferior (por defecto: 0)</dd>
+        <dt>Máx</dt>
+        <dd>Límite superior (por defecto: 100)</dd>
+        <dt>Decimales</dt>
+        <dd>Número de decimales (0-10, por defecto: 2)</dd>
+    </dl>
+
+    <h3>Casos de uso</h3>
+    <ul>
+        <li><b>Sensor:</b> Limitar lecturas de sensor a rango válido</li>
+        <li><b>Control:</b> Restringir salida a límites seguros</li>
+        <li><b>UI:</b> Asegurar valores de deslizador dentro de límites</li>
+    </ul>
+
+    <h3>Estado del Nodo</h3>
+    <ul>
+        <li><b>42 (in range)</b> - Valor pasado</li>
+        <li><b>100 (clamped, was 120)</b> - Valor fue limitado</li>
+        <li><b>Invalid range</b> - min >= max</li>
+    </ul>
+</script>

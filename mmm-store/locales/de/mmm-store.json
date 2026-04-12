@@ -1,0 +1,13 @@
+{
+  "mmm-store": {
+    "label": "Min/Max/Mittel",
+    "windowSize": "Fenstergröße (0=alle)",
+    "tip": "Berechnet Min, Max und laufenden Mittelwert der empfangenen Zahlenwerte.",
+    "input": {
+      "payload": "Numerischer Wert zur Statistik"
+    },
+    "output": {
+      "payload": "Aktueller Mittelwert; msg.stats = { min, max, mean, count }"
+    }
+  }
+}

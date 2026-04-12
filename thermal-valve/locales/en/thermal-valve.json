@@ -1,0 +1,10 @@
+{
+  "thermal-valve": {
+    "label": {
+      "cycleTime": "Cycle Time",
+      "minOnTime": "Min ON Time",
+      "minOffTime": "Min OFF Time",
+      "invert": "Invert Output"
+    }
+  }
+}

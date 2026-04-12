@@ -1,0 +1,12 @@
+{
+  "toggle": {
+    "label": {
+      "initialState": "Ausgangszustand",
+      "persistent": "Zustand speichern"
+    },
+    "options": {
+      "on": "EIN (true)",
+      "off": "AUS (false)"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mmm-store": {
+    "label": "Min/Max/Mean",
+    "windowSize": "Window size (0=all)",
+    "tip": "Calculates min, max, and running mean of received numeric values.",
+    "input": {
+      "payload": "Numeric value to add to statistics"
+    },
+    "output": {
+      "payload": "Current mean value; msg.stats = { min, max, mean, count }"
+    }
+  }
+}

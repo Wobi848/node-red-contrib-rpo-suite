@@ -1,0 +1,64 @@
+<script type="text/html" data-help-name="scale">
+    <p>Skaliert einen numerischen Wert von einem Bereich in einen anderen mittels linearer Interpolation.</p>
+
+    <h3>Verhalten</h3>
+    <ul>
+        <li>Lineare Abbildung vom Eingangsbereich zum Ausgangsbereich</li>
+        <li>Funktioniert mit invertierten Bereichen (z.B. 100→0)</li>
+        <li>Optionale Begrenzung auf den Ausgangsbereich</li>
+        <li>Ausgabe bei jeder Nachricht</li>
+    </ul>
+
+    <h3>Formel</h3>
+    <pre>output = (input - inMin) / (inMax - inMin) * (outMax - outMin) + outMin</pre>
+
+    <h3>Beispiele</h3>
+    <pre>
+0-10 → 0-100:    Input 5  → Output 50
+4-20mA → 0-100%: Input 12 → Output 50
+0-10V → 100-0%:  Input 5  → Output 50 (invertiert)</pre>
+
+    <h3>Eingaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numerischer Wert zum Skalieren</dd>
+        <dt>inMin/inMax <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Eingangsbereich überschreiben</dd>
+        <dt>outMin/outMax <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Ausgangsbereich überschreiben</dd>
+    </dl>
+
+    <h3>Ausgaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Der skalierte Wert</dd>
+        <dt>scale <span class="property-type">object</span></dt>
+        <dd>Details: { input, output, inMin, inMax, outMin, outMax, clamped, decimals }</dd>
+    </dl>
+
+    <h3>Konfiguration</h3>
+    <dl class="message-properties">
+        <dt>Eingangsbereich</dt>
+        <dd>Min und Max des Eingangsbereichs (Standard: 0-10)</dd>
+        <dt>Ausgangsbereich</dt>
+        <dd>Min und Max des Ausgangsbereichs (Standard: 0-100)</dd>
+        <dt>Begrenzen</dt>
+        <dd>Ausgabe auf Bereichsgrenzen begrenzen (Standard: aus)</dd>
+        <dt>Dezimalstellen</dt>
+        <dd>Anzahl der Dezimalstellen (0-10, Standard: 2)</dd>
+    </dl>
+
+    <h3>Anwendungsbeispiele</h3>
+    <ul>
+        <li><b>4-20mA:</b> Sensorsignal zu Prozent</li>
+        <li><b>0-10V:</b> Analogsignal zu technischen Einheiten</li>
+        <li><b>Invertiert:</b> Umgekehrte Ventilposition (100%=geschlossen)</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>12 → 50.00</b> - Skalierter Wert</li>
+        <li><b>22 → 100.00 (clamped)</b> - Ausgabe wurde begrenzt</li>
+        <li><b>Invalid range</b> - inMin gleich inMax</li>
+    </ul>
+</script>

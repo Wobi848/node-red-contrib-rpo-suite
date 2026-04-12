@@ -1,0 +1,22 @@
+{
+  "heat-curve": {
+    "label": {
+      "name": "Name",
+      "mode": "Modus",
+      "slope": "Steilheit",
+      "designOutdoor": "Auslegung Außen",
+      "designFlow": "Auslegung Vorlauf",
+      "roomTemp": "Raumtemp",
+      "shift": "Niveau",
+      "minFlow": "Min Vorlauf",
+      "maxFlow": "Max Vorlauf",
+      "setbackDelta": "Absenkung",
+      "summerLockout": "Sommerabschaltung",
+      "decimals": "Dezimalstellen"
+    },
+    "option": {
+      "slope": "Steilheit",
+      "design": "Auslegung"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "node-red-contrib-alarm-new-val",
+  "version": "1.0.0",
+  "description": "New value alarm - signals when a new or changed value is received",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "alarm-new-val.js",
+    "alarm-new-val.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "alarm",
+    "new-value",
+    "pulse",
+    "change",
+    "notify"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": "1.0.0",
+    "nodes": {
+      "alarm-new-val": "alarm-new-val.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

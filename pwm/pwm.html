@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pwm', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "period": {
+                        "value": 10
+                },
+                "periodUnit": {
+                        "value": "s"
+                },
+                "invert": {
+                        "value": false
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-signal',
+        label: function() { return this.name || 'pwm'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="pwm">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-period"><i class="fa fa-clock-o"></i> Period</label>
+        <input type="number" id="node-input-period" min="1" style="width:50%">
+        <select id="node-input-periodUnit" style="width:18%; margin-left:4px">
+            <option value="ms">ms</option>
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-invert"><i class="fa fa-exchange"></i> Invert</label>
+        <input type="checkbox" id="node-input-invert" style="width:auto;margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="pwm">
+    <p>PWM generator: converts a 0–100% analog value to a digital pulse-width modulation signal.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Duty cycle 0–100%</dd>
+        <dt class="optional">bypass <span class="property-type">boolean</span></dt><dd>Force ON/OFF</dd>
+        <dt class="optional">clearBypass <span class="property-type">boolean</span></dt><dd>Return to PWM</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>PWM state (fires on state change only)</dd>
+        <dt>pwm <span class="property-type">object</span></dt><dd>{ input, output, dutyOn, dutyOff, period, bypass, inverted }</dd>
+    </dl>
+</script>

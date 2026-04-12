@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    RED.nodes.registerType('comparator', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:      { value: '' },
+            topicA:    { value: 'a' },
+            topicB:    { value: 'b' },
+            operator:  { value: '>' },
+            tolerance: { value: 0.01 }
+        },
+        inputs:  1,
+        outputs: 1,
+        icon:    'font-awesome/fa-balance-scale',
+        label:   function() { return this.name || ('A ' + (this.operator || '>') + ' B'); },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        oneditprepare: function() {
+            function toggleTolerance() {
+                var op = $('#node-input-operator').val();
+                var row = $('#node-input-tolerance').closest('.form-row');
+                if (op === '==' || op === '!=') { row.show(); } else { row.hide(); }
+            }
+            $('#node-input-operator').on('change', toggleTolerance);
+            toggleTolerance();
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="comparator">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicA"><i class="fa fa-font"></i> <span data-i18n="comparator.label.topicA"></span></label>
+        <input type="text" id="node-input-topicA" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicB"><i class="fa fa-font"></i> <span data-i18n="comparator.label.topicB"></span></label>
+        <input type="text" id="node-input-topicB" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-operator"><i class="fa fa-code"></i> <span data-i18n="comparator.label.operator"></span></label>
+        <select id="node-input-operator" style="width:70%">
+            <option value=">">&gt;  (A greater than B)</option>
+            <option value="<">&lt;  (A less than B)</option>
+            <option value=">=">&gt;= (A greater or equal B)</option>
+            <option value="<=">&lt;= (A less or equal B)</option>
+            <option value="==">== (A equals B)</option>
+            <option value="!=">!= (A not equals B)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-tolerance"><i class="fa fa-arrows-h"></i> <span data-i18n="comparator.label.tolerance"></span></label>
+        <input type="number" id="node-input-tolerance" min="0" step="0.001" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="comparator">
+    <p>Compares two numeric values identified by <code>msg.topic</code> and outputs a boolean result.</p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numeric value for input A or B (identified by <code>msg.topic</code>).</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd>Set to the configured Topic A or Topic B name.</dd>
+        <dt class="optional">operator <span class="property-type">string</span></dt>
+        <dd>Override operator for this message: <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>==</code> <code>!=</code></dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to clear stored A and B values.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd>Result of the comparison.</dd>
+        <dt>comparator <span class="property-type">object</span></dt>
+        <dd><code>{ a, b, operator, result, tolerance }</code></dd>
+    </dl>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>Output fires every time a new value arrives <strong>and both A and B are known</strong>.</li>
+        <li>Tolerance applies only to <code>==</code> and <code>!=</code> operators.</li>
+        <li>Send <code>msg.reset = true</code> to clear stored values.</li>
+    </ul>
+</script>

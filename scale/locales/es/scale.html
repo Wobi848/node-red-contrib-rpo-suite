@@ -1,0 +1,64 @@
+<script type="text/html" data-help-name="scale">
+    <p>Mapea un valor numérico de un rango a otro usando interpolación lineal.</p>
+
+    <h3>Comportamiento</h3>
+    <ul>
+        <li>Mapeo lineal del rango de entrada al rango de salida</li>
+        <li>Funciona con rangos invertidos (ej. 100→0)</li>
+        <li>Limitación opcional al rango de salida</li>
+        <li>Salida en cada mensaje</li>
+    </ul>
+
+    <h3>Fórmula</h3>
+    <pre>output = (input - inMin) / (inMax - inMin) * (outMax - outMin) + outMin</pre>
+
+    <h3>Ejemplos</h3>
+    <pre>
+0-10 → 0-100:    Input 5  → Output 50
+4-20mA → 0-100%: Input 12 → Output 50
+0-10V → 100-0%:  Input 5  → Output 50 (invertido)</pre>
+
+    <h3>Entradas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Valor numérico a escalar</dd>
+        <dt>inMin/inMax <span class="property-type">number</span></dt>
+        <dd><i>(opcional)</i> Sobrescribir rango de entrada</dd>
+        <dt>outMin/outMax <span class="property-type">number</span></dt>
+        <dd><i>(opcional)</i> Sobrescribir rango de salida</dd>
+    </dl>
+
+    <h3>Salidas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>El valor escalado</dd>
+        <dt>scale <span class="property-type">object</span></dt>
+        <dd>Detalles: { input, output, inMin, inMax, outMin, outMax, clamped, decimals }</dd>
+    </dl>
+
+    <h3>Configuración</h3>
+    <dl class="message-properties">
+        <dt>Rango de Entrada</dt>
+        <dd>Mín y Máx del rango de entrada (por defecto: 0-10)</dd>
+        <dt>Rango de Salida</dt>
+        <dd>Mín y Máx del rango de salida (por defecto: 0-100)</dd>
+        <dt>Limitar</dt>
+        <dd>Limitar salida a los límites del rango (por defecto: desactivado)</dd>
+        <dt>Decimales</dt>
+        <dd>Número de decimales (0-10, por defecto: 2)</dd>
+    </dl>
+
+    <h3>Casos de uso</h3>
+    <ul>
+        <li><b>4-20mA:</b> Señal de sensor a porcentaje</li>
+        <li><b>0-10V:</b> Señal analógica a unidades de ingeniería</li>
+        <li><b>Invertido:</b> Posición de válvula inversa (100%=cerrado)</li>
+    </ul>
+
+    <h3>Estado del Nodo</h3>
+    <ul>
+        <li><b>12 → 50.00</b> - Valor escalado</li>
+        <li><b>22 → 100.00 (clamped)</b> - Salida fue limitada</li>
+        <li><b>Invalid range</b> - inMin igual a inMax</li>
+    </ul>
+</script>

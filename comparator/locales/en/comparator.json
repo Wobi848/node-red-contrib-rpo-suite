@@ -1,0 +1,10 @@
+{
+  "comparator": {
+    "label": {
+      "topicA": "Topic A",
+      "topicB": "Topic B",
+      "operator": "Operator",
+      "tolerance": "Tolerance (for == / !=)"
+    }
+  }
+}

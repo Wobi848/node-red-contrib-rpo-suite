@@ -1,0 +1,19 @@
+{
+  "multiplexer": {
+    "label": "Multiplexer",
+    "channel": "Eingangskanäle",
+    "selectedChannel": "Aktiver Kanal",
+    "passthroughAll": "Durchleitungsmodus",
+    "passthroughAll_opt": {
+      "false": "Nur aktiver Kanal",
+      "true": "Alle Kanäle"
+    },
+    "tip": "Topic 'select' mit Payload ch0–ch7 sendet um den Kanal zu wechseln.",
+    "input": {
+      "payload": "Wert für den adressierten Kanal (topic=ch0..ch7) oder Kanalauswahl (topic=select, payload=ch0..ch7)"
+    },
+    "output": {
+      "payload": "Wert des aktuell aktiven Kanals"
+    }
+  }
+}

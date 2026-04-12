@@ -1,0 +1,25 @@
+{
+  "formula": {
+    "label": {
+      "formula": "Formel",
+      "minVars": "Min. Variablen",
+      "minVarsHint": "(0 = alle)",
+      "decimals": "Dezimalstellen",
+      "varsHint": "Variablen:",
+      "varsHintText": "Jeder Buchstabe/Name in der Formel ist eine Variable. Setze sie mit msg.topic = Variablenname und msg.payload = Zahl.",
+      "mathHint": "Verfügbare Mathefunktionen:",
+      "mathHintText": "sin, cos, tan, asin, acos, atan, abs, sqrt, cbrt, pow, exp, log, log2, log10, floor, ceil, round, min, max, sign — und Konstanten: pi, e"
+    },
+    "help": {
+      "desc": "Wertet eine Matheformel mit benannten Variablen aus. Jedes msg.topic setzt eine Variable. Sobald genug Variablen vorhanden sind wird die Formel ausgewertet.",
+      "inputs": "Eingaben",
+      "payload": "Numerischer Wert für die per msg.topic benannte Variable",
+      "topic": "Variablenname (muss in der Formel vorkommen)",
+      "reset": "Auf true setzen um alle gespeicherten Variablenwerte zu löschen",
+      "outputs": "Ausgaben",
+      "output": "Ergebnis der Formelauswertung",
+      "formulaObj": "{ formula, variables, result, decimals }",
+      "examplesTitle": "Formel-Beispiele"
+    }
+  }
+}

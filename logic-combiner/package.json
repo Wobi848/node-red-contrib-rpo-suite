@@ -1,0 +1,46 @@
+{
+  "name": "node-red-contrib-logic-combiner",
+  "version": "1.0.1",
+  "description": "Node-RED logic combiner - combines multiple boolean inputs with AND/OR",
+  "files": [
+    "logic-combiner.js",
+    "logic-combiner.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "logic",
+    "and",
+    "or",
+    "boolean",
+    "combiner",
+    "plc"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "logic-combiner": "logic-combiner.js"
+    },
+    "version": ">=4.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  }
+}

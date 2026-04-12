@@ -1,0 +1,69 @@
+[
+  {
+    "id": "multi-stat-example-tab",
+    "type": "tab",
+    "label": "multi-stat Basic Example",
+    "disabled": false,
+    "info": "Demonstrates multi-source statistics. Send numeric values with different topics to calculate min/max/avg across all sources."
+  },
+  {
+    "id": "n-inject-a",
+    "type": "inject",
+    "z": "multi-stat-example-tab",
+    "name": "Sensor A: 22.5",
+    "props": [{"p": "payload"}, {"p": "topic", "vt": "str"}],
+    "payload": "22.5",
+    "payloadType": "num",
+    "topic": "sensorA",
+    "x": 130,
+    "y": 100,
+    "wires": [["n-multi-stat"]]
+  },
+  {
+    "id": "n-inject-b",
+    "type": "inject",
+    "z": "multi-stat-example-tab",
+    "name": "Sensor B: 19.0",
+    "props": [{"p": "payload"}, {"p": "topic", "vt": "str"}],
+    "payload": "19.0",
+    "payloadType": "num",
+    "topic": "sensorB",
+    "x": 130,
+    "y": 160,
+    "wires": [["n-multi-stat"]]
+  },
+  {
+    "id": "n-inject-c",
+    "type": "inject",
+    "z": "multi-stat-example-tab",
+    "name": "Sensor C: 25.1",
+    "props": [{"p": "payload"}, {"p": "topic", "vt": "str"}],
+    "payload": "25.1",
+    "payloadType": "num",
+    "topic": "sensorC",
+    "x": 130,
+    "y": 220,
+    "wires": [["n-multi-stat"]]
+  },
+  {
+    "id": "n-multi-stat",
+    "type": "multi-stat",
+    "z": "multi-stat-example-tab",
+    "name": "3-source statistics",
+    "minTopics": "1",
+    "decimals": "2",
+    "x": 370,
+    "y": 160,
+    "wires": [["n-debug"]]
+  },
+  {
+    "id": "n-debug",
+    "type": "debug",
+    "z": "multi-stat-example-tab",
+    "name": "Stats output",
+    "active": true,
+    "x": 570,
+    "y": 160,
+    "wires": []
+  }
+]

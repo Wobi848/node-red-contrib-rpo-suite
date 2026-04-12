@@ -1,0 +1,10 @@
+{
+  "change-detect": {
+    "label": {
+      "tolerance": "Tolerancia",
+      "toleranceHint": "(solo números)",
+      "initialValue": "Valor inicial",
+      "initialValuePlaceholder": "opcional (p.ej. 20)"
+    }
+  }
+}

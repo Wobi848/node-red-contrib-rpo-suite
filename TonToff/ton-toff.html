@@ -1,0 +1,119 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ton-toff', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            name: { value: "" },
+            onDelay: { value: "1" },
+            offDelay: { value: "1" },
+            delayUnit: { value: "s" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-clock-o",
+        label: function() {
+            return this.name || "ton/toff";
+        },
+        paletteLabel: "ton/toff"
+    });
+</script>
+
+<script type="text/html" data-template-name="ton-toff">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-onDelay"><i class="fa fa-arrow-up"></i> On Delay</label>
+        <input type="text" id="node-input-onDelay" style="width: 80px;">
+        <span id="unit-display-on" style="margin-left: 5px;"></span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-offDelay"><i class="fa fa-arrow-down"></i> Off Delay</label>
+        <input type="text" id="node-input-offDelay" style="width: 80px;">
+        <span id="unit-display-off" style="margin-left: 5px;"></span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-delayUnit"><i class="fa fa-clock-o"></i> Unit</label>
+        <select id="node-input-delayUnit" style="width: 100px;">
+            <option value="ms">ms</option>
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="ton-toff">
+    <p>Timer node with configurable on-delay and off-delay (TON/TOFF).</p>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Input becomes truthy → waits <b>onDelay</b> → Output true</li>
+        <li>Input becomes falsy → waits <b>offDelay</b> → Output false</li>
+        <li>Input changes while timer is running → cancel timer, start new timer</li>
+        <li>Same input while timer is running → timer continues (no reset)</li>
+        <li>Delay = 0 → immediate reaction (no timer)</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <pre>
+onDelay=1s, offDelay=1s:
+  Input 1 → waits 1s → Output true
+  Input 0 → waits 1s → Output false
+
+onDelay=2s, offDelay=0s:
+  Input 1 → waits 2s  → Output true
+  Input 0 → immediate → Output false</pre>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Evaluated as truthy/falsy</dd>
+        <dt>onDelay <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Overrides onDelay temporarily</dd>
+        <dt>offDelay <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Overrides offDelay temporarily</dd>
+        <dt>bypassOn <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = immediate ON without delay</dd>
+        <dt>bypassOff <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = immediate OFF without delay</dd>
+    </dl>
+
+    <h4>Falsy values (= OFF)</h4>
+    <p><code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>, <code>"false"</code>, <code>"0"</code>, <code>"off"</code></p>
+
+    <h4>Truthy values (= ON)</h4>
+    <p>Everything else: <code>true</code>, <code>1</code>, <code>"on"</code>, <code>"hello"</code>, <code>42</code>, etc.</p>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd><code>true</code> or <code>false</code></dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>On Delay</dt>
+        <dd>Delay before turning on (0 = immediate)</dd>
+        <dt>Off Delay</dt>
+        <dd>Delay before turning off (0 = immediate)</dd>
+        <dt>Unit</dt>
+        <dd>ms / s / min (applies to both delays)</dd>
+    </dl>
+
+    <h3>Use Cases</h3>
+    <ul>
+        <li><b>Motion detector:</b> onDelay=0, offDelay=30s</li>
+        <li><b>Debounce:</b> onDelay=500ms, offDelay=0</li>
+        <li><b>Soft start/stop:</b> onDelay=2s, offDelay=5s</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>Idle</b> - Waiting for first input</li>
+        <li><b>ON in 5s...</b> - On-delay running</li>
+        <li><b>OFF in 3s...</b> - Off-delay running</li>
+        <li><b>ON</b> - Output is true</li>
+        <li><b>OFF</b> - Output is false</li>
+    </ul>
+</script>

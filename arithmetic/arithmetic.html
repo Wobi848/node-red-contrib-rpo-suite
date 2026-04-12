@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('arithmetic', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:     { value: '' },
+            topicA:   { value: 'a' },
+            topicB:   { value: 'b' },
+            operator: { value: '+' },
+            decimals: { value: 2 }
+        },
+        inputs:  1,
+        outputs: 1,
+        icon:    'font-awesome/fa-calculator',
+        label:   function() { return this.name || ('A ' + (this.operator || '+') + ' B'); },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="arithmetic">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicA"><i class="fa fa-font"></i> <span data-i18n="arithmetic.label.topicA"></span></label>
+        <input type="text" id="node-input-topicA" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicB"><i class="fa fa-font"></i> <span data-i18n="arithmetic.label.topicB"></span></label>
+        <input type="text" id="node-input-topicB" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-operator"><i class="fa fa-calculator"></i> <span data-i18n="arithmetic.label.operator"></span></label>
+        <select id="node-input-operator" style="width:70%">
+            <option value="+">+ (addition)</option>
+            <option value="-">- (subtraction)</option>
+            <option value="×">× (multiplication)</option>
+            <option value="÷">÷ (division)</option>
+            <option value="%">% (modulo)</option>
+            <option value="^">^ (power)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> <span data-i18n="arithmetic.label.decimals"></span></label>
+        <input type="number" id="node-input-decimals" min="0" max="10" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="arithmetic">
+    <p>Performs arithmetic operations on two numeric inputs identified by <code>msg.topic</code>.</p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numeric value for input A or B (identified by <code>msg.topic</code>).</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd>Set to the configured Topic A or Topic B name.</dd>
+        <dt class="optional">operator <span class="property-type">string</span></dt>
+        <dd>Override operator: <code>+</code> <code>-</code> <code>×</code> <code>÷</code> <code>%</code> <code>^</code></dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to clear stored A and B values.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Arithmetic result rounded to configured decimal places.</dd>
+        <dt>arithmetic <span class="property-type">object</span></dt>
+        <dd><code>{ a, b, operator, result, decimals }</code></dd>
+    </dl>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>Division and modulo by zero are blocked with a warning — no output is sent.</li>
+        <li>Output fires every time a new value arrives <strong>and both A and B are known</strong>.</li>
+    </ul>
+</script>

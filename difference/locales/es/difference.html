@@ -1,0 +1,61 @@
+<script type="text/html" data-help-name="difference">
+    <p>Calcula la diferencia entre dos valores de entrada numéricos.</p>
+
+    <h3>Comportamiento</h3>
+    <ul>
+        <li>Input A identificado por topic configurable (por defecto: "a")</li>
+        <li>Input B identificado por topic configurable (por defecto: "b")</li>
+        <li>Resultado = A - B</li>
+        <li>Salida en cada nuevo mensaje una vez que ambos valores son conocidos</li>
+    </ul>
+
+    <h3>Ejemplo</h3>
+    <pre>
+topic="a", payload=24.5  → almacenado como A
+topic="b", payload=18.2  → almacenado como B
+Salida: 24.5 - 18.2 = 6.3</pre>
+
+    <h3>Entradas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Valor numérico para A o B</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd><b>Requerido</b> - Debe coincidir con Topic A o Topic B</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(opcional)</i> <code>true</code> = restablecer ambos valores</dd>
+    </dl>
+
+    <h3>Salidas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>La diferencia calculada (A - B)</dd>
+        <dt>inputs <span class="property-type">object</span></dt>
+        <dd>Info detallada: { a: {...}, b: {...}, result, absolute }</dd>
+    </dl>
+
+    <h3>Configuración</h3>
+    <dl class="message-properties">
+        <dt>Topic A</dt>
+        <dd>Nombre del topic para Input A (por defecto: "a")</dd>
+        <dt>Topic B</dt>
+        <dd>Nombre del topic para Input B (por defecto: "b")</dd>
+        <dt>Absoluto</dt>
+        <dd>Salida valor absoluto |A - B| (por defecto: desactivado)</dd>
+        <dt>Decimales</dt>
+        <dd>Número de decimales (0-10, por defecto: 2)</dd>
+    </dl>
+
+    <h3>Casos de uso</h3>
+    <ul>
+        <li><b>Temperatura:</b> Diferencia entre dos sensores</li>
+        <li><b>Energía:</b> Diferencia de consumo entre lecturas</li>
+        <li><b>Nivel:</b> Diferencia de nivel de agua</li>
+    </ul>
+
+    <h3>Estado del Nodo</h3>
+    <ul>
+        <li><b>a(24.5) - b(18.2) = 6.3</b> - Resultado calculado</li>
+        <li><b>Esperando a...</b> - Input A falta</li>
+        <li><b>Esperando a y b...</b> - Ambos inputs faltan</li>
+    </ul>
+</script>

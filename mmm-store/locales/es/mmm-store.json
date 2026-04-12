@@ -1,0 +1,13 @@
+{
+  "mmm-store": {
+    "label": "Mín/Máx/Media",
+    "windowSize": "Tamaño ventana (0=todos)",
+    "tip": "Calcula mín, máx y media acumulada de los valores numéricos recibidos.",
+    "input": {
+      "payload": "Valor numérico a añadir a las estadísticas"
+    },
+    "output": {
+      "payload": "Media actual; msg.stats = { min, max, mean, count }"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    RED.nodes.registerType('edge-filter', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "window": {
+                        "value": 5
+                },
+                "windowUnit": {
+                        "value": "s"
+                },
+                "mode": {
+                        "value": "time"
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-hand-stop-o',
+        label: function() { return this.name || 'edge-filter'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="edge-filter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-window"><i class="fa fa-clock-o"></i> Window</label>
+        <input type="number" id="node-input-window" min="1" style="width:50%">
+        <select id="node-input-windowUnit" style="width:18%; margin-left:4px">
+            <option value="ms">ms</option>
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <select id="node-input-mode" style="width:70%">
+            <option value="time">Time window</option>
+            <option value="changed">Changed value only</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="edge-filter">
+    <p>Forwards only the first event within a configurable time window. Subsequent events are blocked (re-trigger protection).</p>
+    <h3>Modes</h3>
+    <ul>
+        <li><b>Time</b>: first message forwarded, rest blocked for window duration</li>
+        <li><b>Changed</b>: additionally blocks if value hasn't changed</li>
+    </ul>
+    <p>Send <code>msg.reset = true</code> to immediately reopen the window.</p>
+</script>

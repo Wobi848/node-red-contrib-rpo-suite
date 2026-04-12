@@ -1,0 +1,45 @@
+{
+  "name": "node-red-contrib-rpo-sort",
+  "version": "1.0.0",
+  "description": "Array sorter - sorts arrays numerically or alphabetically with topN support",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "sort.js",
+    "sort.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "sort",
+    "sorter",
+    "array",
+    "order",
+    "filter"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": "1.0.0",
+    "nodes": {
+      "sorter": "sort.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "formula-example-tab",
+    "type": "tab",
+    "label": "formula Basic Example",
+    "disabled": false,
+    "info": "Demonstrates the formula node. Send A and B to compute A*1.5 + B/2.\nTopic = variable name, payload = number."
+  },
+  {
+    "id": "n-inject-a",
+    "type": "inject",
+    "z": "formula-example-tab",
+    "name": "a = 20",
+    "props": [{"p":"payload"},{"p":"topic","vt":"str"}],
+    "payload": "20", "payloadType": "num", "topic": "a",
+    "x": 120, "y": 100, "wires": [["n-formula"]]
+  },
+  {
+    "id": "n-inject-b",
+    "type": "inject",
+    "z": "formula-example-tab",
+    "name": "b = 10",
+    "props": [{"p":"payload"},{"p":"topic","vt":"str"}],
+    "payload": "10", "payloadType": "num", "topic": "b",
+    "x": 120, "y": 160, "wires": [["n-formula"]]
+  },
+  {
+    "id": "n-formula",
+    "type": "formula",
+    "z": "formula-example-tab",
+    "name": "a * 1.5 + b / 2",
+    "formula": "a * 1.5 + b / 2",
+    "minVars": 2,
+    "decimals": 2,
+    "x": 360, "y": 130, "wires": [["n-debug"]]
+  },
+  {
+    "id": "n-debug",
+    "type": "debug",
+    "z": "formula-example-tab",
+    "name": "Result",
+    "active": true,
+    "x": 560, "y": 130, "wires": []
+  }
+]

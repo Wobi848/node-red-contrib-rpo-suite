@@ -1,0 +1,18 @@
+{
+  "int-bits": {
+    "label": "Int Bits",
+    "bits": "Anzahl Bits",
+    "order": "Bitreihenfolge",
+    "order_opt": {
+      "lsb": "LSB zuerst",
+      "msb": "MSB zuerst"
+    },
+    "tip": "Konvertiert Integer in/aus Bit-Array.",
+    "input": {
+      "payload": "Integer → Bit-Array, oder Bit-Array → Integer"
+    },
+    "output": {
+      "payload": "Bit-Array (Zahl→Bits) oder Integer (Bits→Zahl)"
+    }
+  }
+}

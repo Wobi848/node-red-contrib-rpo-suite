@@ -1,0 +1,10 @@
+{
+  "arithmetic": {
+    "label": {
+      "topicA": "Topic A",
+      "topicB": "Topic B",
+      "operator": "Operator",
+      "decimals": "Decimal Places"
+    }
+  }
+}

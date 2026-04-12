@@ -1,0 +1,9 @@
+node_modules/
+*.tgz
+.claude/
+init.txt
+cmd.txt
+reminder.txt
+test-flow*.json
+test-flow*.txt
+update-status.md

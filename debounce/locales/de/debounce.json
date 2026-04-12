@@ -1,0 +1,19 @@
+{
+  "debounce": {
+    "label": "Entprellen",
+    "debounceTime": "Entprellzeit (ms)",
+    "mode": "Modus",
+    "mode_opt": {
+      "trailing": "Nacheilend",
+      "leading": "Voreilend",
+      "both": "Beide Flanken"
+    },
+    "tip": "Entprellt schnelle Nachrichten. msg.flush=true erzwingt sofortige Ausgabe.",
+    "input": {
+      "payload": "Beliebiger Wert zum Entprellen"
+    },
+    "output": {
+      "payload": "Entprellter Wert"
+    }
+  }
+}

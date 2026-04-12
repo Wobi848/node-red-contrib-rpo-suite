@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    RED.nodes.registerType('alarm-new-val', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "mode": {
+                        "value": "always"
+                },
+                "tolerance": {
+                        "value": 0
+                }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-bell',
+        outputLabels: ["Passthrough","New value pulse"],
+        label: function() { return this.name || 'alarm-new-val'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="alarm-new-val">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-bell"></i> Mode</label>
+        <select id="node-input-mode" style="width:70%">
+            <option value="always">Always (every message)</option>
+            <option value="changed">Changed values only</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-tolerance"><i class="fa fa-arrows-h"></i> Tolerance</label>
+        <input type="number" id="node-input-tolerance" min="0" step="0.01" style="width:70%">
+        <span style="color:#aaa;margin-left:5px">(for numeric changed detection)</span>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="alarm-new-val">
+    <p>Sends a pulse on Output 2 whenever a new or changed value is received. Output 1 always passes through.</p>
+    <h3>Output 1</h3><p>Original message, unchanged.</p>
+    <h3>Output 2</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true (pulse on new/changed value)</dd>
+        <dt>alarmNewVal <span class="property-type">object</span></dt><dd>{ value, previous, changed, mode }</dd>
+    </dl>
+</script>

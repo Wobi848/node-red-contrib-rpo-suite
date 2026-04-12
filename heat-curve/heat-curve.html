@@ -1,0 +1,276 @@
+<script type="text/javascript">
+  RED.nodes.registerType("heat-curve", {
+    category: 'rpo',
+    color: "#D4600A",
+    defaults: {
+      name: { value: "" },
+      mode: { value: "slope" },
+      slope: { value: 1.0 },
+      designOutdoor: { value: -15 },
+      designFlow: { value: 55 },
+      roomTemp: { value: 20 },
+      shift: { value: 0 },
+      minFlow: { value: 20 },
+      maxFlow: { value: 75 },
+      setbackDelta: { value: 10 },
+      summerLockout: { value: 18 },
+      decimals: { value: 1 },
+    },
+    inputs: 1,
+    outputs: 2,
+    outputLabels: ["Flow Temp", "Heating Active"],
+    icon: "font-awesome/fa-thermometer-half",
+    label: function () {
+      return this.name || "heat-curve";
+    },
+    paletteLabel: "heat-curve",
+    oneditprepare: function () {
+      var updateVisibility = function () {
+        if ($("#node-input-mode").val() === "design") {
+          $("#row-slope").hide();
+          $("#row-designOutdoor").show();
+          $("#row-designFlow").show();
+        } else {
+          $("#row-slope").show();
+          $("#row-designOutdoor").hide();
+          $("#row-designFlow").hide();
+        }
+      };
+      $("#node-input-mode").on("change", updateVisibility);
+      updateVisibility();
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="heat-curve">
+  <div class="form-row">
+    <label for="node-input-name"
+      ><i class="fa fa-tag"></i>
+      <span data-i18n="heat-curve.label.name">Name</span></label
+    >
+    <input
+      type="text"
+      id="node-input-name"
+      data-i18n="[placeholder]heat-curve.label.name"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-mode"
+      ><i class="fa fa-cog"></i>
+      <span data-i18n="heat-curve.label.mode">Mode</span></label
+    >
+    <select id="node-input-mode" style="width: 150px;">
+      <option value="slope" data-i18n="heat-curve.option.slope">Slope</option>
+      <option value="design" data-i18n="heat-curve.option.design">Design</option>
+    </select>
+  </div>
+  <div class="form-row" id="row-slope">
+    <label for="node-input-slope"
+      ><i class="fa fa-line-chart"></i>
+      <span data-i18n="heat-curve.label.slope">Slope</span></label
+    >
+    <input
+      type="number"
+      id="node-input-slope"
+      min="0.2"
+      max="3.0"
+      step="0.1"
+      style="width: 80px;"
+    />
+  </div>
+  <div class="form-row" id="row-designOutdoor">
+    <label for="node-input-designOutdoor"
+      ><i class="fa fa-snowflake-o"></i>
+      <span data-i18n="heat-curve.label.designOutdoor">Design Outdoor</span></label
+    >
+    <input
+      type="number"
+      id="node-input-designOutdoor"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row" id="row-designFlow">
+    <label for="node-input-designFlow"
+      ><i class="fa fa-thermometer-full"></i>
+      <span data-i18n="heat-curve.label.designFlow">Design Flow</span></label
+    >
+    <input
+      type="number"
+      id="node-input-designFlow"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-roomTemp"
+      ><i class="fa fa-home"></i>
+      <span data-i18n="heat-curve.label.roomTemp">Room Temp</span></label
+    >
+    <input
+      type="number"
+      id="node-input-roomTemp"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-shift"
+      ><i class="fa fa-arrows-v"></i>
+      <span data-i18n="heat-curve.label.shift">Shift</span></label
+    >
+    <input
+      type="number"
+      id="node-input-shift"
+      min="-15"
+      max="15"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-minFlow"
+      ><i class="fa fa-thermometer-empty"></i>
+      <span data-i18n="heat-curve.label.minFlow">Min Flow</span></label
+    >
+    <input
+      type="number"
+      id="node-input-minFlow"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-maxFlow"
+      ><i class="fa fa-thermometer-full"></i>
+      <span data-i18n="heat-curve.label.maxFlow">Max Flow</span></label
+    >
+    <input
+      type="number"
+      id="node-input-maxFlow"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-setbackDelta"
+      ><i class="fa fa-moon-o"></i>
+      <span data-i18n="heat-curve.label.setbackDelta">Setback Delta</span></label
+    >
+    <input
+      type="number"
+      id="node-input-setbackDelta"
+      min="0"
+      max="30"
+      style="width: 80px;"
+    />
+    <span>K</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-summerLockout"
+      ><i class="fa fa-sun-o"></i>
+      <span data-i18n="heat-curve.label.summerLockout">Summer Lockout</span></label
+    >
+    <input
+      type="number"
+      id="node-input-summerLockout"
+      style="width: 80px;"
+    />
+    <span>°C</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-decimals"
+      ><i class="fa fa-hashtag"></i>
+      <span data-i18n="heat-curve.label.decimals">Decimals</span></label
+    >
+    <input
+      type="number"
+      id="node-input-decimals"
+      min="0"
+      max="2"
+      style="width: 60px;"
+    />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="heat-curve">
+  <p>Calculates the heating flow temperature setpoint based on outdoor temperature using a configurable heating curve (Heizkurve).</p>
+
+  <h3>Features</h3>
+  <ul>
+    <li>Slope or Design mode for curve configuration</li>
+    <li>Night setback (reduces flow temp when active)</li>
+    <li>Summer lockout (disables heating above threshold)</li>
+    <li>Two outputs: Flow temp + Heating active boolean</li>
+  </ul>
+
+  <h3>Formula</h3>
+  <pre>flowTemp = roomTemp + slope × (roomTemp - outdoorTemp) + shift
+
+With setback: flowTemp = flowTemp - setbackDelta</pre>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Outdoor temperature in °C (uses last known temp if omitted)</dd>
+    <dt>setback <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> true = activate night setback. Can be sent alone to toggle setback using the last outdoor temp.</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <p><b>Output 1 - Flow Temperature:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number|null</span></dt>
+    <dd>Flow temperature setpoint (null if summer lockout)</dd>
+    <dt>heatCurve <span class="property-type">object</span></dt>
+    <dd>Detailed info including setback and lockout status</dd>
+  </dl>
+  <p><b>Output 2 - Heating Active:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">boolean</span></dt>
+    <dd>true = heating active, false = summer lockout</dd>
+  </dl>
+
+  <h3>Configuration</h3>
+  <dl class="message-properties">
+    <dt>Mode</dt>
+    <dd>Slope (manual) or Design (calculated)</dd>
+    <dt>Setback Delta</dt>
+    <dd>Night setback reduction in Kelvin (default: 10K)</dd>
+    <dt>Summer Lockout</dt>
+    <dd>Outdoor temp above which heating is disabled (default: 18°C)</dd>
+  </dl>
+
+  <h3>Runtime Overrides</h3>
+  <p>All configuration values can be overridden via msg properties:</p>
+  <dl class="message-properties">
+    <dt>msg.setback <span class="property-type">boolean</span></dt>
+    <dd>Activate night setback (true/false). State is retained until explicitly changed.</dd>
+    <dt>msg.setbackDelta <span class="property-type">number</span></dt>
+    <dd>Setback reduction in Kelvin</dd>
+    <dt>msg.summerLockout <span class="property-type">number</span></dt>
+    <dd>Summer lockout threshold in °C</dd>
+    <dt>msg.slope <span class="property-type">number</span></dt>
+    <dd>Heating curve slope (overrides design mode)</dd>
+    <dt>msg.designOutdoor <span class="property-type">number</span></dt>
+    <dd>Design outdoor temperature in °C</dd>
+    <dt>msg.designFlow <span class="property-type">number</span></dt>
+    <dd>Design flow temperature in °C</dd>
+    <dt>msg.roomTemp <span class="property-type">number</span></dt>
+    <dd>Room temperature setpoint in °C</dd>
+    <dt>msg.shift <span class="property-type">number</span></dt>
+    <dd>Parallel shift in °C</dd>
+    <dt>msg.minFlow <span class="property-type">number</span></dt>
+    <dd>Minimum flow temperature in °C</dd>
+    <dt>msg.maxFlow <span class="property-type">number</span></dt>
+    <dd>Maximum flow temperature in °C</dd>
+  </dl>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>-10°C → 50.0°C</b> - Normal heating</li>
+    <li><b>-10°C → 40.0°C (setback)</b> - Night setback active</li>
+    <li><b>20°C → locked out</b> - Summer lockout</li>
+    <li><b>-20°C → 75.0°C (clamped max)</b> - Clamped to limit</li>
+  </ul>
+</script>

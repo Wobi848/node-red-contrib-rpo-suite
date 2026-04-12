@@ -1,0 +1,149 @@
+<script type="text/javascript">
+  RED.nodes.registerType("average", {
+    category: 'rpo',
+    color: "#D4600A",
+    defaults: {
+      name: { value: "" },
+      mode: { value: "count" },
+      window: { value: 10 },
+      windowUnit: { value: "min" },
+      decimals: { value: 2 },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-bar-chart",
+    label: function () {
+      return this.name || "average";
+    },
+    paletteLabel: "average",
+    oneditprepare: function () {
+      var updateVisibility = function () {
+        if ($("#node-input-mode").val() === "time") {
+          $("#row-windowUnit").show();
+        } else {
+          $("#row-windowUnit").hide();
+        }
+      };
+      $("#node-input-mode").on("change", updateVisibility);
+      updateVisibility();
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="average">
+  <div class="form-row">
+    <label for="node-input-name"
+      ><i class="fa fa-tag"></i>
+      <span data-i18n="average.label.name">Name</span></label
+    >
+    <input
+      type="text"
+      id="node-input-name"
+      data-i18n="[placeholder]average.label.name"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-mode"
+      ><i class="fa fa-cog"></i>
+      <span data-i18n="average.label.mode">Mode</span></label
+    >
+    <select id="node-input-mode" style="width: 150px;">
+      <option value="count" data-i18n="average.option.count">Count</option>
+      <option value="time" data-i18n="average.option.time">Time</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-window"
+      ><i class="fa fa-arrows-h"></i>
+      <span data-i18n="average.label.window">Window</span></label
+    >
+    <input type="number" id="node-input-window" min="1" style="width: 80px;" />
+  </div>
+  <div class="form-row" id="row-windowUnit">
+    <label for="node-input-windowUnit"
+      ><i class="fa fa-clock-o"></i>
+      <span data-i18n="average.label.windowUnit">Unit</span></label
+    >
+    <select id="node-input-windowUnit" style="width: 100px;">
+      <option value="s">Seconds</option>
+      <option value="min">Minutes</option>
+      <option value="h">Hours</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-decimals"
+      ><i class="fa fa-hashtag"></i>
+      <span data-i18n="average.label.decimals">Decimals</span></label
+    >
+    <input
+      type="number"
+      id="node-input-decimals"
+      min="0"
+      max="10"
+      style="width: 60px;"
+    />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="average">
+  <p>Calculates a moving average over the last N messages or a time window.</p>
+
+  <h3>Modes</h3>
+  <ul>
+    <li><b>Count:</b> Average over last N messages (sliding window)</li>
+    <li><b>Time:</b> Average over all values received within last X seconds/minutes/hours</li>
+  </ul>
+
+  <h3>Examples</h3>
+  <pre>
+Count mode, window=3:
+  Input 10 → buffer [10]         → Output 10.0
+  Input 20 → buffer [10,20]      → Output 15.0
+  Input 30 → buffer [10,20,30]   → Output 20.0
+  Input 40 → buffer [20,30,40]   → Output 30.0
+
+Time mode, window=5min:
+  All values from last 5 minutes are averaged</pre>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Numeric value to add to average</dd>
+    <dt>reset <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> <code>true</code> = clear buffer</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>The calculated average</dd>
+    <dt>average <span class="property-type">object</span></dt>
+    <dd>Detailed info: { input, output, count, min, max, mode, window, decimals }</dd>
+  </dl>
+
+  <h3>Configuration</h3>
+  <dl class="message-properties">
+    <dt>Mode</dt>
+    <dd>Count (N messages) or Time (duration)</dd>
+    <dt>Window</dt>
+    <dd>Number of messages (count) or duration value (time)</dd>
+    <dt>Unit</dt>
+    <dd>Seconds/Minutes/Hours (only for time mode)</dd>
+    <dt>Decimals</dt>
+    <dd>Number of decimal places (0-10, default: 2)</dd>
+  </dl>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><b>Sensor:</b> Smooth noisy readings</li>
+    <li><b>Energy:</b> Average power consumption</li>
+    <li><b>Temperature:</b> Rolling temperature average</li>
+  </ul>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>Ø 30.00 (3 values)</b> - Current average</li>
+    <li><b>Ø 18.50 (3/10)</b> - Buffer filling up</li>
+    <li><b>Ø 25.00 (last 5min, 12 values)</b> - Time mode</li>
+  </ul>
+</script>

@@ -1,0 +1,288 @@
+<script type="text/javascript">
+  RED.nodes.registerType("logic-combiner", {
+    category: 'rpo',
+    color: "#D4600A",
+    defaults: {
+      name: { value: "" },
+      topics: { value: [] },
+      minTopics: { value: "" },
+      initialValue: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-code-fork",
+    label: function () {
+      return this.name || "logic-combiner";
+    },
+    paletteLabel: "logic-combiner",
+    oneditprepare: function () {
+      var node = this;
+
+      function generateRow(index, topic, label, invert, operator) {
+        var row = $(
+          '<div class="topic-row" style="display:flex; margin-bottom:5px; align-items:center;"></div>',
+        );
+        // Operator (only show for non-first rows)
+        var opSelect =
+          '<select class="topic-operator" style="width:70px; margin-right:5px;">' +
+          '<option value="AND"' +
+          (operator === "AND" ? " selected" : "") +
+          ">AND</option>" +
+          '<option value="OR"' +
+          (operator === "OR" ? " selected" : "") +
+          ">OR</option>" +
+          "</select>";
+        if (index === 0) {
+          row.append(
+            '<span style="width:70px; margin-right:5px; text-align:center;">Start</span>',
+          );
+        } else {
+          row.append(opSelect);
+        }
+        row.append(
+          '<input type="text" class="topic-name" placeholder="Topic" value="' +
+            (topic || "") +
+            '" style="flex:1; margin-right:5px;">',
+        );
+        row.append(
+          '<input type="text" class="topic-label" placeholder="Label" value="' +
+            (label || "") +
+            '" style="flex:1; margin-right:5px;">',
+        );
+        row.append(
+          '<div style="width:50px; margin-right:10px; display:flex; justify-content:center;"><label style="white-space:nowrap; display:inline-flex; align-items:center; gap:0;"><input type="checkbox" class="topic-invert" style="margin:0 !important; padding:0 !important; width:14px; height:14px;"' +
+            (invert ? " checked" : "") +
+            "><span style=\"margin-left:2px;\">NOT</span></label></div>",
+        );
+        row.append(
+          '<button type="button" class="red-ui-button red-ui-button-small topic-remove" style="margin-left:5px;"><i class="fa fa-times"></i></button>',
+        );
+        return row;
+      }
+
+      function updateRowNumbers() {
+        $("#topic-container .topic-row").each(function (index) {
+          var $row = $(this);
+          var $first = $row.children().first();
+          if (index === 0) {
+            if ($first.is("select")) {
+              var op = $first.val();
+              $first.replaceWith(
+                '<span style="width:70px; margin-right:5px; text-align:center;">Start</span>',
+              );
+            }
+          } else {
+            if ($first.is("span")) {
+              var opSelect = $(
+                '<select class="topic-operator" style="width:70px; margin-right:5px;">' +
+                  '<option value="AND" selected>AND</option>' +
+                  '<option value="OR">OR</option>' +
+                  "</select>",
+              );
+              $first.replaceWith(opSelect);
+            }
+          }
+        });
+      }
+
+      // Add existing topics
+      var container = $("#topic-container");
+      if (node.topics && node.topics.length > 0) {
+        for (var i = 0; i < node.topics.length; i++) {
+          var t = node.topics[i];
+          container.append(
+            generateRow(i, t.topic, t.label, t.invert, t.operator || "AND"),
+          );
+        }
+      }
+
+      // Add topic button
+      $("#topic-add").on("click", function () {
+        var index = $("#topic-container .topic-row").length;
+        if (index >= 99) {
+          RED.notify("Maximum of 99 topics reached", "warning");
+          return;
+        }
+        container.append(generateRow(index, "", "", false, "AND"));
+      });
+
+      // Remove topic button
+      container.on("click", ".topic-remove", function () {
+        $(this).closest(".topic-row").remove();
+        updateRowNumbers();
+      });
+    },
+    oneditsave: function () {
+      var topics = [];
+      $("#topic-container .topic-row").each(function (index) {
+        var topic = $(this).find(".topic-name").val().trim();
+        if (topic) {
+          var operator = "AND";
+          var $op = $(this).find(".topic-operator");
+          if ($op.length > 0) {
+            operator = $op.val();
+          }
+          topics.push({
+            topic: topic,
+            label: $(this).find(".topic-label").val().trim() || topic,
+            invert: $(this).find(".topic-invert").is(":checked"),
+            operator: operator,
+          });
+        }
+      });
+      this.topics = topics;
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="logic-combiner">
+  <div class="form-row">
+    <label for="node-input-name"
+      ><i class="fa fa-tag"></i>
+      <span data-i18n="logic-combiner.label.name">Name</span></label
+    >
+    <input
+      type="text"
+      id="node-input-name"
+      data-i18n="[placeholder]logic-combiner.label.name"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-minTopics"
+      ><i class="fa fa-filter"></i>
+      <span data-i18n="logic-combiner.label.minTopics">Min. Topics</span></label
+    >
+    <input
+      type="text"
+      id="node-input-minTopics"
+      style="width: 60px;"
+      data-i18n="[placeholder]logic-combiner.placeholder.all"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-initialValue"
+      ><i class="fa fa-flag"></i>
+      <span data-i18n="logic-combiner.label.initialValue"
+        >Initial Value</span
+      ></label
+    >
+    <select id="node-input-initialValue" style="width: 120px;">
+      <option value="" data-i18n="logic-combiner.option.none">None</option>
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label style="width: 100%;"
+      ><i class="fa fa-list"></i>
+      <span data-i18n="logic-combiner.label.topics">Topics</span></label
+    >
+  </div>
+  <div class="form-row" style="margin-left: 20px;">
+    <div style="display:flex; margin-bottom:3px; font-size:11px; color:#888;">
+      <span
+        style="width:70px; margin-right:5px; text-align:center;"
+        data-i18n="logic-combiner.label.operator"
+        >Operator</span
+      >
+      <span
+        style="flex:1; margin-right:5px;"
+        data-i18n="logic-combiner.label.topic"
+        >Topic</span
+      >
+      <span style="flex:1; margin-right:5px;">Label</span>
+      <span
+        style="width:50px; margin-right:10px; text-align:center;"
+        data-i18n="logic-combiner.label.not"
+        >NOT</span
+      >
+      <span style="width:28px;"></span>
+    </div>
+    <div id="topic-container"></div>
+  </div>
+  <div class="form-row">
+    <button
+      type="button"
+      id="topic-add"
+      class="red-ui-button"
+      style="margin-left: 20px;"
+    >
+      <i class="fa fa-plus"></i>
+      <span data-i18n="logic-combiner.button.addTopic">Add Topic</span>
+    </button>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="logic-combiner">
+  <p>Combines multiple boolean inputs with individual AND/OR operators.</p>
+
+  <h3>Behavior</h3>
+  <ul>
+    <li>Each input is identified by <code>msg.topic</code></li>
+    <li>Per topic configurable: Operator (AND/OR), Label, Inversion</li>
+    <li>Calculation is performed sequentially in the configured order</li>
+    <li>Output as soon as minTopics is reached</li>
+    <li>Maximum of 99 topics supported</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre>
+Input 1 (Pump)         = true  → Start
+Input 2 (Fault)   AND  = false → NOT → true
+Input 3 (Alarm)   OR   = true
+─────────────────────────────────────────────
+Calculation: (true AND true) OR true = true</pre
+  >
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">any</span></dt>
+    <dd>Value is evaluated as truthy/falsy</dd>
+    <dt>topic <span class="property-type">string</span></dt>
+    <dd><b>Required</b> - Must match a configured topic</dd>
+    <dt>reset <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> <code>true</code> = reset all values</dd>
+  </dl>
+
+  <h4>Falsy Values</h4>
+  <p>
+    <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>,
+    <code>undefined</code>, <code>NaN</code>, <code>"false"</code>,
+    <code>"0"</code>, <code>"off"</code>
+  </p>
+
+  <h4>Truthy Values</h4>
+  <p>
+    Everything else: <code>true</code>, <code>1</code>, <code>"on"</code>, etc.
+  </p>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">boolean</span></dt>
+    <dd><code>true</code> or <code>false</code></dd>
+  </dl>
+
+  <h3>Configuration</h3>
+  <dl class="message-properties">
+    <dt>Min. Topics</dt>
+    <dd>Number of topics before output is sent</dd>
+    <dt>Initial Value</dt>
+    <dd>Initial value for topics (optional)</dd>
+    <dt>Topics</dt>
+    <dd>List with: Operator (AND/OR), Topic, Label, NOT (Inversion)</dd>
+  </dl>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li><b>Complex:</b> (Pump AND NOT Fault) OR Bypass</li>
+    <li><b>Safety:</b> EmergencyStop AND Door AND Release</li>
+    <li><b>Alarm:</b> Sensor1 OR Sensor2 OR Sensor3</li>
+  </ul>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>→ true (3/3)</b> - Result active</li>
+    <li><b>→ false (3/3)</b> - Result inactive</li>
+    <li><b>Waiting (1/3 Topics)</b> - Not enough data yet</li>
+  </ul>
+</script>

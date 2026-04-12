@@ -1,0 +1,65 @@
+[
+    {
+        "id": "sr_comment",
+        "type": "comment",
+        "z": "flow_sr_latch",
+        "name": "=== SR Latch - Basic Example ===",
+        "info": "Demonstrates SR Latch (Set-Reset flip-flop):\n- Send true to input 1 to SET the latch (output = true)\n- Send true to input 2 to RESET the latch (output = false)\n- Latch holds its state until explicitly changed\n- Use for alarms, interlocks, and state memory",
+        "x": 260,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "sr_inject_set",
+        "type": "inject",
+        "z": "flow_sr_latch",
+        "name": "SET (Alarm triggered)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 150,
+        "y": 100,
+        "wires": [["sr_node"]]
+    },
+    {
+        "id": "sr_inject_reset",
+        "type": "inject",
+        "z": "flow_sr_latch",
+        "name": "RESET (Alarm acknowledged)",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "reset",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 150,
+        "y": 160,
+        "wires": [["sr_node"]]
+    },
+    {
+        "id": "sr_node",
+        "type": "sr-latch",
+        "z": "flow_sr_latch",
+        "name": "Alarm Latch",
+        "x": 400,
+        "y": 130,
+        "wires": [["sr_debug"]]
+    },
+    {
+        "id": "sr_debug",
+        "type": "debug",
+        "z": "flow_sr_latch",
+        "name": "Alarm State",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 580,
+        "y": 130,
+        "wires": []
+    }
+]

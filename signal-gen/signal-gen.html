@@ -1,0 +1,100 @@
+<script type="text/javascript">
+    RED.nodes.registerType('signal-gen', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "waveform": {
+                        "value": "sine"
+                },
+                "amplitude": {
+                        "value": 10
+                },
+                "offset": {
+                        "value": 0
+                },
+                "period": {
+                        "value": 60
+                },
+                "periodUnit": {
+                        "value": "s"
+                },
+                "interval": {
+                        "value": 1000
+                },
+                "decimals": {
+                        "value": 2
+                },
+                "autoStart": {
+                        "value": true
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-line-chart',
+        label: function() { return this.name || 'signal-gen'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="signal-gen">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-waveform"><i class="fa fa-line-chart"></i> Waveform</label>
+        <select id="node-input-waveform" style="width:70%">
+            <option value="sine">Sine</option>
+            <option value="square">Square</option>
+            <option value="sawtooth">Sawtooth</option>
+            <option value="triangle">Triangle</option>
+            <option value="random">Random</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-amplitude"><i class="fa fa-arrows-v"></i> Amplitude</label>
+        <input type="number" id="node-input-amplitude" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-offset"><i class="fa fa-arrows-h"></i> Offset</label>
+        <input type="number" id="node-input-offset" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-period"><i class="fa fa-clock-o"></i> Period</label>
+        <input type="number" id="node-input-period" min="1" style="width:50%">
+        <select id="node-input-periodUnit" style="width:18%; margin-left:4px">
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-interval"><i class="fa fa-refresh"></i> Interval (ms)</label>
+        <input type="number" id="node-input-interval" min="100" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> Decimal Places</label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-autoStart"><i class="fa fa-play"></i> Auto Start</label>
+        <input type="checkbox" id="node-input-autoStart" style="width:auto;margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="signal-gen">
+    <p>Generates test signals: Sine, Square, Sawtooth, Triangle, or Random — at a configurable interval.</p>
+    <h3>Input (optional)</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt><dd><code>"start"</code> / <code>"stop"</code> / <code>"reset"</code></dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current signal value</dd>
+        <dt>signalGen <span class="property-type">object</span></dt><dd>{ waveform, value, phase, amplitude, offset, period, t }</dd>
+    </dl>
+    <h3>Formula (Sine)</h3>
+    <pre>offset + amplitude × sin(2π × phase)</pre>
+</script>

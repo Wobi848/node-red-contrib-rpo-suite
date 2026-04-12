@@ -1,0 +1,67 @@
+<script type="text/javascript">
+    RED.nodes.registerType('change-detect', {
+        category:  'rpo',
+        color:     '#D4600A',
+        defaults: {
+            name:         { value: '' },
+            tolerance:    { value: 0 },
+            initialValue: { value: '' }
+        },
+        inputs:  1,
+        outputs: 1,
+        icon:    'font-awesome/fa-exchange',
+        label:   function() { return this.name || 'change detect'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="change-detect">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-tolerance"><i class="fa fa-arrows-h"></i> <span data-i18n="change-detect.label.tolerance"></span></label>
+        <input type="number" id="node-input-tolerance" min="0" step="0.01" style="width:70%">
+        <span style="margin-left:5px; color:#aaa;" data-i18n="change-detect.label.toleranceHint"></span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialValue"><i class="fa fa-history"></i> <span data-i18n="change-detect.label.initialValue"></span></label>
+        <input type="text" id="node-input-initialValue" style="width:70%" data-i18n="[placeholder]change-detect.label.initialValuePlaceholder">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="change-detect">
+    <p>Forwards a message <strong>only when the value has changed</strong> compared to the last forwarded value.</p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Value to check. Supports numbers, booleans, strings, and objects.</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to clear the stored last value — next message is always forwarded.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Original value, forwarded only when changed.</dd>
+        <dt>changeDetect <span class="property-type">object</span></dt>
+        <dd><code>{ previous, current, changed, type, tolerance }</code></dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Tolerance</dt>
+        <dd>For numeric values: minimum difference required to trigger output (0 = any change).</dd>
+        <dt>Initial Value</dt>
+        <dd>Optional: pre-set the "last value" on deploy so the first real message is compared against it.</dd>
+    </dl>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>First message is always forwarded (no previous value to compare against).</li>
+        <li>Objects and arrays are compared using deep JSON comparison.</li>
+        <li>Tolerance only applies to numeric values.</li>
+    </ul>
+</script>

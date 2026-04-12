@@ -1,0 +1,83 @@
+[
+    {
+        "id": "lc_comment",
+        "type": "comment",
+        "z": "flow_logic_combiner",
+        "name": "=== Logic Combiner - Basic Example ===",
+        "info": "Demonstrates boolean logic combining:\n- Set individual boolean inputs (conditions)\n- Node combines them with AND or OR logic\n- Use for safety interlocks, multi-condition triggers, etc.\n- Example: Pump runs only if all conditions are true (AND)",
+        "x": 280,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "lc_inject_1t",
+        "type": "inject",
+        "z": "flow_logic_combiner",
+        "name": "Condition 1 = true",
+        "props": [{"p": "payload"}, {"p": "topic", "vt": "str"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "1",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 140,
+        "y": 100,
+        "wires": [["lc_node"]]
+    },
+    {
+        "id": "lc_inject_2t",
+        "type": "inject",
+        "z": "flow_logic_combiner",
+        "name": "Condition 2 = true",
+        "props": [{"p": "payload"}, {"p": "topic", "vt": "str"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "2",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 140,
+        "y": 160,
+        "wires": [["lc_node"]]
+    },
+    {
+        "id": "lc_inject_2f",
+        "type": "inject",
+        "z": "flow_logic_combiner",
+        "name": "Condition 2 = false",
+        "props": [{"p": "payload"}, {"p": "topic", "vt": "str"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "2",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 140,
+        "y": 220,
+        "wires": [["lc_node"]]
+    },
+    {
+        "id": "lc_node",
+        "type": "logic-combiner",
+        "z": "flow_logic_combiner",
+        "name": "Pump Interlock (AND)",
+        "logic": "AND",
+        "inputs": "2",
+        "x": 400,
+        "y": 160,
+        "wires": [["lc_debug"]]
+    },
+    {
+        "id": "lc_debug",
+        "type": "debug",
+        "z": "flow_logic_combiner",
+        "name": "Pump Enable",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 600,
+        "y": 160,
+        "wires": []
+    }
+]

@@ -1,0 +1,66 @@
+<script type="text/html" data-help-name="logic-combiner">
+    <p>Kombiniert mehrere Boolean-Inputs mit individuellen AND/OR Operatoren.</p>
+
+    <h3>Verhalten</h3>
+    <ul>
+        <li>Jeder Input wird per <code>msg.topic</code> identifiziert</li>
+        <li>Pro Topic konfigurierbar: Operator (AND/OR), Label, Invertierung</li>
+        <li>Berechnung erfolgt sequentiell in der konfigurierten Reihenfolge</li>
+        <li>Output sobald minTopics erreicht</li>
+        <li>Maximal 99 Topics unterstützt</li>
+    </ul>
+
+    <h3>Beispiel</h3>
+    <pre>
+Input 1 (Pumpe)        = true  → Start
+Input 2 (Störung) AND  = false → NOT → true
+Input 3 (Alarm)   OR   = true
+─────────────────────────────────────────────
+Berechnung: (true AND true) OR true = true</pre>
+
+    <h3>Eingaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Wert wird auf truthy/falsy geprüft</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd><b>Erforderlich</b> - Muss einem konfigurierten Topic entsprechen</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = alle Werte zurücksetzen</dd>
+    </dl>
+
+    <h4>Falsy-Werte</h4>
+    <p><code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>, <code>"false"</code>, <code>"0"</code>, <code>"off"</code></p>
+
+    <h4>Truthy-Werte</h4>
+    <p>Alles andere: <code>true</code>, <code>1</code>, <code>"on"</code>, etc.</p>
+
+    <h3>Ausgaben</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd><code>true</code> oder <code>false</code></dd>
+    </dl>
+
+    <h3>Konfiguration</h3>
+    <dl class="message-properties">
+        <dt>Min. Topics</dt>
+        <dd>Anzahl Topics bevor Output gesendet wird</dd>
+        <dt>Startwert</dt>
+        <dd>Initialwert für Topics (optional)</dd>
+        <dt>Topics</dt>
+        <dd>Liste mit: Operator (AND/OR), Topic, Label, NOT (Invertierung)</dd>
+    </dl>
+
+    <h3>Anwendungsbeispiele</h3>
+    <ul>
+        <li><b>Komplex:</b> (Pumpe AND NOT Störung) OR Bypass</li>
+        <li><b>Sicherheit:</b> NotAus AND Tür AND Freigabe</li>
+        <li><b>Alarm:</b> Sensor1 OR Sensor2 OR Sensor3</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>→ true (3/3)</b> - Ergebnis aktiv</li>
+        <li><b>→ false (3/3)</b> - Ergebnis inaktiv</li>
+        <li><b>Warte (1/3 Topics)</b> - Noch nicht genug Daten</li>
+    </ul>
+</script>

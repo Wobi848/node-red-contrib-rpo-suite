@@ -1,0 +1,66 @@
+<script type="text/html" data-help-name="logic-combiner">
+    <p>Combina múltiples entradas booleanas con operadores AND/OR individuales.</p>
+
+    <h3>Comportamiento</h3>
+    <ul>
+        <li>Cada entrada se identifica por <code>msg.topic</code></li>
+        <li>Por topic configurable: Operador (AND/OR), Etiqueta, Inversión</li>
+        <li>El cálculo se realiza secuencialmente en el orden configurado</li>
+        <li>Salida cuando se alcanza minTopics</li>
+        <li>Máximo de 99 topics soportados</li>
+    </ul>
+
+    <h3>Ejemplo</h3>
+    <pre>
+Input 1 (Bomba)        = true  → Start
+Input 2 (Fallo)   AND  = false → NOT → true
+Input 3 (Alarma)  OR   = true
+─────────────────────────────────────────────
+Cálculo: (true AND true) OR true = true</pre>
+
+    <h3>Entradas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>El valor se evalúa como truthy/falsy</dd>
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd><b>Requerido</b> - Debe coincidir con un topic configurado</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(opcional)</i> <code>true</code> = restablecer todos los valores</dd>
+    </dl>
+
+    <h4>Valores Falsy</h4>
+    <p><code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>, <code>"false"</code>, <code>"0"</code>, <code>"off"</code></p>
+
+    <h4>Valores Truthy</h4>
+    <p>Todo lo demás: <code>true</code>, <code>1</code>, <code>"on"</code>, etc.</p>
+
+    <h3>Salidas</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd><code>true</code> o <code>false</code></dd>
+    </dl>
+
+    <h3>Configuración</h3>
+    <dl class="message-properties">
+        <dt>Mín. Topics</dt>
+        <dd>Número de topics antes de enviar salida</dd>
+        <dt>Valor inicial</dt>
+        <dd>Valor inicial para topics (opcional)</dd>
+        <dt>Topics</dt>
+        <dd>Lista con: Operador (AND/OR), Topic, Etiqueta, NOT (Inversión)</dd>
+    </dl>
+
+    <h3>Casos de uso</h3>
+    <ul>
+        <li><b>Complejo:</b> (Bomba AND NOT Fallo) OR Bypass</li>
+        <li><b>Seguridad:</b> ParoEmergencia AND Puerta AND Liberación</li>
+        <li><b>Alarma:</b> Sensor1 OR Sensor2 OR Sensor3</li>
+    </ul>
+
+    <h3>Estado del Nodo</h3>
+    <ul>
+        <li><b>→ true (3/3)</b> - Resultado activo</li>
+        <li><b>→ false (3/3)</b> - Resultado inactivo</li>
+        <li><b>Esperando (1/3 Topics)</b> - Aún no hay suficientes datos</li>
+    </ul>
+</script>

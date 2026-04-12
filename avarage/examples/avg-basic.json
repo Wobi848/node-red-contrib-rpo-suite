@@ -1,0 +1,62 @@
+[
+    {
+        "id": "avg_comment",
+        "type": "comment",
+        "z": "flow_avg",
+        "name": "=== Moving Average - Basic Example ===",
+        "info": "Demonstrates moving average smoothing:\n- Inject sensor readings repeatedly\n- Node calculates the average over a sliding window\n- Useful for smoothing noisy sensor data (temperature, pressure, etc.)\n- Configure window size in node settings",
+        "x": 270,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "avg_inject",
+        "type": "inject",
+        "z": "flow_avg",
+        "name": "Noisy sensor (random)",
+        "props": [{"p": "payload"}],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 120,
+        "wires": [["avg_func"]]
+    },
+    {
+        "id": "avg_func",
+        "type": "function",
+        "z": "flow_avg",
+        "name": "Simulate noisy sensor",
+        "func": "var base = 21.5;\nvar noise = (Math.random() - 0.5) * 4;\nmsg.payload = Math.round((base + noise) * 10) / 10;\nreturn msg;",
+        "outputs": 1,
+        "x": 360,
+        "y": 120,
+        "wires": [["avg_node"]]
+    },
+    {
+        "id": "avg_node",
+        "type": "average",
+        "z": "flow_avg",
+        "name": "Smooth Temperature",
+        "windowSize": "10",
+        "x": 570,
+        "y": 120,
+        "wires": [["avg_debug"]]
+    },
+    {
+        "id": "avg_debug",
+        "type": "debug",
+        "z": "flow_avg",
+        "name": "Smoothed Value",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 760,
+        "y": 120,
+        "wires": []
+    }
+]

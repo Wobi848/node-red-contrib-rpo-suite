@@ -1,0 +1,28 @@
+{
+  "counter": {
+    "label": "Contador",
+    "direction": "Dirección",
+    "direction_opt": {
+      "up": "Arriba",
+      "down": "Abajo"
+    },
+    "step": "Paso",
+    "initialValue": "Valor inicial",
+    "min": "Mín",
+    "max": "Máx",
+    "onLimit": "En límite",
+    "onLimit_opt": {
+      "stop": "Parar",
+      "wrap": "Envolver",
+      "alarm": "Alarma"
+    },
+    "persistent": "Persistir tras reinicios",
+    "tip": "Cuenta arriba/abajo. Topics: reset, set, up, down. msg.step anula el paso.",
+    "input": {
+      "payload": "Valor verdadero para contar; topic controla dirección/reset/set"
+    },
+    "output": {
+      "payload": "Conteo actual; msg.counter = { count, direction, step, min, max, atLimit, limitType }"
+    }
+  }
+}

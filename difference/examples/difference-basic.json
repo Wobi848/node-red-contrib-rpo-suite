@@ -1,0 +1,65 @@
+[
+    {
+        "id": "diff_comment",
+        "type": "comment",
+        "z": "flow_difference",
+        "name": "=== Difference - Basic Example ===",
+        "info": "Demonstrates difference calculation:\n- Send value A to input 1\n- Send value B to input 2\n- Output = A - B\n- Useful for delta temperature, error calculation, etc.",
+        "x": 250,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "diff_inject_a",
+        "type": "inject",
+        "z": "flow_difference",
+        "name": "Supply Temp = 65°C",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "65",
+        "payloadType": "num",
+        "x": 140,
+        "y": 100,
+        "wires": [["diff_node"]]
+    },
+    {
+        "id": "diff_inject_b",
+        "type": "inject",
+        "z": "flow_difference",
+        "name": "Return Temp = 45°C",
+        "props": [{"p": "payload"}],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "b",
+        "payload": "45",
+        "payloadType": "num",
+        "x": 140,
+        "y": 160,
+        "wires": [["diff_node"]]
+    },
+    {
+        "id": "diff_node",
+        "type": "difference",
+        "z": "flow_difference",
+        "name": "ΔT Supply - Return",
+        "x": 390,
+        "y": 130,
+        "wires": [["diff_debug"]]
+    },
+    {
+        "id": "diff_debug",
+        "type": "debug",
+        "z": "flow_difference",
+        "name": "Delta Temperature",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 590,
+        "y": 130,
+        "wires": []
+    }
+]

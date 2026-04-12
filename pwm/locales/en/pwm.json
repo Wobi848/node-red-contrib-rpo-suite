@@ -1,0 +1,14 @@
+{
+  "pwm": {
+    "label": "PWM",
+    "frequency": "Frequency (Hz)",
+    "minOnTime": "Min ON time (ms)",
+    "tip": "Payload 0–100 sets duty cycle. msg.bypass=true outputs raw value.",
+    "input": {
+      "payload": "Duty cycle 0–100 % (number)"
+    },
+    "output": {
+      "payload": "1 (ON) or 0 (OFF) according to PWM cycle"
+    }
+  }
+}

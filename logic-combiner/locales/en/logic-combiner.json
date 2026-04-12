@@ -1,0 +1,63 @@
+{
+    "logic-combiner": {
+        "label": {
+            "name": "Name",
+            "minTopics": "Min. Topics",
+            "initialValue": "Initial Value",
+            "topics": "Topics",
+            "operator": "Operator",
+            "topic": "Topic",
+            "not": "NOT"
+        },
+        "placeholder": {
+            "all": "all"
+        },
+        "option": {
+            "none": "None"
+        },
+        "button": {
+            "addTopic": "Add Topic"
+        },
+        "status": {
+            "noTopics": "No topics configured",
+            "waiting": "Waiting (__received__/__min__ topics)",
+            "result": "→ __result__ (__received__/__total__ topics)"
+        },
+        "warning": {
+            "topicRequired": "msg.topic is required",
+            "topicNotConfigured": "Topic '__topic__' not configured"
+        },
+        "help": {
+            "description": "Combines multiple boolean inputs with individual AND/OR operators.",
+            "behavior": "Behavior",
+            "behaviorList": [
+                "Each input is identified by <code>msg.topic</code>",
+                "Per topic configurable: Operator (AND/OR), Label, Inversion",
+                "Calculation is performed sequentially in the configured order",
+                "Output as soon as minTopics is reached"
+            ],
+            "example": "Example",
+            "inputs": "Inputs",
+            "payloadDesc": "Value is evaluated as truthy/falsy",
+            "topicDesc": "<b>Required</b> - Must match a configured topic",
+            "resetDesc": "<i>(optional)</i> <code>true</code> = reset all values",
+            "falsyValues": "Falsy Values",
+            "truthyValues": "Truthy Values",
+            "truthyDesc": "Everything else: <code>true</code>, <code>1</code>, <code>\"on\"</code>, etc.",
+            "outputs": "Outputs",
+            "outputDesc": "<code>true</code> or <code>false</code>",
+            "configuration": "Configuration",
+            "minTopicsDesc": "Number of topics before output is sent",
+            "initialValueDesc": "Initial value for topics (optional)",
+            "topicsDesc": "List with: Operator (AND/OR), Topic, Label, NOT (Inversion)",
+            "useCases": "Use Cases",
+            "complex": "Complex",
+            "safety": "Safety",
+            "alarm": "Alarm",
+            "nodeStatus": "Node Status",
+            "resultActive": "Result active",
+            "resultInactive": "Result inactive",
+            "notEnoughData": "Not enough data yet"
+        }
+    }
+}

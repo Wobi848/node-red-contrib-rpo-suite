@@ -1,0 +1,90 @@
+<script type="text/javascript">
+    RED.nodes.registerType('deadband', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            name: { value: "" },
+            deadband: { value: "0.5" },
+            initialValue: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-filter",
+        label: function() {
+            return this.name || "deadband";
+        },
+        paletteLabel: "deadband"
+    });
+</script>
+
+<script type="text/html" data-template-name="deadband">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-deadband"><i class="fa fa-filter"></i> Deadband</label>
+        <input type="text" id="node-input-deadband" style="width: 100px;" placeholder="0.5">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialValue"><i class="fa fa-flag"></i> Initial Value</label>
+        <input type="text" id="node-input-initialValue" style="width: 100px;" placeholder="(optional)">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="deadband">
+    <p>Filters values and only forwards them when the change from the last value exceeds the deadband.</p>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Change >= Deadband → value is forwarded + new reference stored</li>
+        <li>Change &lt; Deadband → message is blocked, no output</li>
+        <li>First value always passes through (sets reference)</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre>
+Deadband = 0.5, reference = 20.0
+  Input 20.3 → Δ0.3 → blocked
+  Input 20.6 → Δ0.6 → forwarded, new ref = 20.6
+  Input 20.8 → Δ0.2 → blocked
+  Input 21.2 → Δ0.6 → forwarded, new ref = 21.2</pre>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Numeric value to filter</dd>
+        <dt>deadband <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Overrides deadband temporarily</dd>
+        <dt>reset <span class="property-type">boolean</span></dt>
+        <dd><i>(optional)</i> <code>true</code> = reset reference value</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd>Original value (forwarded unchanged)</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Deadband</dt>
+        <dd>Minimum change for value to be forwarded</dd>
+        <dt>Initial Value</dt>
+        <dd><i>(optional)</i> Initial reference value on deploy</dd>
+    </dl>
+
+    <h3>Use Cases</h3>
+    <ul>
+        <li><b>Temperature sensor:</b> Deadband=0.5 → only on >0.5°C change</li>
+        <li><b>Analog value:</b> Deadband=10 → filters noise</li>
+        <li><b>Power consumption:</b> Deadband=50 → only significant changes</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>Idle</b> - Waiting for first input</li>
+        <li><b>✓ 20.6</b> - Value forwarded</li>
+        <li><b>✗ 20.3 (Δ0.3)</b> - Value blocked</li>
+    </ul>
+</script>

@@ -1,0 +1,14 @@
+{
+  "ring-counter": {
+    "label": "Ringzähler",
+    "size": "Ringgröße",
+    "initialIndex": "Startindex",
+    "tip": "Ringförmiger Index-Zähler mit Überlauf. Topics: advance, retreat, set, reset.",
+    "input": {
+      "payload": "Beliebiger Wert zum Weiterschalten; Topic steuert Richtung"
+    },
+    "output": {
+      "payload": "Aktueller Ringindex (0 bis Größe-1)"
+    }
+  }
+}

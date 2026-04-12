@@ -1,0 +1,71 @@
+<script type="text/javascript">
+  RED.nodes.registerType('formula', {
+    category: 'rpo',
+    color: '#D4600A',
+    defaults: {
+      name:     { value: '' },
+      formula:  { value: 'a + b', required: true },
+      minVars:  { value: 0 },
+      decimals: { value: 4 }
+    },
+    inputs:  1,
+    outputs: 1,
+    icon: 'function.svg',
+    label: function() { return this.name || this.formula || 'formula'; },
+    labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+  });
+</script>
+
+<script type="text/html" data-template-name="formula">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+    <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-formula"><i class="fa fa-calculator"></i> <span data-i18n="formula.label.formula"></span></label>
+    <input type="text" id="node-input-formula" placeholder="a * b + 100" style="font-family:monospace;width:70%">
+  </div>
+  <div class="form-row">
+    <label for="node-input-minVars"><i class="fa fa-check-circle"></i> <span data-i18n="formula.label.minVars"></span></label>
+    <input type="number" id="node-input-minVars" min="0" style="width:80px"> <small data-i18n="formula.label.minVarsHint"></small>
+  </div>
+  <div class="form-row">
+    <label for="node-input-decimals"><i class="fa fa-hashtag"></i> <span data-i18n="formula.label.decimals"></span></label>
+    <input type="number" id="node-input-decimals" min="0" max="15" style="width:80px">
+  </div>
+  <div class="form-row" style="background:#f8f8f8;padding:8px;border-radius:4px;font-size:0.85em">
+    <b data-i18n="formula.label.varsHint"></b><br>
+    <span data-i18n="formula.label.varsHintText"></span><br>
+    <b data-i18n="formula.label.mathHint"></b><br>
+    <span data-i18n="formula.label.mathHintText"></span>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="formula">
+  <p data-i18n="formula.help.desc"></p>
+  <h3 data-i18n="formula.help.inputs"></h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd data-i18n="formula.help.payload"></dd>
+    <dt>topic <span class="property-type">string</span></dt>
+    <dd data-i18n="formula.help.topic"></dd>
+    <dt>reset <span class="property-type">boolean</span></dt>
+    <dd data-i18n="formula.help.reset"></dd>
+  </dl>
+  <h3 data-i18n="formula.help.outputs"></h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd data-i18n="formula.help.output"></dd>
+    <dt>formula <span class="property-type">object</span></dt>
+    <dd data-i18n="formula.help.formulaObj"></dd>
+  </dl>
+  <h3 data-i18n="formula.help.examplesTitle"></h3>
+  <ul>
+    <li><code>a * b + 100</code></li>
+    <li><code>a^2 + b^2</code></li>
+    <li><code>(a + b) / 2</code></li>
+    <li><code>a * 1.5 - b / (c + 1)</code></li>
+    <li><code>sqrt(a^2 + b^2)</code></li>
+    <li><code>round(a * pi)</code></li>
+  </ul>
+</script>

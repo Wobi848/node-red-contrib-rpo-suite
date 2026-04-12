@@ -1,0 +1,19 @@
+{
+  "debounce": {
+    "label": "Debounce",
+    "debounceTime": "Debounce time (ms)",
+    "mode": "Mode",
+    "mode_opt": {
+      "trailing": "Trailing edge",
+      "leading": "Leading edge",
+      "both": "Both edges"
+    },
+    "tip": "Debounces rapid messages. Send msg.flush=true to force immediate output.",
+    "input": {
+      "payload": "Any value to debounce"
+    },
+    "output": {
+      "payload": "Debounced value"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "node-red-contrib-clamp",
+  "version": "1.0.1",
+  "description": "Node-RED clamp node - limits values to a min/max range",
+  "files": [
+    "clamp.js",
+    "clamp.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "clamp",
+    "limit",
+    "range",
+    "min",
+    "max",
+    "constrain"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "clamp": "clamp.js"
+    },
+    "version": ">=4.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  }
+}

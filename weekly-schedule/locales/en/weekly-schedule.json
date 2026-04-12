@@ -1,0 +1,10 @@
+{
+  "weekly-schedule": {
+    "label": {
+      "schedule": "Schedule",
+      "onValue": "ON Value",
+      "offValue": "OFF Value",
+      "timezone": "Timezone"
+    }
+  }
+}

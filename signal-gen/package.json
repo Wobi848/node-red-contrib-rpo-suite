@@ -1,0 +1,45 @@
+{
+  "name": "node-red-contrib-signal-gen",
+  "version": "1.0.0",
+  "description": "Signal generator - sine, square, sawtooth, triangle and random test waveforms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "signal-gen.js",
+    "signal-gen.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "signal",
+    "generator",
+    "sine",
+    "waveform",
+    "test"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": "1.0.0",
+    "nodes": {
+      "signal-gen": "signal-gen.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

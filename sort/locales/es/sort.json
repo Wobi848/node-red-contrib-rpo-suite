@@ -1,0 +1,23 @@
+{
+  "sort": {
+    "label": "Ordenar",
+    "mode": "Modo de orden",
+    "mode_opt": {
+      "numeric": "Numérico",
+      "alpha": "Alfabético"
+    },
+    "order": "Orden",
+    "order_opt": {
+      "asc": "Ascendente",
+      "desc": "Descendente"
+    },
+    "topN": "Top N (0=todos)",
+    "tip": "Ordena un array de payload numérica o alfabéticamente.",
+    "input": {
+      "payload": "Array de números o cadenas a ordenar"
+    },
+    "output": {
+      "payload": "Array ordenado; msg.originalIndices = mapa de índices"
+    }
+  }
+}

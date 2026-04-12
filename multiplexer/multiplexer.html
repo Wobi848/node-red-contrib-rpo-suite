@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    RED.nodes.registerType('multiplexer', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "channels": {
+                        "value": 8
+                },
+                "initialChannel": {
+                        "value": 0
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-random',
+        label: function() { return this.name || 'multiplexer'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="multiplexer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-channels"><i class="fa fa-list"></i> Channels</label>
+        <select id="node-input-channels" style="width:70%">
+            <option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialChannel"><i class="fa fa-hand-o-right"></i> Initial Channel</label>
+        <input type="number" id="node-input-initialChannel" min="0" max="7" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="multiplexer">
+    <p>8-channel multiplexer. Forwards the selected input channel to the output.</p>
+    <h3>Topics</h3>
+    <ul>
+        <li><code>select</code> + payload 0–7: select active channel</li>
+        <li><code>ch0</code>–<code>ch7</code>: store value for that channel</li>
+    </ul>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload</dt><dd>Value of selected channel</dd>
+        <dt>multiplexer</dt><dd>{ selectedChannel, value, channels }</dd>
+    </dl>
+</script>

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "deadband-example-tab",
+    "type": "tab",
+    "label": "deadband Basic Example",
+    "disabled": false,
+    "info": "Demonstrates deadband filtering. Only values that differ from the last passed value by more than the deadband are forwarded."
+  },
+  {
+    "id": "n-inject-1",
+    "type": "inject",
+    "z": "deadband-example-tab",
+    "name": "Value 10.0",
+    "props": [{"p": "payload"}],
+    "payload": "10",
+    "payloadType": "num",
+    "x": 120,
+    "y": 100,
+    "wires": [["n-deadband"]]
+  },
+  {
+    "id": "n-inject-2",
+    "type": "inject",
+    "z": "deadband-example-tab",
+    "name": "Value 10.3 (blocked)",
+    "props": [{"p": "payload"}],
+    "payload": "10.3",
+    "payloadType": "num",
+    "x": 120,
+    "y": 160,
+    "wires": [["n-deadband"]]
+  },
+  {
+    "id": "n-inject-3",
+    "type": "inject",
+    "z": "deadband-example-tab",
+    "name": "Value 11.5 (passed)",
+    "props": [{"p": "payload"}],
+    "payload": "11.5",
+    "payloadType": "num",
+    "x": 120,
+    "y": 220,
+    "wires": [["n-deadband"]]
+  },
+  {
+    "id": "n-deadband",
+    "type": "deadband",
+    "z": "deadband-example-tab",
+    "name": "Deadband ±1.0",
+    "deadband": "1.0",
+    "initialValue": "",
+    "x": 360,
+    "y": 160,
+    "wires": [["n-debug"]]
+  },
+  {
+    "id": "n-debug",
+    "type": "debug",
+    "z": "deadband-example-tab",
+    "name": "Passed values",
+    "active": true,
+    "x": 560,
+    "y": 160,
+    "wires": []
+  }
+]

@@ -1,0 +1,103 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sr-latch', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            name: { value: "" },
+            initialState: { value: "false" },
+            outputMode: { value: "change" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-toggle-on",
+        label: function() {
+            return this.name || "sr latch";
+        },
+        paletteLabel: "sr latch"
+    });
+</script>
+
+<script type="text/html" data-template-name="sr-latch">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialState"><i class="fa fa-play"></i> Initial State</label>
+        <select id="node-input-initialState">
+            <option value="false">RESET (OFF)</option>
+            <option value="true">SET (ON)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-outputMode"><i class="fa fa-sign-out"></i> Output</label>
+        <select id="node-input-outputMode">
+            <option value="change">On state change only</option>
+            <option value="always">On every input</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="sr-latch">
+    <p>SR Latch (Set-Reset Flip-Flop) - a memory element that holds its state until set or reset.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt>
+        <dd><code>set</code>, <code>reset</code>, or <code>toggle</code></dd>
+        <dt>payload <span class="property-type">various</span></dt>
+        <dd>
+            <b>String:</b> "set"/"s"/"on"/"true"/"1" or "reset"/"r"/"off"/"false"/"0" or "toggle"/"t"<br>
+            <b>Boolean:</b> <code>true</code> = set, <code>false</code> = reset<br>
+            <b>Number:</b> <code>1</code> = set, <code>0</code> = reset
+        </dd>
+    </dl>
+    <p><b>Note:</b> <code>msg.topic</code> takes priority over <code>msg.payload</code>.</p>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt>
+        <dd>Current state: <code>true</code> (SET) or <code>false</code> (RESET)</dd>
+        <dt>action <span class="property-type">string</span></dt>
+        <dd>Action that was performed: "set", "reset", or "toggle"</dd>
+        <dt>previousState <span class="property-type">boolean</span></dt>
+        <dd>State before the action</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Initial State</dt>
+        <dd>State when the node starts or Node-RED restarts.</dd>
+        <dt>Output Mode</dt>
+        <dd>
+            <b>On state change only:</b> Output only when state actually changes.<br>
+            <b>On every input:</b> Output on every valid input, even if state doesn't change.
+        </dd>
+    </dl>
+
+    <h3>Examples</h3>
+    <h4>Using topic</h4>
+    <pre>
+msg.topic = "set"   → State becomes true (ON)
+msg.topic = "reset" → State becomes false (OFF)
+msg.topic = "toggle" → State flips</pre>
+
+    <h4>Using payload</h4>
+    <pre>
+msg.payload = true  → SET (ON)
+msg.payload = false → RESET (OFF)
+msg.payload = 1     → SET (ON)
+msg.payload = 0     → RESET (OFF)
+msg.payload = "toggle" → State flips</pre>
+
+    <h3>Use Cases</h3>
+    <ul>
+        <li><b>Manual Override:</b> Set a flag that stays until manually reset</li>
+        <li><b>Alarm Latch:</b> Latch alarm state until acknowledged</li>
+        <li><b>Mode Selection:</b> Toggle between two operating modes</li>
+        <li><b>Memory:</b> Remember a state across multiple messages</li>
+    </ul>
+
+    <h3>Node Status</h3>
+    <p>Shows current state: "SET (ON)" with green dot or "RESET (OFF)" with blue dot.</p>
+</script>

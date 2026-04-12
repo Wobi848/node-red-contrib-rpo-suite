@@ -1,0 +1,46 @@
+{
+  "name": "node-red-contrib-weekly-schedule",
+  "version": "1.0.0",
+  "description": "Weekly scheduler with configurable time windows per day of week",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "weekly-schedule.js",
+    "weekly-schedule.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "schedule",
+    "weekly",
+    "timer",
+    "time",
+    "calendar",
+    "automation"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": "1.0.0",
+    "nodes": {
+      "weekly-schedule": "weekly-schedule.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

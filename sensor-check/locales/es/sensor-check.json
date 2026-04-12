@@ -1,0 +1,13 @@
+{
+  "sensor-check": {
+    "label": {
+      "min": "Mín (plausibilidad)",
+      "max": "Máx (plausibilidad)",
+      "fallback": "Valor de reserva",
+      "useFallback": "Usar reserva",
+      "timeout": "Timeout",
+      "timeoutHint": "s (0 = desactivado)",
+      "hysteresis": "Histéresis"
+    }
+  }
+}

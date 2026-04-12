@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ring-counter', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+                "name": {
+                        "value": ""
+                },
+                "count": {
+                        "value": 3
+                },
+                "initialIndex": {
+                        "value": 0
+                },
+                "persistent": {
+                        "value": false
+                }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-refresh',
+        label: function() { return this.name || 'ring-counter'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="ring-counter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-count"><i class="fa fa-list-ol"></i> Slots</label>
+        <input type="number" id="node-input-count" min="2" max="16" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialIndex"><i class="fa fa-hand-o-right"></i> Initial Index</label>
+        <input type="number" id="node-input-initialIndex" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-hdd-o"></i> Persistent</label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto;margin-top:4px">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="ring-counter">
+    <p>Cycles through N slots (0 to N-1) sequentially. Every truthy input advances to the next slot (wrap-around).</p>
+    <h3>Overrides</h3>
+    <ul>
+        <li><code>msg.advance = true</code> — advance (same as truthy payload)</li>
+        <li><code>msg.retreat = true</code> — go back one step</li>
+        <li><code>msg.set = N</code> — jump to specific index</li>
+        <li><code>msg.reset = true</code> — return to initial index</li>
+    </ul>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current index (0-based)</dd>
+        <dt>ringCounter <span class="property-type">object</span></dt><dd>{ index, count, previous, stepCount }</dd>
+    </dl>
+</script>
