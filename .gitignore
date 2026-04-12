@@ -8,3 +8,5 @@ test-flow*.json
 test-flow*.txt
 update-status.md
 check-npm.sh
+publish-all.sh
+publish-log.txt

@@ -56,4 +56,4 @@ npm install node-red-contrib-rpo-suite
 
 ## License
 
-MIT — sr.rpo
+MIT — sr.rpo | wobi848

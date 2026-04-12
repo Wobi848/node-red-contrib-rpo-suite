@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-sensor-check",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sensor plausibility monitor - detects out-of-range values and timeout with fallback output",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "author": "sr.rpo",
   "license": "MIT",
   "node-red": {
-    "version": "1.0.0",
+    "version": ">=4.0.0",
     "nodes": {
       "sensor-check": "sensor-check.js"
     }

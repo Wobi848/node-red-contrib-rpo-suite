@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-rpo-suite",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Complete GLT building automation node suite for Node-RED by sr.rpo",
   "repository": {
     "type": "git",
