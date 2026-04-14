@@ -1,0 +1,62 @@
+<script type="text/javascript">
+    RED.nodes.registerType('three-point', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":     { "value": "" },
+            "runtime":  { "value": 120 },
+            "deadband": { "value": 2 },
+            "minPulse": { "value": 1 },
+            "initPos":  { "value": 50 }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-arrows-v',
+        label: function() { return this.name || 'three-point'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['open (AUF)', 'close (ZU)']
+    });
+</script>
+
+<script type="text/html" data-template-name="three-point">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-runtime"><i class="fa fa-clock-o"></i> Runtime (s)</label>
+        <input type="number" id="node-input-runtime" min="1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-deadband"><i class="fa fa-arrows-h"></i> Deadband (%)</label>
+        <input type="number" id="node-input-deadband" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minPulse"><i class="fa fa-step-forward"></i> Min pulse (s)</label>
+        <input type="number" id="node-input-minPulse" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initPos"><i class="fa fa-map-marker"></i> Initial position (%)</label>
+        <input type="number" id="node-input-initPos" min="0" max="100" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="three-point">
+    <p>Three-point actuator controller. Sends open (AUF) or close (ZU) impulses proportional to the position difference.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Setpoint position 0–100%</dd>
+        <dt class="optional">open <span class="property-type">boolean</span></dt><dd>true = drive fully open</dd>
+        <dt class="optional">close <span class="property-type">boolean</span></dt><dd>true = drive fully closed</dd>
+        <dt class="optional">stop <span class="property-type">boolean</span></dt><dd>true = stop movement</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true = stop and reset to initial position</dd>
+    </dl>
+    <h3>Output 1 — Open (AUF)</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true during open pulse, false when done</dd>
+    </dl>
+    <h3>Output 2 — Close (ZU)</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true during close pulse, false when done</dd>
+    </dl>
+</script>

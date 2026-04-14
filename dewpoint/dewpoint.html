@@ -1,0 +1,65 @@
+<script type="text/javascript">
+    RED.nodes.registerType('dewpoint', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":          { "value": "" },
+            "topicTemp":     { "value": "temp" },
+            "topicRh":       { "value": "rh" },
+            "topicSurface":  { "value": "" },
+            "alarmOffset":   { "value": 2 },
+            "decimals":      { "value": 1 }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-tint',
+        label: function() { return this.name || 'dewpoint'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['dew point', 'alarm']
+    });
+</script>
+
+<script type="text/html" data-template-name="dewpoint">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicTemp"><i class="fa fa-thermometer-half"></i> Topic temp</label>
+        <input type="text" id="node-input-topicTemp" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicRh"><i class="fa fa-tint"></i> Topic rh</label>
+        <input type="text" id="node-input-topicRh" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicSurface"><i class="fa fa-thermometer-empty"></i> Topic surface (optional)</label>
+        <input type="text" id="node-input-topicSurface" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-alarmOffset"><i class="fa fa-bell"></i> Alarm offset (K)</label>
+        <input type="number" id="node-input-alarmOffset" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="2" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="dewpoint">
+    <p>Calculates dew point temperature and triggers condensation alarm when dew point approaches surface temperature.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>"temp", "rh", or surface topic</dd>
+        <dt>payload <span class="property-type">number</span></dt><dd>Temperature (°C) or relative humidity (%)</dd>
+    </dl>
+    <h3>Output 1 — Dew Point</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Dew point in °C</dd>
+        <dt>dewPoint <span class="property-type">object</span></dt><dd>{ temp, rh, dewPoint, surfaceTemp, margin, alarm, alarmOffset }</dd>
+    </dl>
+    <h3>Output 2 — Alarm</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = condensation risk (only on state change)</dd>
+    </dl>
+</script>

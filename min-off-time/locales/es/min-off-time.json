@@ -1,0 +1,6 @@
+{
+  "operating-hours": { "label": { "name": "Name", "serviceInterval": "Service interval (h)", "decimals": "Decimals", "persistent": "Persistent" } },
+  "watchdog":        { "label": { "name": "Name", "timeout": "Timeout", "timeoutUnit": "Unit", "startAlarm": "Alarm on deploy" } },
+  "min-on-time":     { "label": { "name": "Name", "minOnTime": "Min ON time", "minOnTimeUnit": "Unit" } },
+  "min-off-time":    { "label": { "name": "Name", "minOffTime": "Min OFF time", "minOffTimeUnit": "Unit" } }
+}

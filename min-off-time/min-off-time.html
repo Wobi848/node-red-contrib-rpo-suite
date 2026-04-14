@@ -1,0 +1,47 @@
+<script type="text/javascript">
+    RED.nodes.registerType('min-off-time', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":           { "value": "" },
+            "minOffTime":     { "value": 60, "validate": RED.validators.number() },
+            "minOffTimeUnit": { "value": "s" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-unlock',
+        label: function() { return this.name || 'min-off-time'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="min-off-time">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOffTime"><i class="fa fa-unlock"></i> Min OFF time</label>
+        <input type="number" id="node-input-minOffTime" min="1" style="width:50%">
+        <select id="node-input-minOffTimeUnit" style="width:18%">
+            <option value="ms">ms</option>
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="min-off-time">
+    <p>Ensures output stays OFF for a minimum duration after turning off. Protects compressors and motors from rapid restart (anti-short-cycle).</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>Input signal</dd>
+        <dt class="optional">bypassMin <span class="property-type">boolean</span></dt><dd>true ignores minimum time</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true forces output ON immediately</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>Output with minimum OFF time guarantee</dd>
+        <dt>minOffTime <span class="property-type">object</span></dt><dd>{ input, output, held, remainingMs, minOffTime }</dd>
+    </dl>
+</script>

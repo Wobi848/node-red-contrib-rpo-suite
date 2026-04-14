@@ -1,0 +1,68 @@
+<script type="text/javascript">
+    RED.nodes.registerType('enthalpy', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":         { "value": "" },
+            "mode":         { "value": "single" },
+            "topicTempIn":  { "value": "tempIn" },
+            "topicRhIn":    { "value": "rhIn" },
+            "topicTempOut": { "value": "tempOut" },
+            "topicRhOut":   { "value": "rhOut" },
+            "decimals":     { "value": 2 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-thermometer-half',
+        label: function() { return this.name || 'enthalpy'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="enthalpy">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <select id="node-input-mode" style="width:70%">
+            <option value="single">Single location</option>
+            <option value="compare">Compare indoor / outdoor</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicTempIn"><i class="fa fa-thermometer-half"></i> Topic temp (in)</label>
+        <input type="text" id="node-input-topicTempIn" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicRhIn"><i class="fa fa-tint"></i> Topic rh (in)</label>
+        <input type="text" id="node-input-topicRhIn" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicTempOut"><i class="fa fa-thermometer-empty"></i> Topic temp (out)</label>
+        <input type="text" id="node-input-topicTempOut" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicRhOut"><i class="fa fa-tint"></i> Topic rh (out)</label>
+        <input type="text" id="node-input-topicRhOut" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="enthalpy">
+    <p>Calculates specific enthalpy of moist air. In compare mode, recommends heat recovery ventilation (WRG).</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>tempIn / rhIn / tempOut / rhOut</dd>
+        <dt>payload <span class="property-type">number</span></dt><dd>Temperature (°C) or relative humidity (%)</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number|boolean</span></dt><dd>Enthalpy kJ/kg (single) or WRG recommendation (compare)</dd>
+        <dt>enthalpy <span class="property-type">object</span></dt><dd>Detailed enthalpy info</dd>
+    </dl>
+</script>

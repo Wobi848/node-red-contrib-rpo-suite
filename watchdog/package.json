@@ -1,0 +1,45 @@
+{
+  "name": "node-red-contrib-watchdog",
+  "version": "1.0.0",
+  "description": "Watchdog timer - triggers alarm when no message received within timeout",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "watchdog.js",
+    "watchdog.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "watchdog",
+    "timeout",
+    "alarm",
+    "heartbeat",
+    "rpo"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "watchdog": "watchdog.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

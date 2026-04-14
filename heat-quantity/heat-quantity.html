@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('heat-quantity', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":        { "value": "" },
+            "topicFlow":   { "value": "flow" },
+            "topicSupply": { "value": "supply" },
+            "topicReturn": { "value": "return" },
+            "medium":      { "value": "water" },
+            "persistent":  { "value": true },
+            "decimals":    { "value": 2 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-fire',
+        label: function() { return this.name || 'heat-quantity'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="heat-quantity">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicFlow"><i class="fa fa-tachometer"></i> Topic flow (m³/h)</label>
+        <input type="text" id="node-input-topicFlow" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicSupply"><i class="fa fa-thermometer-full"></i> Topic supply (°C)</label>
+        <input type="text" id="node-input-topicSupply" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicReturn"><i class="fa fa-thermometer-empty"></i> Topic return (°C)</label>
+        <input type="text" id="node-input-topicReturn" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-medium"><i class="fa fa-flask"></i> Medium</label>
+        <select id="node-input-medium" style="width:70%">
+            <option value="water">Water (1.163)</option>
+            <option value="glycol30">Glycol 30% (1.100)</option>
+            <option value="glycol50">Glycol 50% (1.050)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-database"></i> Persistent</label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="heat-quantity">
+    <p>Calculates thermal power (kW) and accumulates energy (kWh) from flow rate and temperature difference.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>"flow", "supply", or "return"</dd>
+        <dt>payload <span class="property-type">number</span></dt><dd>Flow m³/h or temperature °C</dd>
+        <dt class="optional">resetEnergy <span class="property-type">boolean</span></dt><dd>true resets accumulated kWh</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current power in kW</dd>
+        <dt>heatQuantity <span class="property-type">object</span></dt><dd>{ flow, supplyTemp, returnTemp, deltaT, power, energyKwh, medium, factor, dt }</dd>
+    </dl>
+</script>

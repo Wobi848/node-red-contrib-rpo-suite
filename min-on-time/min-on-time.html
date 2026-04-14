@@ -1,0 +1,47 @@
+<script type="text/javascript">
+    RED.nodes.registerType('min-on-time', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":          { "value": "" },
+            "minOnTime":     { "value": 30, "validate": RED.validators.number() },
+            "minOnTimeUnit": { "value": "s" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-lock',
+        label: function() { return this.name || 'min-on-time'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="min-on-time">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOnTime"><i class="fa fa-lock"></i> Min ON time</label>
+        <input type="number" id="node-input-minOnTime" min="1" style="width:50%">
+        <select id="node-input-minOnTimeUnit" style="width:18%">
+            <option value="ms">ms</option>
+            <option value="s">s</option>
+            <option value="min">min</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="min-on-time">
+    <p>Ensures output stays ON for a minimum duration. Even if input turns OFF early, output remains ON until the minimum time has elapsed.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>Input signal</dd>
+        <dt class="optional">bypassMin <span class="property-type">boolean</span></dt><dd>true ignores minimum time</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true forces output OFF immediately</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>Output with minimum ON time guarantee</dd>
+        <dt>minOnTime <span class="property-type">object</span></dt><dd>{ input, output, held, remainingMs, minOnTime }</dd>
+    </dl>
+</script>

@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('free-cooling', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":         { "value": "" },
+            "minDelta":     { "value": 3 },
+            "maxOutdoor":   { "value": 24 },
+            "minOutdoor":   { "value": 8 },
+            "topicIndoor":  { "value": "indoor" },
+            "topicOutdoor": { "value": "outdoor" },
+            "decimals":     { "value": 1 }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-snowflake-o',
+        label: function() { return this.name || 'free-cooling'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['active', 'state change']
+    });
+</script>
+
+<script type="text/html" data-template-name="free-cooling">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minDelta"><i class="fa fa-arrows-v"></i> Min ΔT (K)</label>
+        <input type="number" id="node-input-minDelta" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-maxOutdoor"><i class="fa fa-sun-o"></i> Max outdoor (°C)</label>
+        <input type="number" id="node-input-maxOutdoor" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOutdoor"><i class="fa fa-snowflake-o"></i> Min outdoor (°C)</label>
+        <input type="number" id="node-input-minOutdoor" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicIndoor"><i class="fa fa-home"></i> Topic indoor</label>
+        <input type="text" id="node-input-topicIndoor" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicOutdoor"><i class="fa fa-cloud"></i> Topic outdoor</label>
+        <input type="text" id="node-input-topicOutdoor" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="3" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="free-cooling">
+    <p>Free cooling / night cooling recommendation. Recommends using outdoor air for cooling when outdoor temperature is sufficiently below indoor temperature.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>"indoor" or "outdoor"</dd>
+        <dt>payload <span class="property-type">number</span></dt><dd>Temperature in °C</dd>
+    </dl>
+    <h3>Output 1</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = free cooling recommended</dd>
+        <dt>freeCooling <span class="property-type">object</span></dt><dd>indoor, outdoor, delta, active</dd>
+    </dl>
+    <h3>Output 2 — State change</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true/false only on state change</dd>
+    </dl>
+</script>

@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    RED.nodes.registerType('frost-protection', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":           { "value": "" },
+            "mode":           { "value": "binary" },
+            "frostThreshold": { "value": -5 },
+            "hysteresis":     { "value": 2 },
+            "minTemp":        { "value": -15 },
+            "topicOutdoor":   { "value": "outdoor" },
+            "topicSupply":    { "value": "supply" },
+            "decimals":       { "value": 1 }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-snowflake-o',
+        label: function() { return this.name || 'frost-protection'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['output', 'alarm']
+    });
+</script>
+
+<script type="text/html" data-template-name="frost-protection">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <select id="node-input-mode" style="width:70%">
+            <option value="binary">Binary</option>
+            <option value="proportional">Proportional</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-frostThreshold"><i class="fa fa-snowflake-o"></i> Frost threshold (°C)</label>
+        <input type="number" id="node-input-frostThreshold" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-v"></i> Hysteresis (K)</label>
+        <input type="number" id="node-input-hysteresis" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minTemp"><i class="fa fa-thermometer-empty"></i> Min temp (°C, 100%)</label>
+        <input type="number" id="node-input-minTemp" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicOutdoor"><i class="fa fa-cloud"></i> Topic outdoor</label>
+        <input type="text" id="node-input-topicOutdoor" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicSupply"><i class="fa fa-wind"></i> Topic supply (optional)</label>
+        <input type="text" id="node-input-topicSupply" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="frost-protection">
+    <p>Monitors outdoor and supply air temperature for frost risk. Activates frost protection when temperature drops below threshold.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>"outdoor" or "supply"</dd>
+        <dt>payload <span class="property-type">number</span></dt><dd>Temperature in °C</dd>
+        <dt class="optional">override <span class="property-type">boolean</span></dt><dd>Force ON/OFF</dd>
+        <dt class="optional">clearOverride <span class="property-type">boolean</span></dt><dd>Return to automatic</dd>
+    </dl>
+    <h3>Output 1</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean|number</span></dt><dd>ON/OFF (binary) or 0–100% (proportional)</dd>
+    </dl>
+    <h3>Output 2 — Alarm</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = frost alarm (only on state change)</dd>
+    </dl>
+</script>

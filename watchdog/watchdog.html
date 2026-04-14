@@ -1,0 +1,57 @@
+<script type="text/javascript">
+    RED.nodes.registerType('watchdog', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":        { "value": "" },
+            "timeout":     { "value": 60, "validate": RED.validators.number() },
+            "timeoutUnit": { "value": "s" },
+            "startAlarm":  { "value": false }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-heartbeat',
+        label: function() { return this.name || 'watchdog'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['passthrough', 'alarm']
+    });
+</script>
+
+<script type="text/html" data-template-name="watchdog">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="fa fa-clock-o"></i> Timeout</label>
+        <input type="number" id="node-input-timeout" min="1" style="width:50%">
+        <select id="node-input-timeoutUnit" style="width:18%">
+            <option value="ms">ms</option>
+            <option value="s">s</option>
+            <option value="min">min</option>
+            <option value="h">h</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-startAlarm"><i class="fa fa-bell"></i> Alarm on deploy</label>
+        <input type="checkbox" id="node-input-startAlarm" style="width:auto">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="watchdog">
+    <p>Monitors incoming messages and triggers an alarm if no message is received within the timeout period.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt><dd>Any message resets the watchdog timer</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true resets timer without heartbeat</dd>
+    </dl>
+    <h3>Output 1 — Passthrough</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt><dd>Original message unchanged</dd>
+    </dl>
+    <h3>Output 2 — Alarm</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = alarm, false = cleared</dd>
+        <dt>watchdog <span class="property-type">object</span></dt><dd>{ alarm, timeout, lastMessage, elapsed }</dd>
+    </dl>
+</script>

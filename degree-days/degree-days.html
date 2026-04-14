@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('degree-days', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":         { "value": "" },
+            "heatingBase":  { "value": 20 },
+            "heatingLimit": { "value": 12 },
+            "resetDay":     { "value": 1 },
+            "persistent":   { "value": true },
+            "decimals":     { "value": 1 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-sun-o',
+        label: function() { return this.name || 'degree-days'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="degree-days">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-heatingBase"><i class="fa fa-thermometer-full"></i> Heating base (°C)</label>
+        <input type="number" id="node-input-heatingBase" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-heatingLimit"><i class="fa fa-thermometer-half"></i> Heating limit (°C)</label>
+        <input type="number" id="node-input-heatingLimit" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-resetDay"><i class="fa fa-calendar"></i> Reset day of year</label>
+        <input type="number" id="node-input-resetDay" min="1" max="365" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-database"></i> Persistent</label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="2" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="degree-days">
+    <p>Calculates heating degree days (HGT) according to SIA 2028. Send daily mean outdoor temperature as msg.payload.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Daily mean outdoor temperature in °C</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true resets accumulator</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Accumulated degree days (HGT)</dd>
+        <dt>degreeDays <span class="property-type">object</span></dt><dd>{ dailyMean, degreeDayToday, accumulated, heatingBase, heatingLimit, heatingActive }</dd>
+    </dl>
+</script>

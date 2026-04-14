@@ -1,0 +1,71 @@
+<script type="text/javascript">
+    RED.nodes.registerType('co2-controller', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":           { "value": "" },
+            "minLevel":       { "value": 800 },
+            "maxLevel":       { "value": 1200 },
+            "alarmLevel":     { "value": 1500 },
+            "minVentilation": { "value": 20 },
+            "hysteresis":     { "value": 50 },
+            "decimals":       { "value": 1 }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-leaf',
+        label: function() { return this.name || 'co2-controller'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['ventilation %', 'alarm']
+    });
+</script>
+
+<script type="text/html" data-template-name="co2-controller">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minLevel"><i class="fa fa-arrow-down"></i> Min level (ppm)</label>
+        <input type="number" id="node-input-minLevel" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-maxLevel"><i class="fa fa-arrow-up"></i> Max level (ppm)</label>
+        <input type="number" id="node-input-maxLevel" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-alarmLevel"><i class="fa fa-exclamation-triangle"></i> Alarm level (ppm)</label>
+        <input type="number" id="node-input-alarmLevel" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minVentilation"><i class="fa fa-wind"></i> Min ventilation (%)</label>
+        <input type="number" id="node-input-minVentilation" min="0" max="100" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-v"></i> Hysteresis (ppm)</label>
+        <input type="number" id="node-input-hysteresis" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="3" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="co2-controller">
+    <p>CO2-based ventilation controller (SIA 382.1 / EN 13779). Calculates ventilation percentage 0–100% based on CO2 level.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>CO2 concentration in ppm</dd>
+        <dt class="optional">override <span class="property-type">number</span></dt><dd>Force ventilation to fixed % (0–100)</dd>
+        <dt class="optional">clearOverride <span class="property-type">boolean</span></dt><dd>Return to automatic control</dd>
+    </dl>
+    <h3>Output 1</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Ventilation level 0–100%</dd>
+        <dt>co2Controller <span class="property-type">object</span></dt><dd>co2, ventilation, alarm, category, override</dd>
+    </dl>
+    <h3>Output 2 — Alarm</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = CO2 alarm (only on state change)</dd>
+    </dl>
+</script>

@@ -1,0 +1,34 @@
+{
+  "name": "node-red-contrib-frost-protection",
+  "version": "1.0.0",
+  "description": "Frost protection controller for HVAC systems",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "frost-protection.js",
+    "frost-protection.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": ["node-red", "frost-protection", "rpo", "hvac", "building-automation"],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "frost-protection": "frost-protection.js"
+    }
+  },
+  "engines": { "node": ">=14.0.0" },
+  "scripts": { "test": "mocha \"test/**/*_spec.js\" --exit" },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}
