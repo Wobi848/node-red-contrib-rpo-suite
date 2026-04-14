@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-watchdog",
+  "name": "node-red-contrib-rpo-watchdog",
   "version": "1.0.0",
   "description": "Watchdog timer - triggers alarm when no message received within timeout",
   "repository": {

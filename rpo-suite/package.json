@@ -65,7 +65,7 @@
     "node-red-contrib-gradient": "^1.0.0",
     "node-red-contrib-rpo-formula": "^1.0.0",
     "node-red-contrib-operating-hours": "^1.0.0",
-    "node-red-contrib-watchdog": "^1.0.0",
+    "node-red-contrib-rpo-watchdog": "^1.0.0",
     "node-red-contrib-min-on-time": "^1.0.0",
     "node-red-contrib-min-off-time": "^1.0.0",
     "node-red-contrib-abs-humidity": "^1.0.0",
