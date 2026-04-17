@@ -1,1 +1,12 @@
-{}
+{
+  "sequencer": {
+    "label": {
+      "name": "Name",
+      "channels": "Channels (2-8)",
+      "hysteresis": "Hysteresis (%)",
+      "minOnTime": "Min ON time (s)",
+      "minOffTime": "Min OFF time (s)",
+      "wearLevel": "Wear leveling"
+    }
+  }
+}

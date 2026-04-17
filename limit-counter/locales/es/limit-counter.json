@@ -1,18 +1,11 @@
 {
   "limit-counter": {
-    "label": "Contador de límite",
-    "threshold": "Umbral",
-    "hysteresis": "Histéresis",
-    "alarmCount": "Conteo de alarma",
-    "tip": "Cuenta cruces de umbral por flanco ascendente y activa alarma al conteo de alarma.",
-    "input": {
-      "payload": "Valor numérico a comparar con el umbral"
-    },
-    "output1": {
-      "payload": "Conteo de cruces actual"
-    },
-    "output2": {
-      "payload": "true cuando se alcanza el conteo de alarma, false si no"
+    "label": {
+      "name": "Nombre",
+      "threshold": "Umbral",
+      "limit": "Límite",
+      "hysteresis": "Histéresis",
+      "persistent": "Persistente"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-idle-mode",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Periodic exercise runner for idle pumps and valves",
   "repository": {
     "type": "git",

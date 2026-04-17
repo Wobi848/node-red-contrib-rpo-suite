@@ -1,19 +1,9 @@
 {
   "debounce": {
-    "label": "Antirrebote",
-    "debounceTime": "Tiempo de antirrebote (ms)",
-    "mode": "Modo",
-    "mode_opt": {
-      "trailing": "Flanco posterior",
-      "leading": "Flanco anterior",
-      "both": "Ambos flancos"
-    },
-    "tip": "Antirrebota mensajes rápidos. Envíe msg.flush=true para salida inmediata.",
-    "input": {
-      "payload": "Cualquier valor para antirrebote"
-    },
-    "output": {
-      "payload": "Valor sin rebote"
+    "label": {
+      "name": "Nombre",
+      "debounceTime": "Tiempo rebote",
+      "mode": "Modo"
     }
   }
 }

@@ -1,19 +1,9 @@
 {
   "multiplexer": {
-    "label": "Multiplexor",
-    "channel": "Canales de entrada",
-    "selectedChannel": "Canal activo",
-    "passthroughAll": "Modo paso completo",
-    "passthroughAll_opt": {
-      "false": "Solo canal activo",
-      "true": "Todos los canales"
-    },
-    "tip": "Envíe topic 'select' con payload ch0–ch7 para cambiar canal.",
-    "input": {
-      "payload": "Valor para el canal direccionado (topic=ch0..ch7) o selector de canal (topic=select, payload=ch0..ch7)"
-    },
-    "output": {
-      "payload": "Valor del canal activo actualmente"
+    "label": {
+      "name": "Nombre",
+      "channels": "Canales",
+      "initialChannel": "Canal inicial"
     }
   }
 }

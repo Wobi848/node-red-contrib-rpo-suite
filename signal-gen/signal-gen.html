@@ -41,11 +41,11 @@
 
 <script type="text/html" data-template-name="signal-gen">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="signal-gen.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-waveform"><i class="fa fa-line-chart"></i> Waveform</label>
+        <label for="node-input-waveform"><i class="fa fa-line-chart"></i> <span data-i18n="signal-gen.label.waveform"></span></label>
         <select id="node-input-waveform" style="width:70%">
             <option value="sine">Sine</option>
             <option value="square">Square</option>
@@ -55,15 +55,15 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-amplitude"><i class="fa fa-arrows-v"></i> Amplitude</label>
+        <label for="node-input-amplitude"><i class="fa fa-arrows-v"></i> <span data-i18n="signal-gen.label.amplitude"></span></label>
         <input type="number" id="node-input-amplitude" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-offset"><i class="fa fa-arrows-h"></i> Offset</label>
+        <label for="node-input-offset"><i class="fa fa-arrows-h"></i> <span data-i18n="signal-gen.label.offset"></span></label>
         <input type="number" id="node-input-offset" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-period"><i class="fa fa-clock-o"></i> Period</label>
+        <label for="node-input-period"><i class="fa fa-clock-o"></i> <span data-i18n="signal-gen.label.period"></span></label>
         <input type="number" id="node-input-period" min="1" style="width:50%">
         <select id="node-input-periodUnit" style="width:18%; margin-left:4px">
             <option value="s">s</option>
@@ -71,15 +71,15 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-interval"><i class="fa fa-refresh"></i> Interval (ms)</label>
+        <label for="node-input-interval"><i class="fa fa-refresh"></i> <span data-i18n="signal-gen.label.interval"></span></label>
         <input type="number" id="node-input-interval" min="100" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> Decimal Places</label>
+        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> <span data-i18n="signal-gen.label.decimals"></span></label>
         <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-autoStart"><i class="fa fa-play"></i> Auto Start</label>
+        <label for="node-input-autoStart"><i class="fa fa-play"></i> <span data-i18n="signal-gen.label.autoStart"></span></label>
         <input type="checkbox" id="node-input-autoStart" style="width:auto;margin-top:4px">
     </div>
 </script>

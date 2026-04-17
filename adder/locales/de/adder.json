@@ -1,19 +1,10 @@
 {
   "adder": {
-    "label": "Addierer",
-    "topics": "Topics / Gewichte",
-    "mode": "Modus",
-    "mode_opt": {
-      "sum": "Summe",
-      "avg": "Gewichteter Durchschnitt"
-    },
-    "minTopics": "Min. benötigte Topics",
-    "tip": "Sammelt Werte von benannten Topics und gibt Summe oder gewichteten Durchschnitt aus.",
-    "input": {
-      "payload": "Numerischer Wert (Topic bestimmt den Slot)"
-    },
-    "output": {
-      "payload": "Summe oder gewichteter Durchschnitt aller Topic-Werte"
+    "label": {
+      "name": "Name",
+      "mode": "Modus",
+      "minTopics": "Min. Eingänge",
+      "decimals": "Dezimalstellen"
     }
   }
 }

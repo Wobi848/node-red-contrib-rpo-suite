@@ -1,28 +1,14 @@
 {
   "counter": {
-    "label": "Zähler",
-    "direction": "Richtung",
-    "direction_opt": {
-      "up": "Aufwärts",
-      "down": "Abwärts"
-    },
-    "step": "Schrittweite",
-    "initialValue": "Startwert",
-    "min": "Min",
-    "max": "Max",
-    "onLimit": "Bei Grenzwert",
-    "onLimit_opt": {
-      "stop": "Stopp",
-      "wrap": "Überlauf",
-      "alarm": "Alarm"
-    },
-    "persistent": "Über Neustart hinaus speichern",
-    "tip": "Zählt auf/ab. Topics: reset, set, up, down. msg.step überschreibt Schrittweite.",
-    "input": {
-      "payload": "Truthy-Wert zum Zählen; Topic steuert Richtung/Reset/Set"
-    },
-    "output": {
-      "payload": "Aktueller Zählerstand; msg.counter = { count, direction, step, min, max, atLimit, limitType }"
+    "label": {
+      "name": "Name",
+      "direction": "Richtung",
+      "step": "Schritt",
+      "initialValue": "Startwert",
+      "min": "Min",
+      "max": "Max",
+      "onLimit": "Bei Limit",
+      "persistent": "Persistent"
     }
   }
 }

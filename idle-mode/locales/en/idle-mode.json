@@ -1,1 +1,10 @@
-{}
+{
+  "idle-mode": {
+    "label": {
+      "name": "Name",
+      "exerciseInterval": "Exercise interval",
+      "exerciseDuration": "Exercise duration (s)",
+      "persistent": "Persistent"
+    }
+  }
+}

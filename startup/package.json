@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-startup",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Startup sequence with ramp-up and pre/post-run for pumps and fans",
   "repository": {
     "type": "git",

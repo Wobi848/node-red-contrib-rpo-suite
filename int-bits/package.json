@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-int-bits",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Integer to bits converter - bidirectional integer and boolean array conversion",
   "repository": {
     "type": "git",

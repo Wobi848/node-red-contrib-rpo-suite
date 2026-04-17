@@ -1,14 +1,10 @@
 {
   "ring-counter": {
-    "label": "Ring Counter",
-    "size": "Ring size",
-    "initialIndex": "Initial index",
-    "tip": "Wraps around index counter. Topics: advance, retreat, set, reset.",
-    "input": {
-      "payload": "Any truthy value to advance; topic controls direction"
-    },
-    "output": {
-      "payload": "Current ring index (0 to size-1)"
+    "label": {
+      "name": "Name",
+      "count": "Count",
+      "initialIndex": "Initial index",
+      "persistent": "Persistent"
     }
   }
 }

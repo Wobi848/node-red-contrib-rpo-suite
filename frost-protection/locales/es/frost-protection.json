@@ -1,1 +1,13 @@
-{}
+{
+  "frost-protection": {
+    "label": {
+      "name": "Nombre",
+      "mode": "Modo",
+      "frostThreshold": "Umbral helada (°C)",
+      "hysteresis": "Histeresis (K)",
+      "minTemp": "Temp. min. (°C, 100%)",
+      "topicOutdoor": "Topic exterior",
+      "topicSupply": "Topic suministro (opcional)"
+    }
+  }
+}

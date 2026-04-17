@@ -1,18 +1,10 @@
 {
   "int-bits": {
-    "label": "Int Bits",
-    "bits": "Number of bits",
-    "order": "Bit order",
-    "order_opt": {
-      "lsb": "LSB first",
-      "msb": "MSB first"
-    },
-    "tip": "Converts integer to/from array of bits.",
-    "input": {
-      "payload": "Integer value to convert to bit array, or bit array to convert to integer"
-    },
-    "output": {
-      "payload": "Bit array (number→bits) or integer (bits→number)"
+    "label": {
+      "name": "Name",
+      "mode": "Mode",
+      "bits": "Bits",
+      "order": "Bit order"
     }
   }
 }

@@ -1,19 +1,10 @@
 {
   "adder": {
-    "label": "Sumador",
-    "topics": "Topics / pesos",
-    "mode": "Modo",
-    "mode_opt": {
-      "sum": "Suma",
-      "avg": "Promedio ponderado"
-    },
-    "minTopics": "Mín. topics requeridos",
-    "tip": "Recoge valores de topics nombrados, luego genera suma o promedio ponderado.",
-    "input": {
-      "payload": "Valor numérico (el topic determina el slot)"
-    },
-    "output": {
-      "payload": "Suma o promedio ponderado de todos los valores de topic"
+    "label": {
+      "name": "Nombre",
+      "mode": "Modo",
+      "minTopics": "Entradas mín.",
+      "decimals": "Decimales"
     }
   }
 }

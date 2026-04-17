@@ -19,11 +19,11 @@
 
 <script type="text/html" data-template-name="watchdog">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="watchdog.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-timeout"><i class="fa fa-clock-o"></i> Timeout</label>
+        <label for="node-input-timeout"><i class="fa fa-clock-o"></i> <span data-i18n="watchdog.label.timeout"></span></label>
         <input type="number" id="node-input-timeout" min="1" style="width:50%">
         <select id="node-input-timeoutUnit" style="width:18%">
             <option value="ms">ms</option>
@@ -33,7 +33,7 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-startAlarm"><i class="fa fa-bell"></i> Alarm on deploy</label>
+        <label for="node-input-startAlarm"><i class="fa fa-bell"></i> <span data-i18n="watchdog.label.startAlarm"></span></label>
         <input type="checkbox" id="node-input-startAlarm" style="width:auto">
     </div>
 </script>

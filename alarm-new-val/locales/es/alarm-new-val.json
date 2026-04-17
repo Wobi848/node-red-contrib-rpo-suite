@@ -1,21 +1,9 @@
 {
   "alarm-new-val": {
-    "label": "Alarma Nuevo Valor",
-    "mode": "Modo de disparo",
-    "mode_opt": {
-      "always": "Siempre",
-      "changed": "Solo al cambiar"
-    },
-    "pulseMs": "Duración del pulso (ms)",
-    "tip": "Pasa el valor y emite un pulso temporizado en la segunda salida.",
-    "input": {
-      "payload": "Cualquier valor"
-    },
-    "output1": {
-      "payload": "Valor de entrada pasado"
-    },
-    "output2": {
-      "payload": "true en pulso de nuevo valor, luego false tras duración del pulso"
+    "label": {
+      "name": "Nombre",
+      "mode": "Modo",
+      "tolerance": "Tolerancia"
     }
   }
 }

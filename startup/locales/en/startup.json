@@ -1,1 +1,14 @@
-{}
+{
+  "startup": {
+    "label": {
+      "name": "Name",
+      "preRunTime": "Pre-run time (s)",
+      "preRunSpeed": "Pre-run speed (%)",
+      "startSpeed": "Start speed (%)",
+      "rampTime": "Ramp-up time (s)",
+      "rampDownTime": "Ramp-down time (s)",
+      "postRunTime": "Post-run time (s)",
+      "postRunSpeed": "Post-run speed (%)"
+    }
+  }
+}

@@ -1,18 +1,10 @@
 {
   "int-bits": {
-    "label": "Int Bits",
-    "bits": "Número de bits",
-    "order": "Orden de bits",
-    "order_opt": {
-      "lsb": "LSB primero",
-      "msb": "MSB primero"
-    },
-    "tip": "Convierte entero hacia/desde array de bits.",
-    "input": {
-      "payload": "Entero → array de bits, o array de bits → entero"
-    },
-    "output": {
-      "payload": "Array de bits (número→bits) o entero (bits→número)"
+    "label": {
+      "name": "Nombre",
+      "mode": "Modo",
+      "bits": "Bits",
+      "order": "Orden bits"
     }
   }
 }

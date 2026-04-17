@@ -1,25 +1,14 @@
 {
   "signal-gen": {
-    "label": "Signal Generator",
-    "waveform": "Waveform",
-    "waveform_opt": {
-      "sine": "Sine",
-      "square": "Square",
-      "sawtooth": "Sawtooth",
-      "triangle": "Triangle",
-      "noise": "Noise"
-    },
-    "frequency": "Frequency (Hz)",
-    "amplitude": "Amplitude",
-    "offset": "Offset",
-    "intervalMs": "Interval (ms)",
-    "autoStart": "Auto-start",
-    "tip": "Generates periodic waveforms. Send 'start', 'stop', or 'reset' to control.",
-    "input": {
-      "payload": "'start', 'stop', or 'reset' to control generation"
-    },
-    "output": {
-      "payload": "Current waveform value"
+    "label": {
+      "name": "Name",
+      "waveform": "Waveform",
+      "amplitude": "Amplitude",
+      "offset": "Offset",
+      "period": "Period (s)",
+      "interval": "Interval (ms)",
+      "decimals": "Decimals",
+      "autoStart": "Auto start"
     }
   }
 }

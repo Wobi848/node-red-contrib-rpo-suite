@@ -1,1 +1,15 @@
-{}
+{
+  "optimization": {
+    "label": {
+      "name": "Name",
+      "occupancyTime": "Nutzungszeit (HH:MM)",
+      "thermalMass": "Thermische Masse (min/K)",
+      "heatingPower": "Heizleistung",
+      "outdoorFactor": "Aussenfaktor",
+      "maxPreHeat": "Max. Vorheizzeit (min)",
+      "topicRoom": "Topic Raum",
+      "topicOutdoor": "Topic Aussen",
+      "topicSetpoint": "Topic Sollwert"
+    }
+  }
+}

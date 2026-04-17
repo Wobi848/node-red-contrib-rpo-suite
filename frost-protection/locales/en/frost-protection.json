@@ -1,1 +1,13 @@
-{}
+{
+  "frost-protection": {
+    "label": {
+      "name": "Name",
+      "mode": "Mode",
+      "frostThreshold": "Frost threshold (°C)",
+      "hysteresis": "Hysteresis (K)",
+      "minTemp": "Min temp (°C, 100%)",
+      "topicOutdoor": "Topic outdoor",
+      "topicSupply": "Topic supply (optional)"
+    }
+  }
+}

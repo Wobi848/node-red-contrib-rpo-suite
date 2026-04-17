@@ -29,11 +29,11 @@
 
 <script type="text/html" data-template-name="gradient">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="gradient.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-unit"><i class="fa fa-clock-o"></i> Output Unit</label>
+        <label for="node-input-unit"><i class="fa fa-clock-o"></i> <span data-i18n="gradient.label.unit"></span></label>
         <select id="node-input-unit" style="width:70%">
             <option value="per_s">per second (/s)</option>
             <option value="per_min">per minute (/min)</option>
@@ -41,15 +41,15 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-smoothing"><i class="fa fa-filter"></i> Smoothing (samples)</label>
+        <label for="node-input-smoothing"><i class="fa fa-filter"></i> <span data-i18n="gradient.label.smoothing"></span></label>
         <input type="number" id="node-input-smoothing" min="1" max="20" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> Decimal Places</label>
+        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> <span data-i18n="gradient.label.decimals"></span></label>
         <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-alarmRate"><i class="fa fa-exclamation-triangle"></i> Alarm Rate</label>
+        <label for="node-input-alarmRate"><i class="fa fa-exclamation-triangle"></i> <span data-i18n="gradient.label.alarmRate"></span></label>
         <input type="number" id="node-input-alarmRate" min="0" step="0.1" style="width:70%">
         <span style="color:#aaa;margin-left:5px">0 = disabled</span>
     </div>

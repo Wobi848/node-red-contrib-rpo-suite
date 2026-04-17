@@ -1,1 +1,11 @@
-{}
+{
+  "i-element": {
+    "label": {
+      "name": "Name",
+      "Ti": "Ti",
+      "outMin": "Ausgang min",
+      "outMax": "Ausgang max",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

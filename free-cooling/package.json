@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-free-cooling",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Free cooling / night cooling recommendation for HVAC systems",
   "repository": {
     "type": "git",

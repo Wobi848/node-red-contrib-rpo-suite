@@ -21,23 +21,23 @@
 
 <script type="text/html" data-template-name="heat-quantity">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="heat-quantity.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-topicFlow"><i class="fa fa-tachometer"></i> Topic flow (m³/h)</label>
+        <label for="node-input-topicFlow"><i class="fa fa-tachometer"></i> <span data-i18n="heat-quantity.label.topicFlow"></span></label>
         <input type="text" id="node-input-topicFlow" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-topicSupply"><i class="fa fa-thermometer-full"></i> Topic supply (°C)</label>
+        <label for="node-input-topicSupply"><i class="fa fa-thermometer-full"></i> <span data-i18n="heat-quantity.label.topicSupply"></span></label>
         <input type="text" id="node-input-topicSupply" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-topicReturn"><i class="fa fa-thermometer-empty"></i> Topic return (°C)</label>
+        <label for="node-input-topicReturn"><i class="fa fa-thermometer-empty"></i> <span data-i18n="heat-quantity.label.topicReturn"></span></label>
         <input type="text" id="node-input-topicReturn" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-medium"><i class="fa fa-flask"></i> Medium</label>
+        <label for="node-input-medium"><i class="fa fa-flask"></i> <span data-i18n="heat-quantity.label.medium"></span></label>
         <select id="node-input-medium" style="width:70%">
             <option value="water">Water (1.163)</option>
             <option value="glycol30">Glycol 30% (1.100)</option>
@@ -45,11 +45,11 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-persistent"><i class="fa fa-database"></i> Persistent</label>
+        <label for="node-input-persistent"><i class="fa fa-database"></i> <span data-i18n="heat-quantity.label.persistent"></span></label>
         <input type="checkbox" id="node-input-persistent" style="width:auto">
     </div>
     <div class="form-row">
-        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> <span data-i18n="heat-quantity.label.decimals"></span></label>
         <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
     </div>
 </script>

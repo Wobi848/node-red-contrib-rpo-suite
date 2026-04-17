@@ -1,19 +1,9 @@
 {
   "multiplexer": {
-    "label": "Multiplexer",
-    "channel": "Input channels",
-    "selectedChannel": "Active channel",
-    "passthroughAll": "Pass-through mode",
-    "passthroughAll_opt": {
-      "false": "Active channel only",
-      "true": "All channels"
-    },
-    "tip": "Send topic 'select' with payload ch0–ch7 to switch channel.",
-    "input": {
-      "payload": "Value for the addressed channel (topic=ch0..ch7) or channel selector (topic=select, payload=ch0..ch7)"
-    },
-    "output": {
-      "payload": "Value of the currently active channel"
+    "label": {
+      "name": "Name",
+      "channels": "Channels",
+      "initialChannel": "Initial channel"
     }
   }
 }

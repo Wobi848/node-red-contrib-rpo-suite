@@ -1,19 +1,9 @@
 {
   "rate-limiter": {
-    "label": "Limitador de tasa",
-    "maxRate": "Tasa máxima",
-    "unit": "Unidad",
-    "unit_opt": {
-      "per_s": "/s",
-      "per_min": "/min",
-      "per_h": "/h"
-    },
-    "tip": "Limita la tasa máxima de cambio por unidad de tiempo.",
-    "input": {
-      "payload": "Valor numérico de entrada"
-    },
-    "output": {
-      "payload": "Valor numérico con tasa limitada"
+    "label": {
+      "name": "Nombre",
+      "maxRate": "Tasa máx.",
+      "decimals": "Decimales"
     }
   }
 }

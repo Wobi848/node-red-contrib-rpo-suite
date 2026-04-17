@@ -1,1 +1,14 @@
-{}
+{
+  "setpoint-shift": {
+    "label": {
+      "name": "Nombre",
+      "outdoorRef": "Exterior ref. (°C)",
+      "outdoorMin": "Exterior min. (°C)",
+      "setpointBase": "Consigna en ref. (°C)",
+      "setpointMax": "Consigna en min. (°C)",
+      "limitLow": "Limite inf. (°C, opc.)",
+      "limitHigh": "Limite sup. (°C, opc.)",
+      "decimals": "Decimales"
+    }
+  }
+}

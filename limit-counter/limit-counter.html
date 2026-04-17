@@ -30,23 +30,23 @@
 
 <script type="text/html" data-template-name="limit-counter">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="limit-counter.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-threshold"><i class="fa fa-level-up"></i> Threshold</label>
+        <label for="node-input-threshold"><i class="fa fa-level-up"></i> <span data-i18n="limit-counter.label.threshold"></span></label>
         <input type="number" id="node-input-threshold" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-limit"><i class="fa fa-exclamation-triangle"></i> Alarm Limit</label>
+        <label for="node-input-limit"><i class="fa fa-exclamation-triangle"></i> <span data-i18n="limit-counter.label.limit"></span></label>
         <input type="number" id="node-input-limit" min="1" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> Hysteresis</label>
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> <span data-i18n="limit-counter.label.hysteresis"></span></label>
         <input type="number" id="node-input-hysteresis" min="0" step="0.1" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-persistent"><i class="fa fa-hdd-o"></i> Persistent</label>
+        <label for="node-input-persistent"><i class="fa fa-hdd-o"></i> <span data-i18n="limit-counter.label.persistent"></span></label>
         <input type="checkbox" id="node-input-persistent" style="width:auto;margin-top:4px">
     </div>
 </script>

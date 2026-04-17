@@ -26,11 +26,11 @@
 
 <script type="text/html" data-template-name="edge-filter">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="edge-filter.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-window"><i class="fa fa-clock-o"></i> Window</label>
+        <label for="node-input-window"><i class="fa fa-clock-o"></i> <span data-i18n="edge-filter.label.window"></span></label>
         <input type="number" id="node-input-window" min="1" style="width:50%">
         <select id="node-input-windowUnit" style="width:18%; margin-left:4px">
             <option value="ms">ms</option>
@@ -39,7 +39,7 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> <span data-i18n="edge-filter.label.mode"></span></label>
         <select id="node-input-mode" style="width:70%">
             <option value="time">Time window</option>
             <option value="changed">Changed value only</option>

@@ -1,14 +1,9 @@
 {
   "pwm": {
-    "label": "PWM",
-    "frequency": "Frequenz (Hz)",
-    "minOnTime": "Min. Einschaltdauer (ms)",
-    "tip": "Payload 0–100 setzt den Tastgrad. msg.bypass=true leitet Rohwert weiter.",
-    "input": {
-      "payload": "Tastgrad 0–100 % (Zahl)"
-    },
-    "output": {
-      "payload": "1 (EIN) oder 0 (AUS) entsprechend dem PWM-Zyklus"
+    "label": {
+      "name": "Name",
+      "period": "Periode",
+      "invert": "Invertieren"
     }
   }
 }

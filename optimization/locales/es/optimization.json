@@ -1,1 +1,15 @@
-{}
+{
+  "optimization": {
+    "label": {
+      "name": "Nombre",
+      "occupancyTime": "Hora ocupacion (HH:MM)",
+      "thermalMass": "Masa termica (min/K)",
+      "heatingPower": "Potencia calef.",
+      "outdoorFactor": "Factor exterior",
+      "maxPreHeat": "Precalent. max. (min)",
+      "topicRoom": "Topic habitacion",
+      "topicOutdoor": "Topic exterior",
+      "topicSetpoint": "Topic consigna"
+    }
+  }
+}

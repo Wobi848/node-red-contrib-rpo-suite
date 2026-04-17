@@ -1,24 +1,9 @@
 {
   "edge-filter": {
-    "label": "Filtro de flanco",
-    "window": "Tamaño de ventana",
-    "windowUnit": "Unidad de ventana",
-    "windowUnit_opt": {
-      "ms": "ms",
-      "s": "s",
-      "min": "min"
-    },
-    "mode": "Modo de filtro",
-    "mode_opt": {
-      "time": "Ventana de tiempo",
-      "changed": "Al cambiar"
-    },
-    "tip": "Bloquea mensajes repetidos dentro de la ventana.",
-    "input": {
-      "payload": "Cualquier valor"
-    },
-    "output": {
-      "payload": "Valor reenviado (primero en ventana)"
+    "label": {
+      "name": "Nombre",
+      "window": "Ventana",
+      "mode": "Modo"
     }
   }
 }

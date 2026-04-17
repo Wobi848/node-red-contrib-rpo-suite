@@ -1,18 +1,11 @@
 {
   "limit-counter": {
-    "label": "Grenzzähler",
-    "threshold": "Schwellenwert",
-    "hysteresis": "Hysterese",
-    "alarmCount": "Alarmzähler",
-    "tip": "Zählt steigende Flanken-Schwellenwertüberschreitungen und löst bei Alarmzähler aus.",
-    "input": {
-      "payload": "Numerischer Wert zum Vergleich mit dem Schwellenwert"
-    },
-    "output1": {
-      "payload": "Aktueller Überschreitungszähler"
-    },
-    "output2": {
-      "payload": "true wenn Alarmzähler erreicht, sonst false"
+    "label": {
+      "name": "Name",
+      "threshold": "Schwellwert",
+      "limit": "Grenzwert",
+      "hysteresis": "Hysterese",
+      "persistent": "Persistent"
     }
   }
 }

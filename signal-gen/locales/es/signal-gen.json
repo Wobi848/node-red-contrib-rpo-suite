@@ -1,25 +1,14 @@
 {
   "signal-gen": {
-    "label": "Generador de señal",
-    "waveform": "Forma de onda",
-    "waveform_opt": {
-      "sine": "Seno",
-      "square": "Cuadrada",
-      "sawtooth": "Diente de sierra",
-      "triangle": "Triángulo",
-      "noise": "Ruido"
-    },
-    "frequency": "Frecuencia (Hz)",
-    "amplitude": "Amplitud",
-    "offset": "Desplazamiento",
-    "intervalMs": "Intervalo (ms)",
-    "autoStart": "Auto-inicio",
-    "tip": "Genera formas de onda periódicas. Envíe 'start', 'stop' o 'reset' para controlar.",
-    "input": {
-      "payload": "'start', 'stop' o 'reset' para controlar la generación"
-    },
-    "output": {
-      "payload": "Valor actual de la forma de onda"
+    "label": {
+      "name": "Nombre",
+      "waveform": "Forma onda",
+      "amplitude": "Amplitud",
+      "offset": "Offset",
+      "period": "Período (s)",
+      "interval": "Intervalo (ms)",
+      "decimals": "Decimales",
+      "autoStart": "Inicio auto."
     }
   }
 }

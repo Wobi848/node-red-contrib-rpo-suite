@@ -1,1 +1,13 @@
-{}
+{
+  "heat-quantity": {
+    "label": {
+      "name": "Name",
+      "topicFlow": "Topic Durchfluss (m3/h)",
+      "topicSupply": "Topic Vorlauf (°C)",
+      "topicReturn": "Topic Ruecklauf (°C)",
+      "medium": "Medium",
+      "persistent": "Persistent",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

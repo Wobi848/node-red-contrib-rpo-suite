@@ -1,24 +1,9 @@
 {
   "edge-filter": {
-    "label": "Edge Filter",
-    "window": "Window size",
-    "windowUnit": "Window unit",
-    "windowUnit_opt": {
-      "ms": "ms",
-      "s": "s",
-      "min": "min"
-    },
-    "mode": "Filter mode",
-    "mode_opt": {
-      "time": "Time window",
-      "changed": "On change"
-    },
-    "tip": "Blocks repeated messages within the window. Changed mode also blocks identical values.",
-    "input": {
-      "payload": "Any value"
-    },
-    "output": {
-      "payload": "Forwarded value (first within window)"
+    "label": {
+      "name": "Name",
+      "window": "Window",
+      "mode": "Mode"
     }
   }
 }

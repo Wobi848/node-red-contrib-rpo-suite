@@ -1,1 +1,11 @@
-{}
+{
+  "abs-humidity": {
+    "label": {
+      "name": "Nombre",
+      "topicTemp": "Topic temperatura",
+      "topicRh": "Topic humedad rel.",
+      "pressure": "Presión (hPa)",
+      "decimals": "Decimales"
+    }
+  }
+}

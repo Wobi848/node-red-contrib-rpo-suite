@@ -1,1 +1,13 @@
-{}
+{
+  "enthalpy": {
+    "label": {
+      "name": "Name",
+      "mode": "Modus",
+      "topicTempIn": "Topic Temp. (Zuluft)",
+      "topicRhIn": "Topic Feuchte (Zuluft)",
+      "topicTempOut": "Topic Temp. (Abluft)",
+      "topicRhOut": "Topic Feuchte (Abluft)",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

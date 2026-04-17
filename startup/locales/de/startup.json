@@ -1,1 +1,14 @@
-{}
+{
+  "startup": {
+    "label": {
+      "name": "Name",
+      "preRunTime": "Vorlaufzeit (s)",
+      "preRunSpeed": "Vorlauf-Drehzahl (%)",
+      "startSpeed": "Startdrehzahl (%)",
+      "rampTime": "Hochlaufzeit (s)",
+      "rampDownTime": "Auslaufzeit (s)",
+      "postRunTime": "Nachlaufzeit (s)",
+      "postRunSpeed": "Nachlauf-Drehzahl (%)"
+    }
+  }
+}

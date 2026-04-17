@@ -1,1 +1,14 @@
-{}
+{
+  "setpoint-shift": {
+    "label": {
+      "name": "Name",
+      "outdoorRef": "Aussen-Referenz (°C)",
+      "outdoorMin": "Aussen-Min. (°C)",
+      "setpointBase": "Sollwert bei Referenz (°C)",
+      "setpointMax": "Sollwert bei Min. (°C)",
+      "limitLow": "Untergrenze (°C, optional)",
+      "limitHigh": "Obergrenze (°C, optional)",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

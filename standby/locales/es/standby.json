@@ -1,1 +1,11 @@
-{}
+{
+  "standby": {
+    "label": {
+      "name": "Nombre",
+      "comfortSetpoint": "Consigna confort (°C)",
+      "standbyOffset": "Offset reduccion (K)",
+      "frostSetpoint": "Consigna helada (°C)",
+      "initialMode": "Modo inicial"
+    }
+  }
+}

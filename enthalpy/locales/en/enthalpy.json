@@ -1,1 +1,13 @@
-{}
+{
+  "enthalpy": {
+    "label": {
+      "name": "Name",
+      "mode": "Mode",
+      "topicTempIn": "Topic temp (in)",
+      "topicRhIn": "Topic rh (in)",
+      "topicTempOut": "Topic temp (out)",
+      "topicRhOut": "Topic rh (out)",
+      "decimals": "Decimals"
+    }
+  }
+}

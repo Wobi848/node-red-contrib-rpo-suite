@@ -1,28 +1,14 @@
 {
   "counter": {
-    "label": "Counter",
-    "direction": "Direction",
-    "direction_opt": {
-      "up": "Up",
-      "down": "Down"
-    },
-    "step": "Step",
-    "initialValue": "Initial value",
-    "min": "Min",
-    "max": "Max",
-    "onLimit": "On limit",
-    "onLimit_opt": {
-      "stop": "Stop",
-      "wrap": "Wrap",
-      "alarm": "Alarm"
-    },
-    "persistent": "Persist across restarts",
-    "tip": "Counts up/down. Topics: reset, set, up, down. msg.step overrides step.",
-    "input": {
-      "payload": "Truthy to count; topic controls direction/reset/set"
-    },
-    "output": {
-      "payload": "Current count; msg.counter = { count, direction, step, min, max, atLimit, limitType }"
+    "label": {
+      "name": "Name",
+      "direction": "Direction",
+      "step": "Step",
+      "initialValue": "Initial value",
+      "min": "Min",
+      "max": "Max",
+      "onLimit": "On limit",
+      "persistent": "Persistent"
     }
   }
 }

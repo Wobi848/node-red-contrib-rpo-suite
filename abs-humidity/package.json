@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-abs-humidity",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Absolute humidity calculator using Magnus formula",
   "repository": {
     "type": "git",

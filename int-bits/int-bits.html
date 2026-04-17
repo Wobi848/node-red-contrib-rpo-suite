@@ -26,18 +26,18 @@
 
 <script type="text/html" data-template-name="int-bits">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="int-bits.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-mode"><i class="fa fa-exchange"></i> Mode</label>
+        <label for="node-input-mode"><i class="fa fa-exchange"></i> <span data-i18n="int-bits.label.mode"></span></label>
         <select id="node-input-mode" style="width:70%">
             <option value="int-to-bits">Integer → Bits</option>
             <option value="bits-to-int">Bits → Integer</option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-bits"><i class="fa fa-list-ol"></i> Bit Count</label>
+        <label for="node-input-bits"><i class="fa fa-list-ol"></i> <span data-i18n="int-bits.label.bits"></span></label>
         <select id="node-input-bits" style="width:70%">
             <option value="4">4 bits</option>
             <option value="8">8 bits</option>
@@ -46,7 +46,7 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Bit Order</label>
+        <label for="node-input-order"><i class="fa fa-sort"></i> <span data-i18n="int-bits.label.order"></span></label>
         <select id="node-input-order" style="width:70%">
             <option value="LSB">LSB first (bit0 = LSB)</option>
             <option value="MSB">MSB first</option>

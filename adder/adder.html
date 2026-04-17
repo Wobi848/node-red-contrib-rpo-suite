@@ -40,11 +40,11 @@
 
 <script type="text/html" data-template-name="adder">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="adder.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-mode"><i class="fa fa-calculator"></i> Mode</label>
+        <label for="node-input-mode"><i class="fa fa-calculator"></i> <span data-i18n="adder.label.mode"></span></label>
         <select id="node-input-mode" style="width:70%">
             <option value="sum">Sum (Σ w×v)</option>
             <option value="average">Weighted Average</option>
@@ -55,11 +55,11 @@
         <ol id="node-input-topics-list"></ol>
     </div>
     <div class="form-row">
-        <label for="node-input-minTopics"><i class="fa fa-hourglass"></i> Min Topics</label>
+        <label for="node-input-minTopics"><i class="fa fa-hourglass"></i> <span data-i18n="adder.label.minTopics"></span></label>
         <input type="number" id="node-input-minTopics" min="1" style="width:70%">
     </div>
     <div class="form-row">
-        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> Decimal Places</label>
+        <label for="node-input-decimals"><i class="fa fa-sort-numeric-asc"></i> <span data-i18n="adder.label.decimals"></span></label>
         <input type="number" id="node-input-decimals" min="0" max="10" style="width:70%">
     </div>
 </script>

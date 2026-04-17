@@ -1,1 +1,10 @@
-{}
+{
+  "time-shift": {
+    "label": {
+      "name": "Name",
+      "delay": "Verzoegerung",
+      "maxBuffer": "Max. Puffer",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

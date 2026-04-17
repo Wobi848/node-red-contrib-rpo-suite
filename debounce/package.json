@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-rpo-debounce",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Debounce filter - waits until input is stable before forwarding message",
   "repository": {
     "type": "git",

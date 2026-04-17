@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-dewpoint",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dew point calculator with condensation alarm",
   "repository": {
     "type": "git",

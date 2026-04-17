@@ -1,1 +1,12 @@
-{}
+{
+  "sequencer": {
+    "label": {
+      "name": "Name",
+      "channels": "Kanaele (2-8)",
+      "hysteresis": "Hysterese (%)",
+      "minOnTime": "Min. EIN-Zeit (s)",
+      "minOffTime": "Min. AUS-Zeit (s)",
+      "wearLevel": "Verschleissausgleich"
+    }
+  }
+}

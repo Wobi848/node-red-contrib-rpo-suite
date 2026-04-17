@@ -1,1 +1,9 @@
-{}
+{
+  "lookup-table": {
+    "label": {
+      "name": "Name",
+      "points": "Punkte (X -> Y)",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

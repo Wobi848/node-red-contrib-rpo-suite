@@ -1,1 +1,13 @@
-{}
+{
+  "heat-quantity": {
+    "label": {
+      "name": "Nombre",
+      "topicFlow": "Topic caudal (m3/h)",
+      "topicSupply": "Topic impulsion (°C)",
+      "topicReturn": "Topic retorno (°C)",
+      "medium": "Medio",
+      "persistent": "Persistente",
+      "decimals": "Decimales"
+    }
+  }
+}

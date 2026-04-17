@@ -1,1 +1,9 @@
-{}
+{
+  "priority": {
+    "label": {
+      "name": "Nombre",
+      "topics": "Entradas de prioridad",
+      "defaultValue": "Valor por defecto"
+    }
+  }
+}

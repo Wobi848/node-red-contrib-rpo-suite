@@ -1,1 +1,11 @@
-{}
+{
+  "standby": {
+    "label": {
+      "name": "Name",
+      "comfortSetpoint": "Komfort-Sollwert (°C)",
+      "standbyOffset": "Absenk-Offset (K)",
+      "frostSetpoint": "Frost-Sollwert (°C)",
+      "initialMode": "Startmodus"
+    }
+  }
+}

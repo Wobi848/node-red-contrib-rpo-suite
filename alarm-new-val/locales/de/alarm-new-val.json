@@ -1,21 +1,9 @@
 {
   "alarm-new-val": {
-    "label": "Alarm Neuer Wert",
-    "mode": "Auslösemodus",
-    "mode_opt": {
-      "always": "Immer",
-      "changed": "Nur bei Änderung"
-    },
-    "pulseMs": "Pulsdauer (ms)",
-    "tip": "Leitet Wert weiter und gibt einen zeitgesteuerten Puls am zweiten Ausgang aus.",
-    "input": {
-      "payload": "Beliebiger Wert"
-    },
-    "output1": {
-      "payload": "Durchgeleiteter Eingabewert"
-    },
-    "output2": {
-      "payload": "true bei neuem Wert-Puls, dann false nach Pulsdauer"
+    "label": {
+      "name": "Name",
+      "mode": "Modus",
+      "tolerance": "Toleranz"
     }
   }
 }

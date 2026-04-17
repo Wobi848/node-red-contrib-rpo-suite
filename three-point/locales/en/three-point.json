@@ -1,1 +1,11 @@
-{}
+{
+  "three-point": {
+    "label": {
+      "name": "Name",
+      "runtime": "Runtime (s)",
+      "deadband": "Deadband (%)",
+      "minPulse": "Min pulse (s)",
+      "initPos": "Initial position (%)"
+    }
+  }
+}

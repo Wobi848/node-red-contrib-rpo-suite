@@ -26,11 +26,11 @@
 
 <script type="text/html" data-template-name="pwm">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="pwm.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-period"><i class="fa fa-clock-o"></i> Period</label>
+        <label for="node-input-period"><i class="fa fa-clock-o"></i> <span data-i18n="pwm.label.period"></span></label>
         <input type="number" id="node-input-period" min="1" style="width:50%">
         <select id="node-input-periodUnit" style="width:18%; margin-left:4px">
             <option value="ms">ms</option>
@@ -39,7 +39,7 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-invert"><i class="fa fa-exchange"></i> Invert</label>
+        <label for="node-input-invert"><i class="fa fa-exchange"></i> <span data-i18n="pwm.label.invert"></span></label>
         <input type="checkbox" id="node-input-invert" style="width:auto;margin-top:4px">
     </div>
 </script>

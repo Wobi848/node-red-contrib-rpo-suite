@@ -1,1 +1,16 @@
-{}
+{
+  "adaptive-curve": {
+    "label": {
+      "name": "Name",
+      "roomSetpoint": "Raum-Sollwert (°C)",
+      "heatingLimit": "Heizgrenze (°C)",
+      "adaptationRate": "Adaptionsrate (K/K/min)",
+      "maxShift": "Max. Verschiebung (K)",
+      "deadband": "Totband (K)",
+      "topicRoom": "Topic Raum",
+      "topicOutdoor": "Topic Aussen",
+      "persistent": "Persistent",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

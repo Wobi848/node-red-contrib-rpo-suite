@@ -1,19 +1,10 @@
 {
   "adder": {
-    "label": "Adder",
-    "topics": "Topics / weights",
-    "mode": "Mode",
-    "mode_opt": {
-      "sum": "Sum",
-      "avg": "Weighted average"
-    },
-    "minTopics": "Min. required topics",
-    "tip": "Collects values from named topics, then outputs sum or weighted average.",
-    "input": {
-      "payload": "Numeric value (topic determines which slot is filled)"
-    },
-    "output": {
-      "payload": "Sum or weighted average of all received topic values"
+    "label": {
+      "name": "Name",
+      "mode": "Mode",
+      "minTopics": "Min topics",
+      "decimals": "Decimals"
     }
   }
 }

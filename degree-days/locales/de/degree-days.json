@@ -1,1 +1,12 @@
-{}
+{
+  "degree-days": {
+    "label": {
+      "name": "Name",
+      "heatingBase": "Heizbasis (°C)",
+      "heatingLimit": "Heizgrenze (°C)",
+      "resetDay": "Resettag (Jahrestag)",
+      "persistent": "Persistent",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

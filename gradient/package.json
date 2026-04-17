@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-gradient",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gradient calculator - computes rate of change of numeric values over time",
   "repository": {
     "type": "git",

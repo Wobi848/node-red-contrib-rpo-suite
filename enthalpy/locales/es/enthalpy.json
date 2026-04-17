@@ -1,1 +1,13 @@
-{}
+{
+  "enthalpy": {
+    "label": {
+      "name": "Nombre",
+      "mode": "Modo",
+      "topicTempIn": "Topic temp. (entrada)",
+      "topicRhIn": "Topic humedad (entrada)",
+      "topicTempOut": "Topic temp. (salida)",
+      "topicRhOut": "Topic humedad (salida)",
+      "decimals": "Decimales"
+    }
+  }
+}

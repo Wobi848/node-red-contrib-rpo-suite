@@ -1,1 +1,9 @@
-{}
+{
+  "priority": {
+    "label": {
+      "name": "Name",
+      "topics": "Prioritaetseingaenge",
+      "defaultValue": "Standardwert"
+    }
+  }
+}

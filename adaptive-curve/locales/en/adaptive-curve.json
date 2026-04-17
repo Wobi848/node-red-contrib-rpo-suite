@@ -1,1 +1,16 @@
-{}
+{
+  "adaptive-curve": {
+    "label": {
+      "name": "Name",
+      "roomSetpoint": "Room setpoint (°C)",
+      "heatingLimit": "Heating limit (°C)",
+      "adaptationRate": "Adaptation rate (K/K/min)",
+      "maxShift": "Max shift (K)",
+      "deadband": "Deadband (K)",
+      "topicRoom": "Topic room",
+      "topicOutdoor": "Topic outdoor",
+      "persistent": "Persistent",
+      "decimals": "Decimals"
+    }
+  }
+}

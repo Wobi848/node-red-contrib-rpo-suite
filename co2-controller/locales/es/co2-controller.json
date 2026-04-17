@@ -1,1 +1,13 @@
-{}
+{
+  "co2-controller": {
+    "label": {
+      "name": "Nombre",
+      "minLevel": "Nivel min. (ppm)",
+      "maxLevel": "Nivel max. (ppm)",
+      "alarmLevel": "Nivel alarma (ppm)",
+      "minVentilation": "Ventilacion min. (%)",
+      "hysteresis": "Histeresis (ppm)",
+      "decimals": "Decimales"
+    }
+  }
+}

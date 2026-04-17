@@ -1,1 +1,13 @@
-{}
+{
+  "free-cooling": {
+    "label": {
+      "name": "Name",
+      "minDelta": "Min. dT (K)",
+      "maxOutdoor": "Max. Aussentemp. (°C)",
+      "minOutdoor": "Min. Aussentemp. (°C)",
+      "topicIndoor": "Topic Innen",
+      "topicOutdoor": "Topic Aussen",
+      "decimals": "Dezimalstellen"
+    }
+  }
+}

@@ -1,1 +1,12 @@
-{}
+{
+  "dewpoint": {
+    "label": {
+      "name": "Name",
+      "topicTemp": "Topic temp",
+      "topicRh": "Topic rh",
+      "topicSurface": "Topic surface (optional)",
+      "alarmOffset": "Alarm offset (K)",
+      "decimals": "Decimals"
+    }
+  }
+}
