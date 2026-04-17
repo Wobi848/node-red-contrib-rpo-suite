@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-co2-controller",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CO2-based ventilation controller for HVAC systems (SIA 382.1 / EN 13779)",
   "repository": {
     "type": "git",
@@ -15,7 +15,15 @@
     "locales",
     "examples"
   ],
-  "keywords": ["node-red", "co2-controller", "rpo", "hvac", "co2", "ventilation", "building-automation"],
+  "keywords": [
+    "node-red",
+    "co2-controller",
+    "rpo",
+    "hvac",
+    "co2",
+    "ventilation",
+    "building-automation"
+  ],
   "author": "sr.rpo",
   "license": "MIT",
   "node-red": {
@@ -24,8 +32,12 @@
       "co2-controller": "co2-controller.js"
     }
   },
-  "engines": { "node": ">=14.0.0" },
-  "scripts": { "test": "mocha \"test/**/*_spec.js\" --exit" },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-red": "^3.1.0",

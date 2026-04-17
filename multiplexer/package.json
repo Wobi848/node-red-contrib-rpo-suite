@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-multiplexer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "8-channel multiplexer - selects and forwards one of N input channels",
   "repository": {
     "type": "git",

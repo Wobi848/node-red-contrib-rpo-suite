@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-thermal-valve",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "PWM controller for thermal actuator valves - converts 0-100% to timed on/off signal",
   "repository": {
     "type": "git",

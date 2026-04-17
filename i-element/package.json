@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-i-element",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Integral element (I-Glied) with anti-windup for control systems",
   "repository": {
     "type": "git",

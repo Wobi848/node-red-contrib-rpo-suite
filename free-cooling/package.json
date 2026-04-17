@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-free-cooling",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Free cooling / night cooling recommendation for HVAC systems",
   "repository": {
     "type": "git",
@@ -15,7 +15,14 @@
     "locales",
     "examples"
   ],
-  "keywords": ["node-red", "free-cooling", "rpo", "hvac", "night-cooling", "building-automation"],
+  "keywords": [
+    "node-red",
+    "free-cooling",
+    "rpo",
+    "hvac",
+    "night-cooling",
+    "building-automation"
+  ],
   "author": "sr.rpo",
   "license": "MIT",
   "node-red": {
@@ -24,8 +31,12 @@
       "free-cooling": "free-cooling.js"
     }
   },
-  "engines": { "node": ">=14.0.0" },
-  "scripts": { "test": "mocha \"test/**/*_spec.js\" --exit" },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-red": "^3.1.0",

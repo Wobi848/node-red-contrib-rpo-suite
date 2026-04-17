@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-enthalpy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Specific enthalpy of moist air with heat recovery recommendation",
   "repository": {
     "type": "git",
@@ -15,7 +15,13 @@
     "locales",
     "examples"
   ],
-  "keywords": ["node-red", "enthalpy", "rpo", "hvac", "building-automation"],
+  "keywords": [
+    "node-red",
+    "enthalpy",
+    "rpo",
+    "hvac",
+    "building-automation"
+  ],
   "author": "sr.rpo",
   "license": "MIT",
   "node-red": {
@@ -24,8 +30,12 @@
       "enthalpy": "enthalpy.js"
     }
   },
-  "engines": { "node": ">=14.0.0" },
-  "scripts": { "test": "mocha \"test/**/*_spec.js\" --exit" },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-red": "^3.1.0",

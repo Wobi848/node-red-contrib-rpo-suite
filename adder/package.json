@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-adder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Multi-input adder with optional weighting - sum or weighted average of inputs",
   "repository": {
     "type": "git",

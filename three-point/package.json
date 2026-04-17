@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-three-point",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Three-point actuator controller for HVAC dampers and valves",
   "repository": {
     "type": "git",
@@ -15,7 +15,14 @@
     "locales",
     "examples"
   ],
-  "keywords": ["node-red", "three-point", "rpo", "hvac", "actuator", "building-automation"],
+  "keywords": [
+    "node-red",
+    "three-point",
+    "rpo",
+    "hvac",
+    "actuator",
+    "building-automation"
+  ],
   "author": "sr.rpo",
   "license": "MIT",
   "node-red": {
@@ -24,8 +31,12 @@
       "three-point": "three-point.js"
     }
   },
-  "engines": { "node": ">=14.0.0" },
-  "scripts": { "test": "mocha \"test/**/*_spec.js\" --exit" },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-red": "^3.1.0",

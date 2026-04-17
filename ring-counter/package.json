@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-ring-counter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ring counter - cycles through N slots sequentially with wrap-around",
   "repository": {
     "type": "git",
