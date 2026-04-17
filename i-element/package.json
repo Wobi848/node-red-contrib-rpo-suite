@@ -1,0 +1,44 @@
+{
+  "name": "node-red-contrib-i-element",
+  "version": "1.0.0",
+  "description": "Integral element (I-Glied) with anti-windup for control systems",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "i-element.js",
+    "i-element.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "i-element",
+    "rpo",
+    "hvac",
+    "building-automation"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "i-element": "i-element.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

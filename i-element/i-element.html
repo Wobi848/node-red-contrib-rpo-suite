@@ -1,0 +1,63 @@
+<script type="text/javascript">
+    RED.nodes.registerType('i-element', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":    { "value": "" },
+            "Ti":      { "value": 60 },
+            "TiUnit":  { "value": "s" },
+            "outMin":  { "value": 0 },
+            "outMax":  { "value": 100 },
+            "decimals":{ "value": 2 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-superscript',
+        label: function() { return this.name || 'i-element'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="i-element">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-Ti"><i class="fa fa-clock-o"></i> Ti</label>
+        <input type="number" id="node-input-Ti" min="0.1" style="width:50%">
+        <select id="node-input-TiUnit" style="width:18%">
+            <option value="s">s</option>
+            <option value="min">min</option>
+            <option value="h">h</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-outMin"><i class="fa fa-arrow-down"></i> Out min</label>
+        <input type="number" id="node-input-outMin" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-outMax"><i class="fa fa-arrow-up"></i> Out max</label>
+        <input type="number" id="node-input-outMax" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="i-element">
+    <p>Integral element (I-Glied). Integrates the input signal over time: y += (x × dt) / Ti</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Input signal to integrate</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true = reset integral to 0</dd>
+        <dt class="optional">set <span class="property-type">number</span></dt><dd>Set integral to specific value</dd>
+        <dt class="optional">Ti <span class="property-type">number</span></dt><dd>Override Ti (seconds)</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current integral value</dd>
+        <dt>iElement <span class="property-type">object</span></dt><dd>input, integral, Ti, dt, clamped, clampedAt</dd>
+    </dl>
+</script>

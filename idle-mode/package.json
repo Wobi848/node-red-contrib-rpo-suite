@@ -1,0 +1,44 @@
+{
+  "name": "node-red-contrib-idle-mode",
+  "version": "1.0.0",
+  "description": "Periodic exercise runner for idle pumps and valves",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "idle-mode.js",
+    "idle-mode.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "idle-mode",
+    "rpo",
+    "hvac",
+    "building-automation"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "idle-mode": "idle-mode.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

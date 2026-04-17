@@ -67,6 +67,16 @@ npm install node-red-contrib-rpo-suite
 | co2-controller | node-red-contrib-co2-controller | 1.0.0 |
 | setpoint-shift | node-red-contrib-setpoint-shift | 1.0.0 |
 | free-cooling | node-red-contrib-free-cooling | 1.0.0 |
+| lookup-table | node-red-contrib-lookup-table | 1.0.0 |
+| i-element | node-red-contrib-i-element | 1.0.0 |
+| time-shift | node-red-contrib-time-shift | 1.0.0 |
+| standby | node-red-contrib-standby | 1.0.0 |
+| priority | node-red-contrib-priority | 1.0.0 |
+| sequencer | node-red-contrib-rpo-sequencer | 1.0.0 |
+| startup | node-red-contrib-startup | 1.0.0 |
+| idle-mode | node-red-contrib-idle-mode | 1.0.0 |
+| optimization | node-red-contrib-optimization | 1.0.0 |
+| adaptive-curve | node-red-contrib-adaptive-curve | 1.0.0 |
 
 ## License
 

@@ -1,0 +1,57 @@
+<script type="text/javascript">
+    RED.nodes.registerType('idle-mode', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":                  { "value": "" },
+            "exerciseInterval":      { "value": 7 },
+            "exerciseIntervalUnit":  { "value": "days" },
+            "exerciseDuration":      { "value": 60 },
+            "persistent":            { "value": true }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-refresh',
+        label: function() { return this.name || 'idle-mode'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="idle-mode">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-exerciseInterval"><i class="fa fa-calendar"></i> Exercise interval</label>
+        <input type="number" id="node-input-exerciseInterval" min="1" style="width:45%">
+        <select id="node-input-exerciseIntervalUnit" style="width:23%">
+            <option value="min">min</option>
+            <option value="h">h</option>
+            <option value="days">days</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-exerciseDuration"><i class="fa fa-clock-o"></i> Exercise duration (s)</label>
+        <input type="number" id="node-input-exerciseDuration" min="1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-save"></i> Persistent</label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="idle-mode">
+    <p>Periodically exercises idle equipment (pumps, valves, fans) to prevent seizing.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = equipment running (skip exercise)</dd>
+        <dt class="optional">exercise <span class="property-type">boolean</span></dt><dd>true = trigger immediate exercise</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true = reset interval timer</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = exercise active</dd>
+        <dt>idleMode <span class="property-type">object</span></dt><dd>exercising, idleTime, nextExercise, lastExercise</dd>
+    </dl>
+</script>

@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('startup', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":         { "value": "" },
+            "startSpeed":   { "value": 0 },
+            "preRunTime":   { "value": 0 },
+            "preRunSpeed":  { "value": 100 },
+            "rampTime":     { "value": 30 },
+            "rampDownTime": { "value": 0 },
+            "postRunTime":  { "value": 0 },
+            "postRunSpeed": { "value": 30 }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-play-circle',
+        label: function() { return this.name || 'startup'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['speed %', 'running']
+    });
+</script>
+
+<script type="text/html" data-template-name="startup">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-preRunTime"><i class="fa fa-fast-forward"></i> Pre-run time (s)</label>
+        <input type="number" id="node-input-preRunTime" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-preRunSpeed"><i class="fa fa-tachometer"></i> Pre-run speed (%)</label>
+        <input type="number" id="node-input-preRunSpeed" min="0" max="100" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-startSpeed"><i class="fa fa-play"></i> Start speed (%)</label>
+        <input type="number" id="node-input-startSpeed" min="0" max="100" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-rampTime"><i class="fa fa-line-chart"></i> Ramp-up time (s)</label>
+        <input type="number" id="node-input-rampTime" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-rampDownTime"><i class="fa fa-line-chart fa-flip-vertical"></i> Ramp-down time (s)</label>
+        <input type="number" id="node-input-rampDownTime" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-postRunTime"><i class="fa fa-clock-o"></i> Post-run time (s)</label>
+        <input type="number" id="node-input-postRunTime" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-postRunSpeed"><i class="fa fa-tachometer"></i> Post-run speed (%)</label>
+        <input type="number" id="node-input-postRunSpeed" min="0" max="100" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="startup">
+    <p>Startup sequence for pumps, fans and motors. Manages pre-run, ramp-up, ramp-down and post-run phases.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = start, false = stop</dd>
+        <dt class="optional">bypass <span class="property-type">boolean</span></dt><dd>true = immediate start/stop without ramp</dd>
+    </dl>
+    <h3>Output 1 — Speed</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current speed 0–100%</dd>
+    </dl>
+    <h3>Output 2 — Running</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = running or in sequence</dd>
+    </dl>
+</script>

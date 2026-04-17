@@ -1,0 +1,61 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sequencer', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":       { "value": "" },
+            "channels":   { "value": 3 },
+            "hysteresis": { "value": 5 },
+            "minOnTime":  { "value": 60 },
+            "minOffTime": { "value": 60 },
+            "wearLevel":  { "value": true }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-server',
+        label: function() { return this.name || 'sequencer'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="sequencer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-channels"><i class="fa fa-server"></i> Channels (2–8)</label>
+        <input type="number" id="node-input-channels" min="2" max="8" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-v"></i> Hysteresis (%)</label>
+        <input type="number" id="node-input-hysteresis" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOnTime"><i class="fa fa-clock-o"></i> Min ON time (s)</label>
+        <input type="number" id="node-input-minOnTime" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-minOffTime"><i class="fa fa-clock-o"></i> Min OFF time (s)</label>
+        <input type="number" id="node-input-minOffTime" min="0" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-wearLevel"><i class="fa fa-balance-scale"></i> Wear leveling</label>
+        <input type="checkbox" id="node-input-wearLevel" style="width:auto">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="sequencer">
+    <p>Sequential channel switching with runtime balancing (wear leveling). Activates channels based on demand 0–100%.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number|boolean</span></dt><dd>Demand 0–100% or boolean</dd>
+        <dt class="optional">forceChannel <span class="property-type">array</span></dt><dd>Force specific channels [true,false,...]</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true = reset all runtimes</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">array</span></dt><dd>Boolean array per channel</dd>
+        <dt>sequencer <span class="property-type">object</span></dt><dd>demand, activeChannels, channels, runtimes, wearLevel</dd>
+    </dl>
+</script>

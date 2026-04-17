@@ -1,0 +1,57 @@
+<script type="text/javascript">
+    RED.nodes.registerType('time-shift', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":      { "value": "" },
+            "delay":     { "value": 60 },
+            "delayUnit": { "value": "s" },
+            "maxBuffer": { "value": 1000 },
+            "decimals":  { "value": 2 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-history',
+        label: function() { return this.name || 'time-shift'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; }
+    });
+</script>
+
+<script type="text/html" data-template-name="time-shift">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-delay"><i class="fa fa-clock-o"></i> Delay</label>
+        <input type="number" id="node-input-delay" min="1" style="width:50%">
+        <select id="node-input-delayUnit" style="width:18%">
+            <option value="s">s</option>
+            <option value="min">min</option>
+            <option value="h">h</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-maxBuffer"><i class="fa fa-database"></i> Max buffer</label>
+        <input type="number" id="node-input-maxBuffer" min="10" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="time-shift">
+    <p>Delays a signal by a configurable time. Buffers values with timestamps and outputs the value from X seconds/minutes ago.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Value to buffer and delay</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true = clear buffer</dd>
+        <dt class="optional">delay <span class="property-type">number</span></dt><dd>Override delay (in configured unit)</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Delayed value</dd>
+        <dt>timeShift <span class="property-type">object</span></dt><dd>current, delayed, delay, actualDelay, bufferSize</dd>
+    </dl>
+</script>

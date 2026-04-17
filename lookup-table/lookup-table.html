@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    RED.nodes.registerType('lookup-table', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":     { "value": "" },
+            "points":   { "value": '[{"x":0,"y":0},{"x":100,"y":100}]' },
+            "decimals": { "value": 2 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-table',
+        label: function() { return this.name || 'lookup-table'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        oneditprepare: function() {
+            var points = [];
+            try { points = JSON.parse(this.points || '[]'); } catch(e) {}
+
+            $('#node-input-points-container').editableList({
+                addItem: function(container, i, data) {
+                    var row = $('<div style="display:flex;gap:8px;align-items:center;width:100%"></div>');
+                    var labelX = $('<label style="margin:0;flex:0 0 20px">X</label>');
+                    var inputX = $('<input type="number" style="flex:1;min-width:0" class="lt-x">').val(data.x !== undefined ? data.x : 0);
+                    var labelY = $('<label style="margin:0;flex:0 0 20px">Y</label>');
+                    var inputY = $('<input type="number" style="flex:1;min-width:0" class="lt-y">').val(data.y !== undefined ? data.y : 0);
+                    row.append(labelX, inputX, labelY, inputY);
+                    container.append(row);
+                },
+                removable: true,
+                sortable: true
+            });
+
+            points.forEach(function(p) {
+                $('#node-input-points-container').editableList('addItem', p);
+            });
+        },
+        oneditsave: function() {
+            var points = [];
+            $('#node-input-points-container').editableList('items').each(function() {
+                var x = parseFloat($(this).find('.lt-x').val());
+                var y = parseFloat($(this).find('.lt-y').val());
+                if (!isNaN(x) && !isNaN(y)) points.push({ x: x, y: y });
+            });
+            this.points = JSON.stringify(points);
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="lookup-table">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-table"></i> Points (X → Y)</label>
+        <ol id="node-input-points-container"></ol>
+    </div>
+    <div class="form-row">
+        <label for="node-input-decimals"><i class="fa fa-hashtag"></i> Decimals</label>
+        <input type="number" id="node-input-decimals" min="0" max="4" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="lookup-table">
+    <p>Maps an input value to an output value using a configurable X/Y table with linear interpolation.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Input value to map</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Interpolated output value</dd>
+        <dt>lookupTable <span class="property-type">object</span></dt><dd>input, output, interpolated, clamped, lowerPoint, upperPoint</dd>
+    </dl>
+</script>

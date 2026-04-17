@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    RED.nodes.registerType('optimization', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":           { "value": "" },
+            "occupancyTime":  { "value": "08:00" },
+            "thermalMass":    { "value": 30 },
+            "heatingPower":   { "value": 1.0 },
+            "outdoorFactor":  { "value": 0.05 },
+            "maxPreHeat":     { "value": 240 },
+            "topicRoom":      { "value": "room" },
+            "topicOutdoor":   { "value": "outdoor" },
+            "topicSetpoint":  { "value": "setpoint" }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-clock-o',
+        label: function() { return this.name || 'optimization'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['start command', 'status']
+    });
+</script>
+
+<script type="text/html" data-template-name="optimization">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-occupancyTime"><i class="fa fa-clock-o"></i> Occupancy time (HH:MM)</label>
+        <input type="text" id="node-input-occupancyTime" placeholder="08:00" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-thermalMass"><i class="fa fa-building"></i> Thermal mass (min/K)</label>
+        <input type="number" id="node-input-thermalMass" min="1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-heatingPower"><i class="fa fa-fire"></i> Heating power</label>
+        <input type="number" id="node-input-heatingPower" min="0.1" step="0.1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-outdoorFactor"><i class="fa fa-cloud"></i> Outdoor factor</label>
+        <input type="number" id="node-input-outdoorFactor" min="0" step="0.01" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-maxPreHeat"><i class="fa fa-arrow-up"></i> Max preheat (min)</label>
+        <input type="number" id="node-input-maxPreHeat" min="1" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicRoom"><i class="fa fa-home"></i> Topic room</label>
+        <input type="text" id="node-input-topicRoom" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicOutdoor"><i class="fa fa-cloud"></i> Topic outdoor</label>
+        <input type="text" id="node-input-topicOutdoor" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicSetpoint"><i class="fa fa-thermometer-half"></i> Topic setpoint</label>
+        <input type="text" id="node-input-topicSetpoint" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="optimization">
+    <p>Optimal start time calculator. Predicts when to start heating/cooling so the room reaches setpoint by occupancy time.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>"room" / "outdoor" / "setpoint"</dd>
+        <dt>payload <span class="property-type">number</span></dt><dd>Temperature in °C</dd>
+        <dt class="optional">force <span class="property-type">boolean</span></dt><dd>true = force start now</dd>
+        <dt class="optional">occupancyTime <span class="property-type">string</span></dt><dd>Override occupancy time (HH:MM)</dd>
+    </dl>
+    <h3>Output 1 — Start command</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">boolean</span></dt><dd>true = start system now</dd>
+    </dl>
+    <h3>Output 2 — Status</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt><dd>requiredMinutes, startTime, minutesUntilStart</dd>
+    </dl>
+</script>

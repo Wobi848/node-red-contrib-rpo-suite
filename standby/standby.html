@@ -1,0 +1,64 @@
+<script type="text/javascript">
+    RED.nodes.registerType('standby', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":            { "value": "" },
+            "comfortSetpoint": { "value": 22 },
+            "standbyOffset":   { "value": -4 },
+            "frostSetpoint":   { "value": 8 },
+            "initialMode":     { "value": "comfort" }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: 'font-awesome/fa-home',
+        label: function() { return this.name || 'standby'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        outputLabels: ['setpoint', 'mode']
+    });
+</script>
+
+<script type="text/html" data-template-name="standby">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-comfortSetpoint"><i class="fa fa-home"></i> Comfort setpoint (°C)</label>
+        <input type="number" id="node-input-comfortSetpoint" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-standbyOffset"><i class="fa fa-moon-o"></i> Standby offset (K)</label>
+        <input type="number" id="node-input-standbyOffset" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-frostSetpoint"><i class="fa fa-snowflake-o"></i> Frost setpoint (°C)</label>
+        <input type="number" id="node-input-frostSetpoint" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initialMode"><i class="fa fa-play"></i> Initial mode</label>
+        <select id="node-input-initialMode" style="width:70%">
+            <option value="comfort">Comfort</option>
+            <option value="standby">Standby</option>
+            <option value="frost">Frost</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="standby">
+    <p>Operating mode manager: Comfort / Standby / Frost protection setpoints.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt class="optional">mode <span class="property-type">string</span></dt><dd>"comfort" / "standby" / "frost"</dd>
+        <dt class="optional">topic <span class="property-type">string</span></dt><dd>"comfort" / "standby" / "frost"</dd>
+        <dt class="optional">comfortSetpoint <span class="property-type">number</span></dt><dd>Override comfort setpoint</dd>
+    </dl>
+    <h3>Output 1 — Setpoint</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt><dd>Current setpoint in °C</dd>
+    </dl>
+    <h3>Output 2 — Mode</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt><dd>Mode string (only on change)</dd>
+    </dl>
+</script>

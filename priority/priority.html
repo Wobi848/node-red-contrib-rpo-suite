@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('priority', {
+        category: 'rpo',
+        color: '#D4600A',
+        defaults: {
+            "name":         { "value": "" },
+            "topics":       { "value": '[{"topic":"manual","label":"Hand","priority":1},{"topic":"remote","label":"Remote","priority":2},{"topic":"auto","label":"Auto","priority":3}]' },
+            "defaultValue": { "value": null }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'font-awesome/fa-sort-amount-desc',
+        label: function() { return this.name || 'priority'; },
+        labelStyle: function() { return this.name ? 'node_label_italic' : ''; },
+        oneditprepare: function() {
+            var topics = [];
+            try { topics = JSON.parse(this.topics || '[]'); } catch(e) {}
+
+            $('#node-input-topics-container').editableList({
+                addItem: function(container, i, data) {
+                    var row = $('<div style="display:flex;gap:6px;align-items:center;width:100%"></div>');
+                    var inputTopic = $('<input type="text" placeholder="topic" style="flex:2;min-width:0" class="pr-topic">').val(data.topic || '');
+                    var inputLabel = $('<input type="text" placeholder="label" style="flex:2;min-width:0" class="pr-label">').val(data.label || '');
+                    var spanPrio   = $('<label style="margin:0;flex:0 0 50px;text-align:right">Prio</label>');
+                    var inputPrio  = $('<input type="number" min="1" max="99" style="flex:0 0 50px" class="pr-prio">').val(data.priority !== undefined ? data.priority : i + 1);
+                    row.append(inputTopic, inputLabel, spanPrio, inputPrio);
+                    container.append(row);
+                },
+                removable: true,
+                sortable: true
+            });
+
+            topics.forEach(function(t) {
+                $('#node-input-topics-container').editableList('addItem', t);
+            });
+        },
+        oneditsave: function() {
+            var topics = [];
+            $('#node-input-topics-container').editableList('items').each(function() {
+                var topic = $(this).find('.pr-topic').val().trim();
+                var label = $(this).find('.pr-label').val().trim();
+                var prio  = parseInt($(this).find('.pr-prio').val(), 10);
+                if (topic) topics.push({ topic: topic, label: label || topic, priority: isNaN(prio) ? 1 : prio, nullValue: '' });
+            });
+            this.topics = JSON.stringify(topics);
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="priority">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-list"></i> Priority inputs <span style="font-size:0.85em;color:#888">(1 = highest)</span></label>
+        <ol id="node-input-topics-container"></ol>
+    </div>
+    <div class="form-row">
+        <label for="node-input-defaultValue"><i class="fa fa-circle-o"></i> Default value</label>
+        <input type="text" id="node-input-defaultValue" placeholder="null" style="width:70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="priority">
+    <p>Selects the highest priority active input. Models DDC priority levels: Hand &gt; Remote &gt; Automatic.</p>
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>topic <span class="property-type">string</span></dt><dd>Topic matching a configured priority level</dd>
+        <dt>payload <span class="property-type">any</span></dt><dd>Value (null = inactive)</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt><dd>true = clear all stored values</dd>
+    </dl>
+    <h3>Output</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt><dd>Value of highest priority active input</dd>
+        <dt>priority <span class="property-type">object</span></dt><dd>winner, winnerPriority, value, inputs</dd>
+    </dl>
+</script>
