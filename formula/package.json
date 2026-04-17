@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-rpo-formula",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node-RED formula evaluator - evaluate math expressions with named topic variables",
   "repository": {
     "type": "git",

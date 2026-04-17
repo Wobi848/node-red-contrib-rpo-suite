@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-comparator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Compares two numeric values with configurable operator and outputs boolean result",
   "repository": {
     "type": "git",

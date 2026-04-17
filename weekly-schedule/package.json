@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-weekly-schedule",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Weekly scheduler with configurable time windows per day of week",
   "repository": {
     "type": "git",
