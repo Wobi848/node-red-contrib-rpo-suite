@@ -1,0 +1,9 @@
+[
+    {"id":"rl_tab","type":"tab","label":"rate-limiter Example","disabled":false,"info":""},
+    {"id":"rl_cmt","type":"comment","z":"rl_tab","name":"=== Rate Limiter Example ===","info":"Limits how fast a value can change per second.\nHere: max 5 units/s. Fast jumps are slowed down.","x":230,"y":40,"wires":[]},
+    {"id":"rl_i1","type":"inject","z":"rl_tab","name":"Jump to 100","props":[{"p":"payload","v":"100","vt":"num"}],"repeat":"","once":false,"payload":"100","payloadType":"num","x":110,"y":100,"wires":[["rl_n"]]},
+    {"id":"rl_i2","type":"inject","z":"rl_tab","name":"Jump to 0","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":110,"y":140,"wires":[["rl_n"]]},
+    {"id":"rl_i3","type":"inject","z":"rl_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["rl_n"]]},
+    {"id":"rl_n","type":"rate-limiter","z":"rl_tab","name":"","maxRate":5,"maxRateUnit":"per_s","decimals":2,"wires":[["rl_d"]],"x":320,"y":140},
+    {"id":"rl_d","type":"debug","z":"rl_tab","name":"limited","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":140,"wires":[]}
+]

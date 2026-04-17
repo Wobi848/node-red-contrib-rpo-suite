@@ -1,0 +1,10 @@
+[
+    {"id":"tog_tab","type":"tab","label":"toggle Example","disabled":false,"info":""},
+    {"id":"tog_cmt","type":"comment","z":"tog_tab","name":"=== Toggle Example ===","info":"Flips between true/false on each incoming message.\nCan be forced ON/OFF via msg.set. Reset returns to initial state.","x":220,"y":40,"wires":[]},
+    {"id":"tog_i1","type":"inject","z":"tog_tab","name":"Toggle","props":[{"p":"payload","v":"","vt":"str"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":100,"wires":[["tog_n"]]},
+    {"id":"tog_i2","type":"inject","z":"tog_tab","name":"Force ON","props":[{"p":"set","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":140,"wires":[["tog_n"]]},
+    {"id":"tog_i3","type":"inject","z":"tog_tab","name":"Force OFF","props":[{"p":"set","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["tog_n"]]},
+    {"id":"tog_i4","type":"inject","z":"tog_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":220,"wires":[["tog_n"]]},
+    {"id":"tog_n","type":"toggle","z":"tog_tab","name":"","initialState":false,"persistent":false,"wires":[["tog_d"]],"x":320,"y":160},
+    {"id":"tog_d","type":"debug","z":"tog_tab","name":"state","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":480,"y":160,"wires":[]}
+]

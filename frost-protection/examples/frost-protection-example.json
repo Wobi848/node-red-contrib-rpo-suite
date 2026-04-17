@@ -1,0 +1,9 @@
+[
+    {"id":"fp_tab","type":"tab","label":"frost-protection Example","disabled":false,"info":""},
+    {"id":"fp_comment","type":"comment","z":"fp_tab","name":"=== Frost Protection Example ===","info":"Monitors outdoor or supply air temperature. Outputs alarm when temperature drops below threshold.\nOutput 1: temperature pass-through. Output 2: alarm (true/false).","x":260,"y":40,"wires":[]},
+    {"id":"fp_i1","type":"inject","z":"fp_tab","name":"Temp +2°C","props":[{"p":"payload","v":"2","vt":"num"}],"repeat":"","once":false,"payload":"2","payloadType":"num","x":120,"y":100,"wires":[["fp_n"]]},
+    {"id":"fp_i2","type":"inject","z":"fp_tab","name":"Temp -3°C","props":[{"p":"payload","v":"-3","vt":"num"}],"repeat":"","once":false,"payload":"-3","payloadType":"num","x":120,"y":140,"wires":[["fp_n"]]},
+    {"id":"fp_n","type":"frost-protection","z":"fp_tab","name":"","frostThreshold":5,"hysteresis":1,"decimals":1,"wires":[["fp_d1"],["fp_d2"]],"x":330,"y":120},
+    {"id":"fp_d1","type":"debug","z":"fp_tab","name":"temp °C","active":true,"tosidebar":true,"complete":"payload","x":510,"y":100,"wires":[]},
+    {"id":"fp_d2","type":"debug","z":"fp_tab","name":"alarm","active":true,"tosidebar":true,"complete":"payload","x":510,"y":140,"wires":[]}
+]

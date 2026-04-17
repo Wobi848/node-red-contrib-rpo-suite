@@ -1,0 +1,9 @@
+[
+    {"id":"pwm_tab","type":"tab","label":"pwm Example","disabled":false,"info":""},
+    {"id":"pwm_cmt","type":"comment","z":"pwm_tab","name":"=== PWM Example ===","info":"Converts a 0-100% analog signal into a pulse-width modulated ON/OFF output.\nPeriod: 10 minutes. 30% = ON for 3min, OFF for 7min.","x":230,"y":40,"wires":[]},
+    {"id":"pwm_i1","type":"inject","z":"pwm_tab","name":"30% demand","props":[{"p":"payload","v":"30","vt":"num"}],"repeat":"","once":false,"payload":"30","payloadType":"num","x":110,"y":100,"wires":[["pwm_n"]]},
+    {"id":"pwm_i2","type":"inject","z":"pwm_tab","name":"70% demand","props":[{"p":"payload","v":"70","vt":"num"}],"repeat":"","once":false,"payload":"70","payloadType":"num","x":110,"y":140,"wires":[["pwm_n"]]},
+    {"id":"pwm_i3","type":"inject","z":"pwm_tab","name":"0% (off)","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":110,"y":180,"wires":[["pwm_n"]]},
+    {"id":"pwm_n","type":"pwm","z":"pwm_tab","name":"","period":10,"periodUnit":"min","invert":false,"wires":[["pwm_d"]],"x":310,"y":140},
+    {"id":"pwm_d","type":"debug","z":"pwm_tab","name":"ON/OFF","active":true,"tosidebar":true,"complete":"payload","x":480,"y":140,"wires":[]}
+]

@@ -1,0 +1,9 @@
+[
+    {"id":"tv_tab","type":"tab","label":"thermal-valve Example","disabled":false,"info":""},
+    {"id":"tv_cmt","type":"comment","z":"tv_tab","name":"=== Thermal Valve (PWM Valve) Example ===","info":"Controls a thermal actuator valve with PWM cycle.\nCycle time: 5 min. 40% demand = valve open 2min, closed 3min per cycle.","x":260,"y":40,"wires":[]},
+    {"id":"tv_i1","type":"inject","z":"tv_tab","name":"0% (closed)","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":110,"y":100,"wires":[["tv_n"]]},
+    {"id":"tv_i2","type":"inject","z":"tv_tab","name":"40% demand","props":[{"p":"payload","v":"40","vt":"num"}],"repeat":"","once":false,"payload":"40","payloadType":"num","x":110,"y":140,"wires":[["tv_n"]]},
+    {"id":"tv_i3","type":"inject","z":"tv_tab","name":"100% (open)","props":[{"p":"payload","v":"100","vt":"num"}],"repeat":"","once":false,"payload":"100","payloadType":"num","x":110,"y":180,"wires":[["tv_n"]]},
+    {"id":"tv_n","type":"thermal-valve","z":"tv_tab","name":"","cycleTime":300,"cycleTimeUnit":"s","minOnTime":0,"minOffTime":0,"invert":false,"wires":[["tv_d"]],"x":320,"y":140},
+    {"id":"tv_d","type":"debug","z":"tv_tab","name":"OPEN/CLOSE","active":true,"tosidebar":true,"complete":"payload","x":500,"y":140,"wires":[]}
+]

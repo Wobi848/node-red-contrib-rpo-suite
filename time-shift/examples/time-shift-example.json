@@ -1,0 +1,9 @@
+[
+    {"id":"ts_tab","type":"tab","label":"time-shift Example","disabled":false,"info":""},
+    {"id":"ts_comment","type":"comment","z":"ts_tab","name":"=== Time Shift Example ===","info":"Delays a signal by a configurable time. Useful for dead-time compensation.\nHere: 30 second delay. Send values, output appears 30s later.","x":240,"y":40,"wires":[]},
+    {"id":"ts_i1","type":"inject","z":"ts_tab","name":"Value 42","props":[{"p":"payload","v":"42","vt":"num"}],"repeat":"","once":false,"payload":"42","payloadType":"num","x":110,"y":100,"wires":[["ts_n"]]},
+    {"id":"ts_i2","type":"inject","z":"ts_tab","name":"Value 75","props":[{"p":"payload","v":"75","vt":"num"}],"repeat":"","once":false,"payload":"75","payloadType":"num","x":110,"y":140,"wires":[["ts_n"]]},
+    {"id":"ts_i3","type":"inject","z":"ts_tab","name":"Reset buffer","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["ts_n"]]},
+    {"id":"ts_n","type":"time-shift","z":"ts_tab","name":"","delay":30,"delayUnit":"s","maxBuffer":1000,"decimals":1,"wires":[["ts_d"]],"x":320,"y":140},
+    {"id":"ts_d","type":"debug","z":"ts_tab","name":"delayed value","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":500,"y":140,"wires":[]}
+]

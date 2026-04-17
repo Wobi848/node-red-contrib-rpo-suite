@@ -1,0 +1,9 @@
+[
+    {"id":"lt_tab","type":"tab","label":"lookup-table Example","disabled":false,"info":""},
+    {"id":"lt_comment","type":"comment","z":"lt_tab","name":"=== Lookup Table Example ===","info":"Maps an input value to an output using linear interpolation.\nExample: heating curve — outdoor temp (-20 to +20°C) → flow temp (70 to 30°C).","x":250,"y":40,"wires":[]},
+    {"id":"lt_i1","type":"inject","z":"lt_tab","name":"Outdoor -20°C","props":[{"p":"payload","v":"-20","vt":"num"}],"repeat":"","once":false,"payload":"-20","payloadType":"num","x":130,"y":100,"wires":[["lt_n"]]},
+    {"id":"lt_i2","type":"inject","z":"lt_tab","name":"Outdoor 0°C","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":130,"y":140,"wires":[["lt_n"]]},
+    {"id":"lt_i3","type":"inject","z":"lt_tab","name":"Outdoor +20°C","props":[{"p":"payload","v":"20","vt":"num"}],"repeat":"","once":false,"payload":"20","payloadType":"num","x":130,"y":180,"wires":[["lt_n"]]},
+    {"id":"lt_n","type":"lookup-table","z":"lt_tab","name":"Heating Curve","points":"[{\"x\":-20,\"y\":70},{\"x\":0,\"y\":50},{\"x\":20,\"y\":30}]","decimals":1,"wires":[["lt_d"]],"x":340,"y":140},
+    {"id":"lt_d","type":"debug","z":"lt_tab","name":"flow temp °C","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":520,"y":140,"wires":[]}
+]

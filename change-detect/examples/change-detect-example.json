@@ -1,0 +1,9 @@
+[
+    {"id":"cd_tab","type":"tab","label":"change-detect Example","disabled":false,"info":""},
+    {"id":"cd_cmt","type":"comment","z":"cd_tab","name":"=== Change Detect Example ===","info":"Passes message only when value changes beyond tolerance.\nUseful to reduce message rate from sensors. Tolerance: 0.5.","x":240,"y":40,"wires":[]},
+    {"id":"cd_i1","type":"inject","z":"cd_tab","name":"21.0","props":[{"p":"payload","v":"21.0","vt":"num"}],"repeat":"","once":false,"payload":"21.0","payloadType":"num","x":110,"y":100,"wires":[["cd_n"]]},
+    {"id":"cd_i2","type":"inject","z":"cd_tab","name":"21.3 (blocked)","props":[{"p":"payload","v":"21.3","vt":"num"}],"repeat":"","once":false,"payload":"21.3","payloadType":"num","x":120,"y":140,"wires":[["cd_n"]]},
+    {"id":"cd_i3","type":"inject","z":"cd_tab","name":"22.5 (passes)","props":[{"p":"payload","v":"22.5","vt":"num"}],"repeat":"","once":false,"payload":"22.5","payloadType":"num","x":120,"y":180,"wires":[["cd_n"]]},
+    {"id":"cd_n","type":"change-detect","z":"cd_tab","name":"","tolerance":0.5,"wires":[["cd_d"]],"x":330,"y":140},
+    {"id":"cd_d","type":"debug","z":"cd_tab","name":"changed","active":true,"tosidebar":true,"complete":"payload","x":500,"y":140,"wires":[]}
+]

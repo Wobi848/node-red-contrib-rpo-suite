@@ -1,0 +1,8 @@
+[
+    {"id":"wd_tab","type":"tab","label":"watchdog Example","disabled":false,"info":""},
+    {"id":"wd_comment","type":"comment","z":"wd_tab","name":"=== Watchdog Example ===","info":"Monitors signal heartbeat. If no message arrives within the timeout, an alarm is triggered.\nHere: ping every 3s, alarm after 10s silence.","x":240,"y":40,"wires":[]},
+    {"id":"wd_ping","type":"inject","z":"wd_tab","name":"Ping every 3s","props":[{"p":"payload","v":"ping","vt":"str"}],"repeat":"3","once":true,"onceDelay":0.1,"payload":"ping","payloadType":"str","x":130,"y":100,"wires":[["wd_n"]]},
+    {"id":"wd_n","type":"watchdog","z":"wd_tab","name":"","timeout":10,"timeUnit":"s","wires":[["wd_d1"],["wd_d2"]],"x":330,"y":100},
+    {"id":"wd_d1","type":"debug","z":"wd_tab","name":"pass-through","active":true,"tosidebar":true,"complete":"payload","x":510,"y":80,"wires":[]},
+    {"id":"wd_d2","type":"debug","z":"wd_tab","name":"ALARM","active":true,"tosidebar":true,"complete":"payload","x":510,"y":120,"wires":[]}
+]

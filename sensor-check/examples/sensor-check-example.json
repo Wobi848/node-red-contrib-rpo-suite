@@ -1,0 +1,10 @@
+[
+    {"id":"sc_tab","type":"tab","label":"sensor-check Example","disabled":false,"info":""},
+    {"id":"sc_cmt","type":"comment","z":"sc_tab","name":"=== Sensor Check Example ===","info":"Validates sensor values against plausible range (-50 to 150°C).\nOut-of-range values trigger a fault and output fallback value (0°C).","x":240,"y":40,"wires":[]},
+    {"id":"sc_i1","type":"inject","z":"sc_tab","name":"22°C (ok)","props":[{"p":"payload","v":"22","vt":"num"}],"repeat":"","once":false,"payload":"22","payloadType":"num","x":110,"y":100,"wires":[["sc_n"]]},
+    {"id":"sc_i2","type":"inject","z":"sc_tab","name":"200°C (fault!)","props":[{"p":"payload","v":"200","vt":"num"}],"repeat":"","once":false,"payload":"200","payloadType":"num","x":120,"y":140,"wires":[["sc_n"]]},
+    {"id":"sc_i3","type":"inject","z":"sc_tab","name":"Acknowledge fault","props":[{"p":"acknowledge","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":180,"wires":[["sc_n"]]},
+    {"id":"sc_n","type":"sensor-check","z":"sc_tab","name":"","min":-50,"max":150,"fallback":0,"useFallback":true,"hysteresis":0,"timeout":0,"wires":[["sc_d1"],["sc_d2"]],"x":330,"y":140},
+    {"id":"sc_d1","type":"debug","z":"sc_tab","name":"value / fallback","active":true,"tosidebar":true,"complete":"payload","x":510,"y":120,"wires":[]},
+    {"id":"sc_d2","type":"debug","z":"sc_tab","name":"fault","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":160,"wires":[]}
+]

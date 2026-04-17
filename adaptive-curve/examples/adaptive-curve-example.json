@@ -1,0 +1,12 @@
+[
+    {"id":"ac_tab","type":"tab","label":"adaptive-curve Example","disabled":false,"info":""},
+    {"id":"ac_comment","type":"comment","z":"ac_tab","name":"=== Adaptive Heating Curve Example ===","info":"Self-learns the optimal heating curve shift based on room temperature error.\nWhen room is too cold, shift increases. When too warm, shift decreases.\nOutput 1: current shift value. Output 2: full info object.","x":280,"y":40,"wires":[]},
+    {"id":"ac_i1","type":"inject","z":"ac_tab","name":"Room 20°C (too cold)","props":[{"p":"payload","v":"20","vt":"num"},{"p":"topic","v":"room","vt":"str"}],"repeat":"","once":false,"payload":"20","payloadType":"num","topic":"room","x":130,"y":100,"wires":[["ac_n"]]},
+    {"id":"ac_i2","type":"inject","z":"ac_tab","name":"Outdoor -5°C","props":[{"p":"payload","v":"-5","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"","once":false,"payload":"-5","payloadType":"num","topic":"outdoor","x":130,"y":140,"wires":[["ac_n"]]},
+    {"id":"ac_i3","type":"inject","z":"ac_tab","name":"Room 23°C (too warm)","props":[{"p":"payload","v":"23","vt":"num"},{"p":"topic","v":"room","vt":"str"}],"repeat":"","once":false,"payload":"23","payloadType":"num","topic":"room","x":130,"y":180,"wires":[["ac_n"]]},
+    {"id":"ac_i4","type":"inject","z":"ac_tab","name":"Reset shift to 0","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":220,"wires":[["ac_n"]]},
+    {"id":"ac_i5","type":"inject","z":"ac_tab","name":"Pause adaptation","props":[{"p":"pauseAdaptation","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":260,"wires":[["ac_n"]]},
+    {"id":"ac_n","type":"adaptive-curve","z":"ac_tab","name":"","roomSetpoint":22,"heatingLimit":15,"adaptationRate":0.01,"maxShift":10,"deadband":0.5,"topicRoom":"room","topicOutdoor":"outdoor","persistent":true,"decimals":2,"wires":[["ac_d1"],["ac_d2"]],"x":350,"y":180},
+    {"id":"ac_d1","type":"debug","z":"ac_tab","name":"shift K","active":true,"tosidebar":true,"complete":"payload","x":510,"y":160,"wires":[]},
+    {"id":"ac_d2","type":"debug","z":"ac_tab","name":"info","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":200,"wires":[]}
+]

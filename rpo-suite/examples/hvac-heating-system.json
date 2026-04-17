@@ -1,0 +1,54 @@
+[
+    {"id":"hvac_tab","type":"tab","label":"HVAC Heating System","disabled":false,"info":"Complete heating system example using rpo-suite nodes.\n\nFlow:\n1. weekly-schedule → operating mode\n2. standby → setpoint management (comfort/standby/frost)\n3. optimization → optimal pre-heat start\n4. sensor-check → validate room/outdoor sensors\n5. heat-curve → calculate flow temperature setpoint\n6. adaptive-curve → self-learning curve shift\n7. pid-controller → room temperature control (setpoint fixed in node config)\n8. sequencer → boiler staging (2 boilers)\n9. three-point → mixing valve control\n10. operating-hours → boiler runtime tracking\n11. frost-protection → freeze guard\n12. watchdog → sensor monitoring"},
+
+    {"id":"400fa74589c51bbf","type":"comment","z":"hvac_tab","name":"── 1. SENSORS ──","info":"","x":140,"y":40,"wires":[]},
+    {"id":"c1883a0adb61e762","type":"inject","z":"hvac_tab","name":"Room Temp 19°C","props":[{"p":"payload","v":"19","vt":"num"},{"p":"topic","v":"room","vt":"str"}],"repeat":"30","once":true,"onceDelay":0.1,"topic":"room","payload":"19","payloadType":"num","x":130,"y":80,"wires":[["3d99b5405645b130","7009d84dc1706dcf"]]},
+    {"id":"1924a0eef384223f","type":"inject","z":"hvac_tab","name":"Outdoor Temp -5°C","props":[{"p":"payload","v":"-5","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"60","once":true,"onceDelay":0.2,"topic":"outdoor","payload":"-5","payloadType":"num","x":140,"y":120,"wires":[["cf46b16fad0fa024","b3f074aa25779d4a"]]},
+    {"id":"3d99b5405645b130","type":"sensor-check","z":"hvac_tab","name":"Room Sensor Check","min":-10,"max":50,"fallback":20,"useFallback":true,"timeout":300,"hysteresis":0,"x":540,"y":80,"wires":[["6b8b83a0daaac50e","2963704153506cd8","5fc3daf83540c21f"],["c24d47d8dddca02d"]]},
+    {"id":"cf46b16fad0fa024","type":"sensor-check","z":"hvac_tab","name":"Outdoor Sensor Check","min":-40,"max":60,"fallback":0,"useFallback":true,"timeout":600,"hysteresis":0,"x":540,"y":140,"wires":[["e1e0427f2f97c53e","e252273f592ea3a1","f080276d94206632"],["c24d47d8dddca02d"]]},
+    {"id":"c24d47d8dddca02d","type":"debug","z":"hvac_tab","name":"SENSOR FAULT","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":910,"y":80,"wires":[]},
+    {"id":"7009d84dc1706dcf","type":"watchdog","z":"hvac_tab","name":"Room Watchdog","timeout":600,"x":530,"y":200,"wires":[[],["5c1946321eaef949"]]},
+    {"id":"5c1946321eaef949","type":"debug","z":"hvac_tab","name":"WD ALARM","active":true,"tosidebar":true,"complete":"payload","x":890,"y":200,"wires":[]},
+
+    {"id":"1b271de7ec2e9246","type":"comment","z":"hvac_tab","name":"── 2. SCHEDULE & MODE ──","info":"","x":170,"y":240,"wires":[]},
+    {"id":"e54ae5ed377a5fdc","type":"weekly-schedule","z":"hvac_tab","name":"Office Hours","schedule":[{"day":1,"on":"07:00","off":"18:00"},{"day":2,"on":"07:00","off":"18:00"},{"day":3,"on":"07:00","off":"18:00"},{"day":4,"on":"07:00","off":"18:00"},{"day":5,"on":"07:00","off":"18:00"}],"onValue":"comfort","offValue":"standby","timezone":"","x":110,"y":280,"wires":[["5f1ac8f23503c954"],["5f1ac8f23503c954"]]},
+    {"id":"5f1ac8f23503c954","type":"function","z":"hvac_tab","name":"payload → mode","func":"msg.mode = msg.payload;\nreturn msg;","outputs":1,"x":310,"y":280,"wires":[["ef4a92eb4595f1ab"]]},
+    {"id":"ef4a92eb4595f1ab","type":"standby","z":"hvac_tab","name":"Mode Manager","comfortSetpoint":22,"standbyOffset":-4,"frostSetpoint":8,"initialMode":"standby","x":520,"y":280,"wires":[["77f8d57f4920e339"],["72fef452852c5921"]]},
+    {"id":"72fef452852c5921","type":"debug","z":"hvac_tab","name":"Mode Change","active":true,"tosidebar":true,"complete":"payload","x":900,"y":280,"wires":[]},
+
+    {"id":"03cd04dc18535348","type":"comment","z":"hvac_tab","name":"── 3. OPTIMAL START ──","info":"","x":820,"y":360,"wires":[]},
+    {"id":"77f8d57f4920e339","type":"function","z":"hvac_tab","name":"SP → opt","func":"msg.topic='setpoint'; return msg;","outputs":1,"x":760,"y":400,"wires":[["98b7989cafb9b166"]]},
+    {"id":"f080276d94206632","type":"function","z":"hvac_tab","name":"outdoor → opt","func":"msg.topic='outdoor'; return msg;","outputs":1,"x":780,"y":440,"wires":[["98b7989cafb9b166"]]},
+    {"id":"5fc3daf83540c21f","type":"function","z":"hvac_tab","name":"room → opt","func":"msg.topic='room'; return msg;","outputs":1,"x":770,"y":480,"wires":[["98b7989cafb9b166"]]},
+    {"id":"98b7989cafb9b166","type":"optimization","z":"hvac_tab","name":"Optimal Start","occupancyTime":"07:00","thermalMass":35,"heatingPower":1,"outdoorFactor":0.05,"maxPreHeat":180,"topicRoom":"room","topicOutdoor":"outdoor","topicSetpoint":"setpoint","x":1030,"y":440,"wires":[["c81b6c0c112de90f"],["934fbd2c5359a632"]]},
+    {"id":"c81b6c0c112de90f","type":"debug","z":"hvac_tab","name":"Opt. Start Active","active":true,"tosidebar":true,"complete":"payload","x":1240,"y":420,"wires":[]},
+    {"id":"934fbd2c5359a632","type":"debug","z":"hvac_tab","name":"Opt. Start Info","active":true,"tosidebar":true,"complete":"payload","x":1240,"y":460,"wires":[]},
+
+    {"id":"8c7c8e5d76b42117","type":"comment","z":"hvac_tab","name":"── 4. HEATING CURVE ──","info":"","x":820,"y":560,"wires":[]},
+    {"id":"e1e0427f2f97c53e","type":"heat-curve","z":"hvac_tab","name":"Heat Curve","x":770,"y":600,"wires":[["dd500b1ad60db592","f6df7cc1678d725b"],[]]},
+    {"id":"2963704153506cd8","type":"function","z":"hvac_tab","name":"room → adaptive","func":"msg.topic='room'; return msg;","outputs":1,"x":790,"y":660,"wires":[["90553c8dfdab05e3"]]},
+    {"id":"e252273f592ea3a1","type":"function","z":"hvac_tab","name":"outdoor → adaptive","func":"msg.topic='outdoor'; return msg;","outputs":1,"x":790,"y":700,"wires":[["90553c8dfdab05e3"]]},
+    {"id":"90553c8dfdab05e3","type":"adaptive-curve","z":"hvac_tab","name":"Adaptive Curve Shift","roomSetpoint":22,"heatingLimit":15,"adaptationRate":0.005,"maxShift":8,"deadband":0.3,"topicRoom":"room","topicOutdoor":"outdoor","persistent":true,"decimals":2,"x":1060,"y":660,"wires":[["932712f026fcea7a"],[]]},
+    {"id":"f6df7cc1678d725b","type":"debug","z":"hvac_tab","name":"Flow Temp SP","active":true,"tosidebar":true,"complete":"payload","x":1280,"y":600,"wires":[]},
+    {"id":"932712f026fcea7a","type":"debug","z":"hvac_tab","name":"Curve Shift K","active":true,"tosidebar":true,"complete":"payload","x":1270,"y":660,"wires":[]},
+
+    {"id":"7b10b99983d8d62b","type":"comment","z":"hvac_tab","name":"── 5. PID CONTROL (setpoint in node config) ──","info":"","x":890,"y":760,"wires":[]},
+    {"id":"6b8b83a0daaac50e","type":"pid-controller","z":"hvac_tab","name":"Room PID","setpoint":22,"useXp":false,"Kp":1,"Ti":60,"Td":0,"outMin":0,"outMax":100,"rateLimit":0,"reverseActing":false,"centeredBand":false,"manualMode":false,"manualValue":0,"decimals":1,"maxInterval":0,"ffEnable":false,"ffGain":1,"x":770,"y":800,"wires":[["1f4ddd9db2ae56ae"],[]]},
+
+    {"id":"6774f20f0822639b","type":"comment","z":"hvac_tab","name":"── 6. BOILER STAGING ──","info":"","x":820,"y":880,"wires":[]},
+    {"id":"1f4ddd9db2ae56ae","type":"sequencer","z":"hvac_tab","name":"2 Boilers","channels":2,"hysteresis":10,"minOnTime":300,"minOffTime":300,"wearLevel":true,"x":760,"y":920,"wires":[["b8cce8de41c592d6","4c90cc09a08745d0"]]},
+    {"id":"4c90cc09a08745d0","type":"function","z":"hvac_tab","name":"any boiler ON?","func":"var ch = msg.payload;\nvar on = Array.isArray(ch) ? ch.some(function(v){return v;}) : Boolean(ch);\nreturn {payload: on};","outputs":1,"x":1000,"y":960,"wires":[["5d671f3a8bff385a"]]},
+    {"id":"5d671f3a8bff385a","type":"operating-hours","z":"hvac_tab","name":"Boiler Runtime","serviceInterval":2000,"decimals":1,"persistent":true,"x":1200,"y":960,"wires":[["1cdc1c82bbd01142"],["105e793a327166fd"]]},
+    {"id":"b8cce8de41c592d6","type":"debug","z":"hvac_tab","name":"Boiler States","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":990,"y":920,"wires":[]},
+    {"id":"1cdc1c82bbd01142","type":"debug","z":"hvac_tab","name":"Runtime h","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":1410,"y":940,"wires":[]},
+    {"id":"105e793a327166fd","type":"debug","z":"hvac_tab","name":"Service Alarm","active":true,"tosidebar":true,"complete":"payload","x":1420,"y":980,"wires":[]},
+
+    {"id":"e25b210b987c9307","type":"comment","z":"hvac_tab","name":"── 7. MIXING VALVE ──","info":"","x":1030,"y":1060,"wires":[]},
+    {"id":"dd500b1ad60db592","type":"three-point","z":"hvac_tab","name":"Mixing Valve","runTime":120,"deadband":2,"initPos":50,"x":990,"y":1100,"wires":[["baec806c33df0ba8"],["2998662756da1be3"]]},
+    {"id":"baec806c33df0ba8","type":"debug","z":"hvac_tab","name":"Valve OPEN","active":true,"tosidebar":true,"complete":"payload","x":1270,"y":1080,"wires":[]},
+    {"id":"2998662756da1be3","type":"debug","z":"hvac_tab","name":"Valve CLOSE","active":true,"tosidebar":true,"complete":"payload","x":1280,"y":1120,"wires":[]},
+
+    {"id":"d6603fb4ccc43960","type":"comment","z":"hvac_tab","name":"── 8. SAFETY ──","info":"","x":370,"y":1020,"wires":[]},
+    {"id":"b3f074aa25779d4a","type":"frost-protection","z":"hvac_tab","name":"Frost Guard","frostThreshold":5,"hysteresis":1,"decimals":1,"x":350,"y":1060,"wires":[[],["79a7fb12d603ae72"]]},
+    {"id":"79a7fb12d603ae72","type":"debug","z":"hvac_tab","name":"FROST ALARM","active":true,"tosidebar":true,"complete":"payload","x":600,"y":1060,"wires":[]}
+]

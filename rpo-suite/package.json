@@ -9,6 +9,9 @@
   "bugs": {
     "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
   },
+  "files": [
+    "examples"
+  ],
   "keywords": [
     "node-red",
     "glt",
@@ -86,7 +89,7 @@
     "node-red-contrib-rpo-sequencer": "^1.0.0",
     "node-red-contrib-startup": "^1.0.0",
     "node-red-contrib-idle-mode": "^1.0.0",
-    "node-red-contrib-optimization": "^1.0.0",
+    "node-red-contrib-optimization": "^1.0.1",
     "node-red-contrib-adaptive-curve": "^1.0.0"
   }
 }

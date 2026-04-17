@@ -1,0 +1,11 @@
+[
+    {"id":"ws_tab","type":"tab","label":"weekly-schedule Example","disabled":false,"info":""},
+    {"id":"ws_cmt","type":"comment","z":"ws_tab","name":"=== Weekly Schedule Example ===","info":"Defines ON/OFF times for each day of the week.\nOutput 1: current state on request. Output 2: state change events automatically.\nOverride with msg.override=true/false, clear with msg.override=null.","x":270,"y":40,"wires":[]},
+    {"id":"ws_i1","type":"inject","z":"ws_tab","name":"Query state now","props":[{"p":"payload","v":"","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"","payloadType":"str","x":130,"y":100,"wires":[["ws_n"]]},
+    {"id":"ws_i2","type":"inject","z":"ws_tab","name":"Override ON","props":[{"p":"override","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":140,"wires":[["ws_n"]]},
+    {"id":"ws_i3","type":"inject","z":"ws_tab","name":"Override OFF","props":[{"p":"override","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":180,"wires":[["ws_n"]]},
+    {"id":"ws_i4","type":"inject","z":"ws_tab","name":"Clear override","props":[{"p":"override","v":"","vt":"null"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":220,"wires":[["ws_n"]]},
+    {"id":"ws_n","type":"weekly-schedule","z":"ws_tab","name":"Office Hours","schedule":[{"day":1,"on":"07:00","off":"18:00"},{"day":2,"on":"07:00","off":"18:00"},{"day":3,"on":"07:00","off":"18:00"},{"day":4,"on":"07:00","off":"18:00"},{"day":5,"on":"07:00","off":"18:00"}],"onValue":true,"offValue":false,"timezone":"","wires":[["ws_d1"],["ws_d2"]],"x":340,"y":160},
+    {"id":"ws_d1","type":"debug","z":"ws_tab","name":"state now","active":true,"tosidebar":true,"complete":"payload","x":510,"y":140,"wires":[]},
+    {"id":"ws_d2","type":"debug","z":"ws_tab","name":"state change","active":true,"tosidebar":true,"complete":"payload","x":510,"y":180,"wires":[]}
+]

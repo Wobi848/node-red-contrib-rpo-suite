@@ -1,0 +1,8 @@
+[
+    {"id":"ah_tab","type":"tab","label":"abs-humidity Example","disabled":false,"info":""},
+    {"id":"ah_comment","type":"comment","z":"ah_tab","name":"=== Absolute Humidity Example ===","info":"Send temperature (topic: temp) and relative humidity (topic: rh) to calculate absolute humidity in g/kg.","x":250,"y":40,"wires":[]},
+    {"id":"ah_temp","type":"inject","z":"ah_tab","name":"Temp 22°C","props":[{"p":"payload","v":"22","vt":"num"},{"p":"topic","v":"temp","vt":"str"}],"repeat":"","once":false,"payload":"22","payloadType":"num","topic":"temp","x":120,"y":100,"wires":[["ah_n"]]},
+    {"id":"ah_rh","type":"inject","z":"ah_tab","name":"RH 60%","props":[{"p":"payload","v":"60","vt":"num"},{"p":"topic","v":"rh","vt":"str"}],"repeat":"","once":false,"payload":"60","payloadType":"num","topic":"rh","x":120,"y":140,"wires":[["ah_n"]]},
+    {"id":"ah_n","type":"abs-humidity","z":"ah_tab","name":"","decimals":2,"wires":[["ah_d"]],"x":320,"y":120},
+    {"id":"ah_d","type":"debug","z":"ah_tab","name":"g/kg","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":120,"wires":[]}
+]

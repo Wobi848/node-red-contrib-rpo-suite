@@ -1,0 +1,9 @@
+[
+    {"id":"co2_tab","type":"tab","label":"co2-controller Example","disabled":false,"info":""},
+    {"id":"co2_comment","type":"comment","z":"co2_tab","name":"=== CO2 Controller Example ===","info":"PI controller for CO2-based ventilation control.\nSend CO2 ppm as payload. Output: ventilation demand 0-100%.","x":240,"y":40,"wires":[]},
+    {"id":"co2_i1","type":"inject","z":"co2_tab","name":"CO2 600 ppm (low)","props":[{"p":"payload","v":"600","vt":"num"}],"repeat":"","once":false,"payload":"600","payloadType":"num","x":130,"y":100,"wires":[["co2_n"]]},
+    {"id":"co2_i2","type":"inject","z":"co2_tab","name":"CO2 1000 ppm (setpoint)","props":[{"p":"payload","v":"1000","vt":"num"}],"repeat":"","once":false,"payload":"1000","payloadType":"num","x":140,"y":140,"wires":[["co2_n"]]},
+    {"id":"co2_i3","type":"inject","z":"co2_tab","name":"CO2 1500 ppm (high)","props":[{"p":"payload","v":"1500","vt":"num"}],"repeat":"","once":false,"payload":"1500","payloadType":"num","x":130,"y":180,"wires":[["co2_n"]]},
+    {"id":"co2_n","type":"co2-controller","z":"co2_tab","name":"","setpoint":1000,"Kp":0.1,"Ti":300,"outMin":0,"outMax":100,"decimals":1,"wires":[["co2_d"]],"x":350,"y":140},
+    {"id":"co2_d","type":"debug","z":"co2_tab","name":"ventilation %","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":520,"y":140,"wires":[]}
+]

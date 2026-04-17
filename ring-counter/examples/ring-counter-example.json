@@ -1,0 +1,9 @@
+[
+    {"id":"rc_tab","type":"tab","label":"ring-counter Example","disabled":false,"info":""},
+    {"id":"rc_cmt","type":"comment","z":"rc_tab","name":"=== Ring Counter Example ===","info":"Cycles through a fixed number of positions (0, 1, 2, ... N-1, 0, ...).\nUseful for rotating through setpoints or operating modes.","x":240,"y":40,"wires":[]},
+    {"id":"rc_i1","type":"inject","z":"rc_tab","name":"Next step","props":[{"p":"payload","v":"","vt":"str"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":100,"wires":[["rc_n"]]},
+    {"id":"rc_i2","type":"inject","z":"rc_tab","name":"Reset to 0","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":140,"wires":[["rc_n"]]},
+    {"id":"rc_i3","type":"inject","z":"rc_tab","name":"Set to index 2","props":[{"p":"payload","v":"2","vt":"num"},{"p":"topic","v":"set","vt":"str"}],"repeat":"","once":false,"payload":"2","payloadType":"num","topic":"set","x":120,"y":180,"wires":[["rc_n"]]},
+    {"id":"rc_n","type":"ring-counter","z":"rc_tab","name":"","size":4,"initialIndex":0,"persistent":false,"wires":[["rc_d"]],"x":320,"y":140},
+    {"id":"rc_d","type":"debug","z":"rc_tab","name":"index","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":140,"wires":[]}
+]

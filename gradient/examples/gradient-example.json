@@ -1,0 +1,10 @@
+[
+    {"id":"gr_tab","type":"tab","label":"gradient Example","disabled":false,"info":""},
+    {"id":"gr_cmt","type":"comment","z":"gr_tab","name":"=== Gradient (Rate of Change) Example ===","info":"Calculates the rate of change of incoming values per minute.\nUseful to detect how fast temperature is rising or falling.","x":250,"y":40,"wires":[]},
+    {"id":"gr_i1","type":"inject","z":"gr_tab","name":"20.0°C","props":[{"p":"payload","v":"20.0","vt":"num"}],"repeat":"","once":false,"payload":"20.0","payloadType":"num","x":110,"y":100,"wires":[["gr_n"]]},
+    {"id":"gr_i2","type":"inject","z":"gr_tab","name":"20.5°C","props":[{"p":"payload","v":"20.5","vt":"num"}],"repeat":"","once":false,"payload":"20.5","payloadType":"num","x":110,"y":140,"wires":[["gr_n"]]},
+    {"id":"gr_i3","type":"inject","z":"gr_tab","name":"21.2°C","props":[{"p":"payload","v":"21.2","vt":"num"}],"repeat":"","once":false,"payload":"21.2","payloadType":"num","x":110,"y":180,"wires":[["gr_n"]]},
+    {"id":"gr_n","type":"gradient","z":"gr_tab","name":"","unit":"per_min","smoothing":1,"decimals":3,"alarmRate":0,"wires":[["gr_d1"],["gr_d2"]],"x":310,"y":140},
+    {"id":"gr_d1","type":"debug","z":"gr_tab","name":"rate/min","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":480,"y":120,"wires":[]},
+    {"id":"gr_d2","type":"debug","z":"gr_tab","name":"alarm","active":true,"tosidebar":true,"complete":"payload","x":480,"y":160,"wires":[]}
+]

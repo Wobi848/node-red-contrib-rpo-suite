@@ -1,0 +1,10 @@
+[
+    {"id":"su_tab","type":"tab","label":"startup Example","disabled":false,"info":""},
+    {"id":"su_comment","type":"comment","z":"su_tab","name":"=== Startup / Shutdown Ramp Example ===","info":"Controls a fan with smooth startup and shutdown ramps.\nPreRun 5s at 100%, ramp up to 75% in 20s, ramp down in 10s, postRun 5s at 30%.","x":260,"y":40,"wires":[]},
+    {"id":"su_i1","type":"inject","z":"su_tab","name":"START","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":110,"y":100,"wires":[["su_n"]]},
+    {"id":"su_i2","type":"inject","z":"su_tab","name":"STOP","props":[{"p":"payload","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"false","payloadType":"bool","x":110,"y":140,"wires":[["su_n"]]},
+    {"id":"su_i3","type":"inject","z":"su_tab","name":"Bypass (instant)","props":[{"p":"bypass","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":180,"wires":[["su_n"]]},
+    {"id":"su_n","type":"startup","z":"su_tab","name":"Fan Startup","startSpeed":0,"preRunTime":5,"preRunSpeed":100,"rampTime":20,"targetSpeed":75,"rampDownTime":10,"postRunTime":5,"postRunSpeed":30,"wires":[["su_d1"],["su_d2"]],"x":330,"y":140},
+    {"id":"su_d1","type":"debug","z":"su_tab","name":"speed %","active":true,"tosidebar":true,"complete":"payload","x":500,"y":120,"wires":[]},
+    {"id":"su_d2","type":"debug","z":"su_tab","name":"running","active":true,"tosidebar":true,"complete":"payload","x":500,"y":160,"wires":[]}
+]

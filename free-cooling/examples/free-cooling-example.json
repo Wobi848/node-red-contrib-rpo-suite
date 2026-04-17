@@ -1,0 +1,10 @@
+[
+    {"id":"fc_tab","type":"tab","label":"free-cooling Example","disabled":false,"info":""},
+    {"id":"fc_comment","type":"comment","z":"fc_tab","name":"=== Free Cooling Example ===","info":"Enables free cooling when outdoor conditions are better than indoor.\nCompares enthalpy or temperature. Output 1: enable (bool), Output 2: info object.","x":250,"y":40,"wires":[]},
+    {"id":"fc_i1","type":"inject","z":"fc_tab","name":"Indoor 26°C","props":[{"p":"payload","v":"26","vt":"num"},{"p":"topic","v":"indoor","vt":"str"}],"repeat":"","once":false,"payload":"26","payloadType":"num","topic":"indoor","x":120,"y":100,"wires":[["fc_n"]]},
+    {"id":"fc_i2","type":"inject","z":"fc_tab","name":"Outdoor 18°C","props":[{"p":"payload","v":"18","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"","once":false,"payload":"18","payloadType":"num","topic":"outdoor","x":120,"y":140,"wires":[["fc_n"]]},
+    {"id":"fc_i3","type":"inject","z":"fc_tab","name":"Outdoor 30°C (too hot)","props":[{"p":"payload","v":"30","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"","once":false,"payload":"30","payloadType":"num","topic":"outdoor","x":130,"y":180,"wires":[["fc_n"]]},
+    {"id":"fc_n","type":"free-cooling","z":"fc_tab","name":"","hysteresis":1,"minOutdoor":10,"maxOutdoor":28,"decimals":1,"wires":[["fc_d1"],["fc_d2"]],"x":340,"y":140},
+    {"id":"fc_d1","type":"debug","z":"fc_tab","name":"enable","active":true,"tosidebar":true,"complete":"payload","x":500,"y":120,"wires":[]},
+    {"id":"fc_d2","type":"debug","z":"fc_tab","name":"info","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":500,"y":160,"wires":[]}
+]

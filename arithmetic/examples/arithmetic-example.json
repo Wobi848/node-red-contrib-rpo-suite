@@ -1,0 +1,8 @@
+[
+    {"id":"ari_tab","type":"tab","label":"arithmetic Example","disabled":false,"info":""},
+    {"id":"ari_cmt","type":"comment","z":"ari_tab","name":"=== Arithmetic Example ===","info":"Performs arithmetic (+ - * /) on two inputs.\nSend values via topic 'a' and 'b'. Output: result of operation.","x":230,"y":40,"wires":[]},
+    {"id":"ari_a","type":"inject","z":"ari_tab","name":"a = 80","props":[{"p":"payload","v":"80","vt":"num"},{"p":"topic","v":"a","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"80","payloadType":"num","topic":"a","x":110,"y":100,"wires":[["ari_n"]]},
+    {"id":"ari_b","type":"inject","z":"ari_tab","name":"b = 20","props":[{"p":"payload","v":"20","vt":"num"},{"p":"topic","v":"b","vt":"str"}],"repeat":"","once":true,"onceDelay":0.2,"payload":"20","payloadType":"num","topic":"b","x":110,"y":140,"wires":[["ari_n"]]},
+    {"id":"ari_n","type":"arithmetic","z":"ari_tab","name":"a - b","topicA":"a","topicB":"b","operator":"-","decimals":2,"wires":[["ari_d"]],"x":310,"y":120},
+    {"id":"ari_d","type":"debug","z":"ari_tab","name":"result","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":120,"wires":[]}
+]

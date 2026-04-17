@@ -1,0 +1,8 @@
+[
+    {"id":"dp_tab","type":"tab","label":"dewpoint Example","disabled":false,"info":""},
+    {"id":"dp_comment","type":"comment","z":"dp_tab","name":"=== Dewpoint Example ===","info":"Send temperature (topic: temp) and relative humidity (topic: rh) to calculate the dewpoint temperature.","x":230,"y":40,"wires":[]},
+    {"id":"dp_temp","type":"inject","z":"dp_tab","name":"Temp 22°C","props":[{"p":"payload","v":"22","vt":"num"},{"p":"topic","v":"temp","vt":"str"}],"repeat":"","once":false,"payload":"22","payloadType":"num","topic":"temp","x":120,"y":100,"wires":[["dp_n"]]},
+    {"id":"dp_rh","type":"inject","z":"dp_tab","name":"RH 60%","props":[{"p":"payload","v":"60","vt":"num"},{"p":"topic","v":"rh","vt":"str"}],"repeat":"","once":false,"payload":"60","payloadType":"num","topic":"rh","x":120,"y":140,"wires":[["dp_n"]]},
+    {"id":"dp_n","type":"dewpoint","z":"dp_tab","name":"","decimals":1,"wires":[["dp_d"]],"x":320,"y":120},
+    {"id":"dp_d","type":"debug","z":"dp_tab","name":"dewpoint °C","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":500,"y":120,"wires":[]}
+]

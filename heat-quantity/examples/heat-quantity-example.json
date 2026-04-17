@@ -1,0 +1,10 @@
+[
+    {"id":"hq_tab","type":"tab","label":"heat-quantity Example","disabled":false,"info":""},
+    {"id":"hq_comment","type":"comment","z":"hq_tab","name":"=== Heat Quantity Example ===","info":"Send flow (topic: flow, in m³/h) and temperatures (topic: tFlow, tReturn in °C) to calculate thermal power in kW and accumulated energy in kWh.","x":270,"y":40,"wires":[]},
+    {"id":"hq_flow","type":"inject","z":"hq_tab","name":"Flow 1.5 m³/h","props":[{"p":"payload","v":"1.5","vt":"num"},{"p":"topic","v":"flow","vt":"str"}],"repeat":"","once":false,"payload":"1.5","payloadType":"num","topic":"flow","x":130,"y":100,"wires":[["hq_n"]]},
+    {"id":"hq_tf","type":"inject","z":"hq_tab","name":"T-Flow 65°C","props":[{"p":"payload","v":"65","vt":"num"},{"p":"topic","v":"tFlow","vt":"str"}],"repeat":"","once":false,"payload":"65","payloadType":"num","topic":"tFlow","x":120,"y":140,"wires":[["hq_n"]]},
+    {"id":"hq_tr","type":"inject","z":"hq_tab","name":"T-Return 45°C","props":[{"p":"payload","v":"45","vt":"num"},{"p":"topic","v":"tReturn","vt":"str"}],"repeat":"","once":false,"payload":"45","payloadType":"num","topic":"tReturn","x":120,"y":180,"wires":[["hq_n"]]},
+    {"id":"hq_reset","type":"inject","z":"hq_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":220,"wires":[["hq_n"]]},
+    {"id":"hq_n","type":"heat-quantity","z":"hq_tab","name":"","decimals":2,"wires":[["hq_d"]],"x":330,"y":160},
+    {"id":"hq_d","type":"debug","z":"hq_tab","name":"kW / kWh","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":500,"y":160,"wires":[]}
+]

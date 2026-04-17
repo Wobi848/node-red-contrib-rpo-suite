@@ -1,0 +1,9 @@
+[
+    {"id":"ib_tab","type":"tab","label":"int-bits Example","disabled":false,"info":""},
+    {"id":"ib_cmt","type":"comment","z":"ib_tab","name":"=== Int-Bits Example ===","info":"Converts integer to bit array (int→bits) or bit array to integer (bits→int).\nUseful for Modbus status words or PLC byte manipulation.","x":240,"y":40,"wires":[]},
+    {"id":"ib_i1","type":"inject","z":"ib_tab","name":"Integer 42 → bits","props":[{"p":"payload","v":"42","vt":"num"}],"repeat":"","once":false,"payload":"42","payloadType":"num","x":130,"y":100,"wires":[["ib_n"]]},
+    {"id":"ib_i2","type":"inject","z":"ib_tab","name":"Integer 255 → bits","props":[{"p":"payload","v":"255","vt":"num"}],"repeat":"","once":false,"payload":"255","payloadType":"num","x":130,"y":140,"wires":[["ib_n"]]},
+    {"id":"ib_i3","type":"inject","z":"ib_tab","name":"[1,0,1,0] → int","props":[{"p":"payload","v":"[1,0,1,0]","vt":"json"}],"repeat":"","once":false,"payload":"[1,0,1,0]","payloadType":"json","x":120,"y":180,"wires":[["ib_n"]]},
+    {"id":"ib_n","type":"int-bits","z":"ib_tab","name":"","bits":8,"order":"lsb","wires":[["ib_d"]],"x":330,"y":140},
+    {"id":"ib_d","type":"debug","z":"ib_tab","name":"result","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":140,"wires":[]}
+]

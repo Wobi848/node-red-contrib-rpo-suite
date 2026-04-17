@@ -1,0 +1,12 @@
+[
+    {"id":"mx_tab","type":"tab","label":"multiplexer Example","disabled":false,"info":""},
+    {"id":"mx_comment","type":"comment","z":"mx_tab","name":"=== Multiplexer Example ===","info":"Selects one of multiple input channels and outputs its value.\nSet channel values via topic ch0-ch7, switch active channel via topic 'select' + channel number (0-based).","x":250,"y":40,"wires":[]},
+    {"id":"mx_ch0","type":"inject","z":"mx_tab","name":"ch0 = 10","props":[{"p":"payload","v":"10","vt":"num"},{"p":"topic","v":"ch0","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"10","payloadType":"num","topic":"ch0","x":120,"y":100,"wires":[["mx_n"]]},
+    {"id":"mx_ch1","type":"inject","z":"mx_tab","name":"ch1 = 25","props":[{"p":"payload","v":"25","vt":"num"},{"p":"topic","v":"ch1","vt":"str"}],"repeat":"","once":true,"onceDelay":0.2,"payload":"25","payloadType":"num","topic":"ch1","x":120,"y":140,"wires":[["mx_n"]]},
+    {"id":"mx_ch2","type":"inject","z":"mx_tab","name":"ch2 = 42","props":[{"p":"payload","v":"42","vt":"num"},{"p":"topic","v":"ch2","vt":"str"}],"repeat":"","once":true,"onceDelay":0.3,"payload":"42","payloadType":"num","topic":"ch2","x":120,"y":180,"wires":[["mx_n"]]},
+    {"id":"mx_s0","type":"inject","z":"mx_tab","name":"Select ch0","props":[{"p":"payload","v":"0","vt":"num"},{"p":"topic","v":"select","vt":"str"}],"repeat":"","once":false,"payload":"0","payloadType":"num","topic":"select","x":120,"y":240,"wires":[["mx_n"]]},
+    {"id":"mx_s1","type":"inject","z":"mx_tab","name":"Select ch1","props":[{"p":"payload","v":"1","vt":"num"},{"p":"topic","v":"select","vt":"str"}],"repeat":"","once":false,"payload":"1","payloadType":"num","topic":"select","x":120,"y":280,"wires":[["mx_n"]]},
+    {"id":"mx_s2","type":"inject","z":"mx_tab","name":"Select ch2","props":[{"p":"payload","v":"2","vt":"num"},{"p":"topic","v":"select","vt":"str"}],"repeat":"","once":false,"payload":"2","payloadType":"num","topic":"select","x":120,"y":320,"wires":[["mx_n"]]},
+    {"id":"mx_n","type":"multiplexer","z":"mx_tab","name":"","channels":3,"initialChannel":0,"wires":[["mx_d"]],"x":340,"y":210},
+    {"id":"mx_d","type":"debug","z":"mx_tab","name":"selected value","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":520,"y":210,"wires":[]}
+]

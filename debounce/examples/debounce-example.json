@@ -1,0 +1,9 @@
+[
+    {"id":"deb_tab","type":"tab","label":"debounce Example","disabled":false,"info":""},
+    {"id":"deb_cmt","type":"comment","z":"deb_tab","name":"=== Debounce Example ===","info":"Suppresses rapid repeated messages. Only passes the last message after 500ms silence.\nUseful for button presses or sensor noise.","x":240,"y":40,"wires":[]},
+    {"id":"deb_i1","type":"inject","z":"deb_tab","name":"Rapid click 1","props":[{"p":"payload","v":"click","vt":"str"}],"repeat":"","once":false,"payload":"click","payloadType":"str","x":120,"y":100,"wires":[["deb_n"]]},
+    {"id":"deb_i2","type":"inject","z":"deb_tab","name":"Rapid click 2","props":[{"p":"payload","v":"click","vt":"str"}],"repeat":"","once":false,"payload":"click","payloadType":"str","x":120,"y":140,"wires":[["deb_n"]]},
+    {"id":"deb_i3","type":"inject","z":"deb_tab","name":"Rapid click 3","props":[{"p":"payload","v":"click","vt":"str"}],"repeat":"","once":false,"payload":"click","payloadType":"str","x":120,"y":180,"wires":[["deb_n"]]},
+    {"id":"deb_n","type":"debounce","z":"deb_tab","name":"","debounceTime":500,"mode":"trailing","wires":[["deb_d"]],"x":330,"y":140},
+    {"id":"deb_d","type":"debug","z":"deb_tab","name":"debounced","active":true,"tosidebar":true,"complete":"payload","x":500,"y":140,"wires":[]}
+]

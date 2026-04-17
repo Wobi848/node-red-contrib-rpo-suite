@@ -1,0 +1,10 @@
+[
+    {"id":"pt1_tab","type":"tab","label":"pt1 Example","disabled":false,"info":""},
+    {"id":"pt1_cmt","type":"comment","z":"pt1_tab","name":"=== PT1 Low-Pass Filter Example ===","info":"Smooths noisy signals with a first-order lag filter.\nT1=30s: slow response. T1=5s: faster response. Send varying values to see smoothing effect.","x":240,"y":40,"wires":[]},
+    {"id":"pt1_i1","type":"inject","z":"pt1_tab","name":"Value 100 (jump)","props":[{"p":"payload","v":"100","vt":"num"}],"repeat":"","once":false,"payload":"100","payloadType":"num","x":120,"y":100,"wires":[["pt1_n"]]},
+    {"id":"pt1_i2","type":"inject","z":"pt1_tab","name":"Value 0 (jump)","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":120,"y":140,"wires":[["pt1_n"]]},
+    {"id":"pt1_i3","type":"inject","z":"pt1_tab","name":"Noisy 50 every 1s","props":[{"p":"payload","v":"50","vt":"num"}],"repeat":"1","once":false,"payload":"50","payloadType":"num","x":130,"y":180,"wires":[["pt1_n"]]},
+    {"id":"pt1_i4","type":"inject","z":"pt1_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":220,"wires":[["pt1_n"]]},
+    {"id":"pt1_n","type":"pt1","z":"pt1_tab","name":"","T1":30,"T1Unit":"s","decimals":2,"wires":[["pt1_d"]],"x":330,"y":160},
+    {"id":"pt1_d","type":"debug","z":"pt1_tab","name":"smoothed","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":500,"y":160,"wires":[]}
+]

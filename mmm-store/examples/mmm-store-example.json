@@ -1,0 +1,11 @@
+[
+    {"id":"mmm_tab","type":"tab","label":"mmm-store Example","disabled":false,"info":""},
+    {"id":"mmm_comment","type":"comment","z":"mmm_tab","name":"=== MMM-Store (Min/Max/Mean) Example ===","info":"Tracks minimum, maximum and running average of incoming values.\nSend numeric values as payload. Reset with msg.reset=true.\nOutput: { min, max, avg, count, value }","x":270,"y":40,"wires":[]},
+    {"id":"mmm_i1","type":"inject","z":"mmm_tab","name":"Value 18.5","props":[{"p":"payload","v":"18.5","vt":"num"}],"repeat":"","once":false,"payload":"18.5","payloadType":"num","x":120,"y":100,"wires":[["mmm_n"]]},
+    {"id":"mmm_i2","type":"inject","z":"mmm_tab","name":"Value 22.3","props":[{"p":"payload","v":"22.3","vt":"num"}],"repeat":"","once":false,"payload":"22.3","payloadType":"num","x":120,"y":140,"wires":[["mmm_n"]]},
+    {"id":"mmm_i3","type":"inject","z":"mmm_tab","name":"Value 19.8","props":[{"p":"payload","v":"19.8","vt":"num"}],"repeat":"","once":false,"payload":"19.8","payloadType":"num","x":120,"y":180,"wires":[["mmm_n"]]},
+    {"id":"mmm_i4","type":"inject","z":"mmm_tab","name":"Value 25.1","props":[{"p":"payload","v":"25.1","vt":"num"}],"repeat":"","once":false,"payload":"25.1","payloadType":"num","x":120,"y":220,"wires":[["mmm_n"]]},
+    {"id":"mmm_i5","type":"inject","z":"mmm_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":270,"wires":[["mmm_n"]]},
+    {"id":"mmm_n","type":"mmm-store","z":"mmm_tab","name":"","decimals":2,"persistent":false,"wires":[["mmm_d"]],"x":330,"y":180},
+    {"id":"mmm_d","type":"debug","z":"mmm_tab","name":"min/max/avg","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":180,"wires":[]}
+]

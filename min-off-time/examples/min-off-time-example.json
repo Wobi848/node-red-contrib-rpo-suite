@@ -1,0 +1,8 @@
+[
+    {"id":"mof_tab","type":"tab","label":"min-off-time Example","disabled":false,"info":""},
+    {"id":"mof_comment","type":"comment","z":"mof_tab","name":"=== Min-Off-Time Example ===","info":"Prevents a device from restarting before a minimum off time has elapsed.\nHere: minimum OFF time = 30 seconds.","x":240,"y":40,"wires":[]},
+    {"id":"mof_off","type":"inject","z":"mof_tab","name":"OFF","props":[{"p":"payload","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"false","payloadType":"bool","x":110,"y":100,"wires":[["mof_n"]]},
+    {"id":"mof_on","type":"inject","z":"mof_tab","name":"ON (blocked for 30s)","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":130,"y":140,"wires":[["mof_n"]]},
+    {"id":"mof_n","type":"min-off-time","z":"mof_tab","name":"","minTime":30,"timeUnit":"s","wires":[["mof_d"]],"x":350,"y":120},
+    {"id":"mof_d","type":"debug","z":"mof_tab","name":"output","active":true,"tosidebar":true,"complete":"payload","x":510,"y":120,"wires":[]}
+]

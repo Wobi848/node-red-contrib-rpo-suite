@@ -1,0 +1,8 @@
+[
+    {"id":"sg_tab","type":"tab","label":"signal-gen Example","disabled":false,"info":""},
+    {"id":"sg_cmt","type":"comment","z":"sg_tab","name":"=== Signal Generator Example ===","info":"Generates periodic waveforms (sine, square, triangle, sawtooth).\nUseful for testing PID controllers or simulating sensor data.","x":240,"y":40,"wires":[]},
+    {"id":"sg_start","type":"inject","z":"sg_tab","name":"Start","props":[{"p":"payload","v":"start","vt":"str"}],"repeat":"","once":false,"payload":"start","payloadType":"str","x":110,"y":100,"wires":[["sg_n"]]},
+    {"id":"sg_stop","type":"inject","z":"sg_tab","name":"Stop","props":[{"p":"payload","v":"stop","vt":"str"}],"repeat":"","once":false,"payload":"stop","payloadType":"str","x":110,"y":140,"wires":[["sg_n"]]},
+    {"id":"sg_n","type":"signal-gen","z":"sg_tab","name":"Sine 10±5","waveform":"sine","amplitude":5,"offset":10,"period":60,"periodUnit":"s","interval":1000,"decimals":2,"autoStart":true,"wires":[["sg_d"]],"x":320,"y":120},
+    {"id":"sg_d","type":"debug","z":"sg_tab","name":"signal","active":true,"tosidebar":true,"complete":"payload","x":490,"y":120,"wires":[]}
+]

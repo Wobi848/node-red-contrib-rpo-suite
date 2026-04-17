@@ -1,0 +1,9 @@
+[
+    {"id":"add_tab","type":"tab","label":"adder Example","disabled":false,"info":""},
+    {"id":"add_cmt","type":"comment","z":"add_tab","name":"=== Adder (Weighted Sum) Example ===","info":"Adds multiple inputs with optional weights.\nSend values via topic 'a', 'b', 'c'. Output: weighted sum.","x":240,"y":40,"wires":[]},
+    {"id":"add_a","type":"inject","z":"add_tab","name":"a = 10","props":[{"p":"payload","v":"10","vt":"num"},{"p":"topic","v":"a","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"10","payloadType":"num","topic":"a","x":110,"y":100,"wires":[["add_n"]]},
+    {"id":"add_b","type":"inject","z":"add_tab","name":"b = 20","props":[{"p":"payload","v":"20","vt":"num"},{"p":"topic","v":"b","vt":"str"}],"repeat":"","once":true,"onceDelay":0.2,"payload":"20","payloadType":"num","topic":"b","x":110,"y":140,"wires":[["add_n"]]},
+    {"id":"add_c","type":"inject","z":"add_tab","name":"c = 5","props":[{"p":"payload","v":"5","vt":"num"},{"p":"topic","v":"c","vt":"str"}],"repeat":"","once":true,"onceDelay":0.3,"payload":"5","payloadType":"num","topic":"c","x":110,"y":180,"wires":[["add_n"]]},
+    {"id":"add_n","type":"adder","z":"add_tab","name":"","mode":"sum","topics":"[{\"topic\":\"a\",\"label\":\"A\",\"weight\":1},{\"topic\":\"b\",\"label\":\"B\",\"weight\":1},{\"topic\":\"c\",\"label\":\"C\",\"weight\":1}]","minTopics":3,"decimals":2,"wires":[["add_d"]],"x":320,"y":140},
+    {"id":"add_d","type":"debug","z":"add_tab","name":"sum","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":140,"wires":[]}
+]

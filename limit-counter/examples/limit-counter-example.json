@@ -1,0 +1,10 @@
+[
+    {"id":"lc_tab","type":"tab","label":"limit-counter Example","disabled":false,"info":""},
+    {"id":"lc_cmt","type":"comment","z":"lc_tab","name":"=== Limit Counter Example ===","info":"Counts how many times a value exceeds a threshold. Triggers alarm when count reaches limit.\nHere: alarm after 3 exceedances above 25°C.","x":250,"y":40,"wires":[]},
+    {"id":"lc_i1","type":"inject","z":"lc_tab","name":"20°C (ok)","props":[{"p":"payload","v":"20","vt":"num"}],"repeat":"","once":false,"payload":"20","payloadType":"num","x":110,"y":100,"wires":[["lc_n"]]},
+    {"id":"lc_i2","type":"inject","z":"lc_tab","name":"27°C (above!)","props":[{"p":"payload","v":"27","vt":"num"}],"repeat":"","once":false,"payload":"27","payloadType":"num","x":120,"y":140,"wires":[["lc_n"]]},
+    {"id":"lc_i3","type":"inject","z":"lc_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["lc_n"]]},
+    {"id":"lc_n","type":"limit-counter","z":"lc_tab","name":"","threshold":25,"limit":3,"hysteresis":1,"persistent":false,"wires":[["lc_d1"],["lc_d2"]],"x":330,"y":140},
+    {"id":"lc_d1","type":"debug","z":"lc_tab","name":"count","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":120,"wires":[]},
+    {"id":"lc_d2","type":"debug","z":"lc_tab","name":"alarm","active":true,"tosidebar":true,"complete":"payload","x":490,"y":160,"wires":[]}
+]

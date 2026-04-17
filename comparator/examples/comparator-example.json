@@ -1,0 +1,8 @@
+[
+    {"id":"cmp_tab","type":"tab","label":"comparator Example","disabled":false,"info":""},
+    {"id":"cmp_cmt","type":"comment","z":"cmp_tab","name":"=== Comparator Example ===","info":"Compares two values (a > b, a < b, a == b, etc.).\nSend values via topic 'a' and 'b'. Output: true/false.","x":230,"y":40,"wires":[]},
+    {"id":"cmp_a","type":"inject","z":"cmp_tab","name":"a = 25°C","props":[{"p":"payload","v":"25","vt":"num"},{"p":"topic","v":"a","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"25","payloadType":"num","topic":"a","x":110,"y":100,"wires":[["cmp_n"]]},
+    {"id":"cmp_b","type":"inject","z":"cmp_tab","name":"b = 22°C (setpoint)","props":[{"p":"payload","v":"22","vt":"num"},{"p":"topic","v":"b","vt":"str"}],"repeat":"","once":true,"onceDelay":0.2,"payload":"22","payloadType":"num","topic":"b","x":120,"y":140,"wires":[["cmp_n"]]},
+    {"id":"cmp_n","type":"comparator","z":"cmp_tab","name":"room > setpoint?","topicA":"a","topicB":"b","operator":">","tolerance":0.1,"wires":[["cmp_d"]],"x":340,"y":120},
+    {"id":"cmp_d","type":"debug","z":"cmp_tab","name":"result","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":120,"wires":[]}
+]

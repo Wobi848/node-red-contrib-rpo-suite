@@ -1,0 +1,9 @@
+[
+    {"id":"ss_tab","type":"tab","label":"setpoint-shift Example","disabled":false,"info":""},
+    {"id":"ss_comment","type":"comment","z":"ss_tab","name":"=== Setpoint Shift Example ===","info":"Shifts a base setpoint based on outdoor temperature (outdoor reset).\nHigher outdoor temp → lower heating setpoint.","x":240,"y":40,"wires":[]},
+    {"id":"ss_i1","type":"inject","z":"ss_tab","name":"Outdoor -10°C","props":[{"p":"payload","v":"-10","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"","once":false,"payload":"-10","payloadType":"num","topic":"outdoor","x":130,"y":100,"wires":[["ss_n"]]},
+    {"id":"ss_i2","type":"inject","z":"ss_tab","name":"Outdoor +5°C","props":[{"p":"payload","v":"5","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"","once":false,"payload":"5","payloadType":"num","topic":"outdoor","x":130,"y":140,"wires":[["ss_n"]]},
+    {"id":"ss_i3","type":"inject","z":"ss_tab","name":"Base SP 22°C","props":[{"p":"payload","v":"22","vt":"num"},{"p":"topic","v":"setpoint","vt":"str"}],"repeat":"","once":false,"payload":"22","payloadType":"num","topic":"setpoint","x":130,"y":180,"wires":[["ss_n"]]},
+    {"id":"ss_n","type":"setpoint-shift","z":"ss_tab","name":"","minOutdoor":-15,"maxOutdoor":20,"minShift":-3,"maxShift":3,"decimals":1,"wires":[["ss_d"]],"x":340,"y":140},
+    {"id":"ss_d","type":"debug","z":"ss_tab","name":"shifted SP","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":140,"wires":[]}
+]

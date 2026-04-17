@@ -1,0 +1,9 @@
+[
+    {"id":"anv_tab","type":"tab","label":"alarm-new-val Example","disabled":false,"info":""},
+    {"id":"anv_cmt","type":"comment","z":"anv_tab","name":"=== Alarm on New Value Example ===","info":"Forwards message only when value has changed beyond tolerance.\nMode 'changed': only pass when value differs from last. Tolerance: 0.5°C.","x":260,"y":40,"wires":[]},
+    {"id":"anv_i1","type":"inject","z":"anv_tab","name":"22.0°C","props":[{"p":"payload","v":"22.0","vt":"num"}],"repeat":"","once":false,"payload":"22.0","payloadType":"num","x":110,"y":100,"wires":[["anv_n"]]},
+    {"id":"anv_i2","type":"inject","z":"anv_tab","name":"22.3°C (no change)","props":[{"p":"payload","v":"22.3","vt":"num"}],"repeat":"","once":false,"payload":"22.3","payloadType":"num","x":130,"y":140,"wires":[["anv_n"]]},
+    {"id":"anv_i3","type":"inject","z":"anv_tab","name":"23.5°C (change!)","props":[{"p":"payload","v":"23.5","vt":"num"}],"repeat":"","once":false,"payload":"23.5","payloadType":"num","x":130,"y":180,"wires":[["anv_n"]]},
+    {"id":"anv_n","type":"alarm-new-val","z":"anv_tab","name":"","mode":"changed","tolerance":0.5,"wires":[["anv_d"]],"x":340,"y":140},
+    {"id":"anv_d","type":"debug","z":"anv_tab","name":"changed value","active":true,"tosidebar":true,"complete":"payload","x":510,"y":140,"wires":[]}
+]

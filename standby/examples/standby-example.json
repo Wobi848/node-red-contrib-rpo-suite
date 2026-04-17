@@ -1,0 +1,10 @@
+[
+    {"id":"sb_tab","type":"tab","label":"standby Example","disabled":false,"info":""},
+    {"id":"sb_comment","type":"comment","z":"sb_tab","name":"=== Standby Mode Example ===","info":"Manages three operating modes: Comfort (22°C), Standby (18°C), Frost (8°C).\nOutput 1: current setpoint. Output 2: mode change event.","x":240,"y":40,"wires":[]},
+    {"id":"sb_i1","type":"inject","z":"sb_tab","name":"→ Comfort","props":[{"p":"mode","v":"comfort","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"","payloadType":"str","x":110,"y":100,"wires":[["sb_n"]]},
+    {"id":"sb_i2","type":"inject","z":"sb_tab","name":"→ Standby","props":[{"p":"mode","v":"standby","vt":"str"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":140,"wires":[["sb_n"]]},
+    {"id":"sb_i3","type":"inject","z":"sb_tab","name":"→ Frost","props":[{"p":"mode","v":"frost","vt":"str"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["sb_n"]]},
+    {"id":"sb_n","type":"standby","z":"sb_tab","name":"","comfortSetpoint":22,"standbyOffset":-4,"frostSetpoint":8,"initialMode":"comfort","wires":[["sb_d1"],["sb_d2"]],"x":320,"y":140},
+    {"id":"sb_d1","type":"debug","z":"sb_tab","name":"setpoint °C","active":true,"tosidebar":true,"complete":"payload","x":500,"y":120,"wires":[]},
+    {"id":"sb_d2","type":"debug","z":"sb_tab","name":"mode change","active":true,"tosidebar":true,"complete":"payload","x":500,"y":160,"wires":[]}
+]

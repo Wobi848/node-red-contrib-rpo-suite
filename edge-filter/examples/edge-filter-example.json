@@ -1,0 +1,9 @@
+[
+    {"id":"ef_tab","type":"tab","label":"edge-filter Example","disabled":false,"info":""},
+    {"id":"ef_cmt","type":"comment","z":"ef_tab","name":"=== Edge Filter Example ===","info":"Blocks repeated messages for a time window after a change.\nPrevents alarm flooding: first event passes, next ones blocked for 10s.","x":250,"y":40,"wires":[]},
+    {"id":"ef_i1","type":"inject","z":"ef_tab","name":"Alarm true","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":110,"y":100,"wires":[["ef_n"]]},
+    {"id":"ef_i2","type":"inject","z":"ef_tab","name":"Alarm true (blocked)","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":130,"y":140,"wires":[["ef_n"]]},
+    {"id":"ef_i3","type":"inject","z":"ef_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["ef_n"]]},
+    {"id":"ef_n","type":"edge-filter","z":"ef_tab","name":"","window":10,"windowUnit":"s","mode":"time","wires":[["ef_d"]],"x":330,"y":140},
+    {"id":"ef_d","type":"debug","z":"ef_tab","name":"passed","active":true,"tosidebar":true,"complete":"payload","x":500,"y":140,"wires":[]}
+]

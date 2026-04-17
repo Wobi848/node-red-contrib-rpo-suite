@@ -1,0 +1,8 @@
+[
+    {"id":"en_tab","type":"tab","label":"enthalpy Example","disabled":false,"info":""},
+    {"id":"en_comment","type":"comment","z":"en_tab","name":"=== Enthalpy Example ===","info":"Send temperature (topic: tempIn) and relative humidity (topic: rhIn) to calculate enthalpy in kJ/kg.\nUseful for free-cooling control: compare indoor vs outdoor enthalpy.","x":250,"y":40,"wires":[]},
+    {"id":"en_temp","type":"inject","z":"en_tab","name":"Temp 28°C","props":[{"p":"payload","v":"28","vt":"num"},{"p":"topic","v":"tempIn","vt":"str"}],"repeat":"","once":false,"payload":"28","payloadType":"num","topic":"tempIn","x":120,"y":100,"wires":[["en_n"]]},
+    {"id":"en_rh","type":"inject","z":"en_tab","name":"RH 55%","props":[{"p":"payload","v":"55","vt":"num"},{"p":"topic","v":"rhIn","vt":"str"}],"repeat":"","once":false,"payload":"55","payloadType":"num","topic":"rhIn","x":120,"y":140,"wires":[["en_n"]]},
+    {"id":"en_n","type":"enthalpy","z":"en_tab","name":"","decimals":1,"wires":[["en_d"]],"x":320,"y":120},
+    {"id":"en_d","type":"debug","z":"en_tab","name":"kJ/kg","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":490,"y":120,"wires":[]}
+]

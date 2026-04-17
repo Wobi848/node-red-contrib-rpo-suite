@@ -1,0 +1,10 @@
+[
+    {"id":"oh_tab","type":"tab","label":"operating-hours Example","disabled":false,"info":""},
+    {"id":"oh_comment","type":"comment","z":"oh_tab","name":"=== Operating Hours Example ===","info":"Counts runtime hours of a device. Send true to start, false to stop.\nOutput 2 sends alarm when service hours are exceeded.","x":250,"y":40,"wires":[]},
+    {"id":"oh_on","type":"inject","z":"oh_tab","name":"Device ON","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":120,"y":100,"wires":[["oh_n"]]},
+    {"id":"oh_off","type":"inject","z":"oh_tab","name":"Device OFF","props":[{"p":"payload","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"false","payloadType":"bool","x":120,"y":140,"wires":[["oh_n"]]},
+    {"id":"oh_reset","type":"inject","z":"oh_tab","name":"Reset counter","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":180,"wires":[["oh_n"]]},
+    {"id":"oh_n","type":"operating-hours","z":"oh_tab","name":"","timeUnit":"h","serviceHours":2000,"decimals":1,"persistent":true,"wires":[["oh_d1"],["oh_d2"]],"x":330,"y":140},
+    {"id":"oh_d1","type":"debug","z":"oh_tab","name":"hours","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":500,"y":120,"wires":[]},
+    {"id":"oh_d2","type":"debug","z":"oh_tab","name":"service alarm","active":true,"tosidebar":true,"complete":"payload","x":510,"y":160,"wires":[]}
+]

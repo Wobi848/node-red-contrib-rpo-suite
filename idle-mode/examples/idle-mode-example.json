@@ -1,0 +1,10 @@
+[
+    {"id":"im_tab","type":"tab","label":"idle-mode Example","disabled":false,"info":""},
+    {"id":"im_comment","type":"comment","z":"im_tab","name":"=== Idle Mode Example ===","info":"Periodically exercises idle equipment to prevent seizing.\nHere: if device not running for 7 days, exercise for 60 seconds.\nOutput 1: exercise command. Output 2: status info.","x":260,"y":40,"wires":[]},
+    {"id":"im_i1","type":"inject","z":"im_tab","name":"Running = true","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":130,"y":100,"wires":[["im_n"]]},
+    {"id":"im_i2","type":"inject","z":"im_tab","name":"Running = false","props":[{"p":"payload","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"false","payloadType":"bool","x":130,"y":140,"wires":[["im_n"]]},
+    {"id":"im_i3","type":"inject","z":"im_tab","name":"Reset idle timer","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":180,"wires":[["im_n"]]},
+    {"id":"im_n","type":"idle-mode","z":"im_tab","name":"Pump Exercise","exerciseInterval":7,"exerciseIntervalUnit":"day","exerciseDuration":60,"persistent":true,"wires":[["im_d1"],["im_d2"]],"x":340,"y":140},
+    {"id":"im_d1","type":"debug","z":"im_tab","name":"exercise ON/OFF","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":520,"y":120,"wires":[]},
+    {"id":"im_d2","type":"debug","z":"im_tab","name":"status","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":520,"y":160,"wires":[]}
+]

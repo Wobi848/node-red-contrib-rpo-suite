@@ -1,0 +1,8 @@
+[
+    {"id":"mot_tab","type":"tab","label":"min-on-time Example","disabled":false,"info":""},
+    {"id":"mot_comment","type":"comment","z":"mot_tab","name":"=== Min-On-Time Example ===","info":"Prevents a device from switching off before a minimum runtime has elapsed.\nHere: minimum ON time = 30 seconds.","x":240,"y":40,"wires":[]},
+    {"id":"mot_on","type":"inject","z":"mot_tab","name":"ON","props":[{"p":"payload","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"true","payloadType":"bool","x":110,"y":100,"wires":[["mot_n"]]},
+    {"id":"mot_off","type":"inject","z":"mot_tab","name":"OFF (blocked for 30s)","props":[{"p":"payload","v":"false","vt":"bool"}],"repeat":"","once":false,"payload":"false","payloadType":"bool","x":130,"y":140,"wires":[["mot_n"]]},
+    {"id":"mot_n","type":"min-on-time","z":"mot_tab","name":"","minTime":30,"timeUnit":"s","wires":[["mot_d"]],"x":350,"y":120},
+    {"id":"mot_d","type":"debug","z":"mot_tab","name":"output","active":true,"tosidebar":true,"complete":"payload","x":510,"y":120,"wires":[]}
+]

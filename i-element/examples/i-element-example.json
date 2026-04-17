@@ -1,0 +1,9 @@
+[
+    {"id":"ie_tab","type":"tab","label":"i-element Example","disabled":false,"info":""},
+    {"id":"ie_comment","type":"comment","z":"ie_tab","name":"=== I-Element (Integral) Example ===","info":"Integrates an error signal over time. Used as the I-part in a custom PID controller.\nTi=60s, output clamped 0-100%. Reset with msg.reset=true.","x":250,"y":40,"wires":[]},
+    {"id":"ie_i1","type":"inject","z":"ie_tab","name":"Error +2°C","props":[{"p":"payload","v":"2","vt":"num"}],"repeat":"2","once":false,"payload":"2","payloadType":"num","x":120,"y":100,"wires":[["ie_n"]]},
+    {"id":"ie_i2","type":"inject","z":"ie_tab","name":"Error -2°C","props":[{"p":"payload","v":"-2","vt":"num"}],"repeat":"2","once":false,"payload":"-2","payloadType":"num","x":120,"y":140,"wires":[["ie_n"]]},
+    {"id":"ie_i3","type":"inject","z":"ie_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":180,"wires":[["ie_n"]]},
+    {"id":"ie_n","type":"i-element","z":"ie_tab","name":"","Ti":60,"TiUnit":"s","outMin":0,"outMax":100,"decimals":2,"wires":[["ie_d"]],"x":330,"y":140},
+    {"id":"ie_d","type":"debug","z":"ie_tab","name":"integral output","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":140,"wires":[]}
+]

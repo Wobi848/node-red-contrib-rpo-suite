@@ -1,0 +1,11 @@
+[
+    {"id":"op_tab","type":"tab","label":"optimization Example","disabled":false,"info":""},
+    {"id":"op_comment","type":"comment","z":"op_tab","name":"=== Optimal Start Example ===","info":"Calculates the optimal pre-heat start time to reach setpoint by occupancy.\nSend room temp, outdoor temp and setpoint. Output 1: active (bool). Output 2: optimization info.","x":260,"y":40,"wires":[]},
+    {"id":"op_i1","type":"inject","z":"op_tab","name":"Room 16°C","props":[{"p":"payload","v":"16","vt":"num"},{"p":"topic","v":"room","vt":"str"}],"repeat":"","once":true,"onceDelay":0.1,"payload":"16","payloadType":"num","topic":"room","x":120,"y":100,"wires":[["op_n"]]},
+    {"id":"op_i2","type":"inject","z":"op_tab","name":"Outdoor -5°C","props":[{"p":"payload","v":"-5","vt":"num"},{"p":"topic","v":"outdoor","vt":"str"}],"repeat":"","once":true,"onceDelay":0.2,"payload":"-5","payloadType":"num","topic":"outdoor","x":120,"y":140,"wires":[["op_n"]]},
+    {"id":"op_i3","type":"inject","z":"op_tab","name":"Setpoint 22°C","props":[{"p":"payload","v":"22","vt":"num"},{"p":"topic","v":"setpoint","vt":"str"}],"repeat":"","once":true,"onceDelay":0.3,"payload":"22","payloadType":"num","topic":"setpoint","x":120,"y":180,"wires":[["op_n"]]},
+    {"id":"op_i4","type":"inject","z":"op_tab","name":"Force start now","props":[{"p":"force","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":120,"y":220,"wires":[["op_n"]]},
+    {"id":"op_n","type":"optimization","z":"op_tab","name":"","occupancyTime":"08:00","thermalMass":30,"heatingPower":1.0,"outdoorFactor":0.05,"maxPreHeat":240,"topicRoom":"room","topicOutdoor":"outdoor","topicSetpoint":"setpoint","wires":[["op_d1"],["op_d2"]],"x":340,"y":160},
+    {"id":"op_d1","type":"debug","z":"op_tab","name":"active","active":true,"tosidebar":true,"complete":"payload","x":500,"y":140,"wires":[]},
+    {"id":"op_d2","type":"debug","z":"op_tab","name":"optimization info","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":180,"wires":[]}
+]

@@ -66,6 +66,8 @@ module.exports = function(RED) {
                 node.status({ fill: 'green', shape: 'dot', text: 'ACTIVE – heating to ' + node.setpoint + '°C' });
             } else if (required === 0) {
                 node.status({ fill: 'green', shape: 'dot', text: 'READY – room at setpoint' });
+            } else if (nowTotal >= occTotal) {
+                node.status({ fill: 'grey', shape: 'dot', text: 'Next: tomorrow at ' + startTime });
             } else {
                 node.status({ fill: 'blue', shape: 'dot', text: 'Start in ' + minutesUntilStart + 'min (at ' + startTime + ')' });
             }

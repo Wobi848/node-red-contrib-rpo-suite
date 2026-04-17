@@ -1,0 +1,12 @@
+[
+    {"id":"pr_tab","type":"tab","label":"priority Example","disabled":false,"info":""},
+    {"id":"pr_comment","type":"comment","z":"pr_tab","name":"=== Priority Example ===","info":"Models DDC priority: Hand > Remote > Auto.\nActive input with lowest priority number wins. Deactivate by sending empty string for that topic.","x":240,"y":40,"wires":[]},
+    {"id":"pr_i1","type":"inject","z":"pr_tab","name":"Hand = 25°C","props":[{"p":"payload","v":"25","vt":"num"},{"p":"topic","v":"hand","vt":"str"}],"repeat":"","once":false,"payload":"25","payloadType":"num","topic":"hand","x":120,"y":100,"wires":[["pr_n"]]},
+    {"id":"pr_i2","type":"inject","z":"pr_tab","name":"Remote = 21°C","props":[{"p":"payload","v":"21","vt":"num"},{"p":"topic","v":"remote","vt":"str"}],"repeat":"","once":false,"payload":"21","payloadType":"num","topic":"remote","x":120,"y":140,"wires":[["pr_n"]]},
+    {"id":"pr_i3","type":"inject","z":"pr_tab","name":"Auto = 19°C","props":[{"p":"payload","v":"19","vt":"num"},{"p":"topic","v":"auto","vt":"str"}],"repeat":"","once":false,"payload":"19","payloadType":"num","topic":"auto","x":120,"y":180,"wires":[["pr_n"]]},
+    {"id":"pr_i4","type":"inject","z":"pr_tab","name":"Deactivate Hand","props":[{"p":"payload","v":"","vt":"str"},{"p":"topic","v":"hand","vt":"str"}],"repeat":"","once":false,"payload":"","payloadType":"str","topic":"hand","x":120,"y":220,"wires":[["pr_n"]]},
+    {"id":"pr_i5","type":"inject","z":"pr_tab","name":"Reset all","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":260,"wires":[["pr_n"]]},
+    {"id":"pr_n","type":"priority","z":"pr_tab","name":"","topics":"[{\"topic\":\"hand\",\"label\":\"Hand\",\"priority\":1,\"nullValue\":\"\"},{\"topic\":\"remote\",\"label\":\"Remote\",\"priority\":2,\"nullValue\":\"\"},{\"topic\":\"auto\",\"label\":\"Auto\",\"priority\":3,\"nullValue\":\"\"}]","defaultValue":"","wires":[["pr_d1"],["pr_d2"]],"x":330,"y":180},
+    {"id":"pr_d1","type":"debug","z":"pr_tab","name":"winner value","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":160,"wires":[]},
+    {"id":"pr_d2","type":"debug","z":"pr_tab","name":"no winner","active":true,"tosidebar":true,"complete":"payload","x":510,"y":200,"wires":[]}
+]

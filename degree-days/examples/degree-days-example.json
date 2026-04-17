@@ -1,0 +1,8 @@
+[
+    {"id":"dd_tab","type":"tab","label":"degree-days Example","disabled":false,"info":""},
+    {"id":"dd_comment","type":"comment","z":"dd_tab","name":"=== Degree Days Example ===","info":"Accumulates heating degree days. Send outdoor temperature as payload.\nReset with msg.reset=true. Useful for energy consumption analysis.","x":240,"y":40,"wires":[]},
+    {"id":"dd_i1","type":"inject","z":"dd_tab","name":"-5°C outdoor","props":[{"p":"payload","v":"-5","vt":"num"}],"repeat":"60","once":true,"onceDelay":0.1,"payload":"-5","payloadType":"num","x":130,"y":100,"wires":[["dd_n"]]},
+    {"id":"dd_i2","type":"inject","z":"dd_tab","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":140,"wires":[["dd_n"]]},
+    {"id":"dd_n","type":"degree-days","z":"dd_tab","name":"","baseTemp":20,"decimals":2,"wires":[["dd_d"]],"x":330,"y":100},
+    {"id":"dd_d","type":"debug","z":"dd_tab","name":"degree-days","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":100,"wires":[]}
+]

@@ -1,0 +1,8 @@
+[
+    {"id":"sort_tab","type":"tab","label":"sort Example","disabled":false,"info":""},
+    {"id":"sort_cmt","type":"comment","z":"sort_tab","name":"=== Sort Example ===","info":"Sorts an array of values numerically or alphabetically.\nCan also return only the top N values.","x":210,"y":40,"wires":[]},
+    {"id":"sort_i1","type":"inject","z":"sort_tab","name":"[3,1,4,1,5,9,2,6]","props":[{"p":"payload","v":"[3,1,4,1,5,9,2,6]","vt":"json"}],"repeat":"","once":false,"payload":"[3,1,4,1,5,9,2,6]","payloadType":"json","x":140,"y":100,"wires":[["sort_n"]]},
+    {"id":"sort_i2","type":"inject","z":"sort_tab","name":"[\"banana\",\"apple\",\"cherry\"]","props":[{"p":"payload","v":"[\"banana\",\"apple\",\"cherry\"]","vt":"json"}],"repeat":"","once":false,"payload":"[\"banana\",\"apple\",\"cherry\"]","payloadType":"json","x":150,"y":140,"wires":[["sort_n"]]},
+    {"id":"sort_n","type":"sort","z":"sort_tab","name":"asc","order":"asc","mode":"numeric","topN":0,"wires":[["sort_d"]],"x":360,"y":120},
+    {"id":"sort_d","type":"debug","z":"sort_tab","name":"sorted","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":120,"wires":[]}
+]

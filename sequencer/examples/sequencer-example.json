@@ -1,0 +1,10 @@
+[
+    {"id":"sq_tab","type":"tab","label":"sequencer Example","disabled":false,"info":""},
+    {"id":"sq_comment","type":"comment","z":"sq_tab","name":"=== Sequencer Example ===","info":"Controls 3 pumps/boilers with wear leveling. Send demand 0-100% as payload.\nThe node decides which units to switch on/off to balance runtime hours.","x":250,"y":40,"wires":[]},
+    {"id":"sq_i1","type":"inject","z":"sq_tab","name":"Demand 0% (all off)","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":130,"y":100,"wires":[["sq_n"]]},
+    {"id":"sq_i2","type":"inject","z":"sq_tab","name":"Demand 40% (1 of 3)","props":[{"p":"payload","v":"40","vt":"num"}],"repeat":"","once":false,"payload":"40","payloadType":"num","x":130,"y":140,"wires":[["sq_n"]]},
+    {"id":"sq_i3","type":"inject","z":"sq_tab","name":"Demand 70% (2 of 3)","props":[{"p":"payload","v":"70","vt":"num"}],"repeat":"","once":false,"payload":"70","payloadType":"num","x":130,"y":180,"wires":[["sq_n"]]},
+    {"id":"sq_i4","type":"inject","z":"sq_tab","name":"Demand 100% (all on)","props":[{"p":"payload","v":"100","vt":"num"}],"repeat":"","once":false,"payload":"100","payloadType":"num","x":130,"y":220,"wires":[["sq_n"]]},
+    {"id":"sq_n","type":"sequencer","z":"sq_tab","name":"3 Pumps","channels":3,"hysteresis":5,"minOnTime":60,"minOffTime":60,"wearLevel":true,"wires":[["sq_d"]],"x":340,"y":160},
+    {"id":"sq_d","type":"debug","z":"sq_tab","name":"channel states","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":160,"wires":[]}
+]
