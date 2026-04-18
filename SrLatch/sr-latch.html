@@ -19,18 +19,18 @@
 
 <script type="text/html" data-template-name="sr-latch">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="sr-latch.label.name">Name</span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-initialState"><i class="fa fa-play"></i> Initial State</label>
+        <label for="node-input-initialState"><i class="fa fa-play"></i> <span data-i18n="sr-latch.label.initialState">Initial State</span></label>
         <select id="node-input-initialState">
             <option value="false">RESET (OFF)</option>
             <option value="true">SET (ON)</option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-outputMode"><i class="fa fa-sign-out"></i> Output</label>
+        <label for="node-input-outputMode"><i class="fa fa-sign-out"></i> <span data-i18n="sr-latch.label.outputMode">Output</span></label>
         <select id="node-input-outputMode">
             <option value="change">On state change only</option>
             <option value="always">On every input</option>

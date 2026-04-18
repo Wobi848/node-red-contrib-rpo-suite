@@ -1,0 +1,10 @@
+{
+  "ton-toff": {
+    "label": {
+      "name": "Nombre",
+      "onDelay": "Retardo de encendido",
+      "offDelay": "Retardo de apagado",
+      "delayUnit": "Unidad"
+    }
+  }
+}

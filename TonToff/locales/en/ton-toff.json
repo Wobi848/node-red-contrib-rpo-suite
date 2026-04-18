@@ -1,0 +1,10 @@
+{
+  "ton-toff": {
+    "label": {
+      "name": "Name",
+      "onDelay": "On Delay",
+      "offDelay": "Off Delay",
+      "delayUnit": "Unit"
+    }
+  }
+}

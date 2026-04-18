@@ -1,0 +1,11 @@
+{
+  "hysteresis": {
+    "label": {
+      "name": "Name",
+      "setpoint": "Setpoint",
+      "hysteresis": "Hysteresis",
+      "mode": "Mode",
+      "initialState": "Initial State"
+    }
+  }
+}

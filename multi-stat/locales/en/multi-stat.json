@@ -1,0 +1,9 @@
+{
+  "multi-stat": {
+    "label": {
+      "name": "Name",
+      "decimals": "Decimals",
+      "minTopics": "Min. Topics"
+    }
+  }
+}

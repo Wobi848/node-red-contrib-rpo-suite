@@ -1,0 +1,20 @@
+{
+  "name": "node-red-contrib-rpo-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Monorepo for Node-RED rpo building automation nodes (dev scripts only, not published)",
+  "scripts": {
+    "test": "bash scripts/test-all.sh",
+    "check": "bash check-quality.sh",
+    "check:npm": "bash check-npm.sh",
+    "sync": "node scripts/sync-deps.js",
+    "readme": "node scripts/update-readme.js",
+    "verify": "bash check-quality.sh && bash scripts/test-all.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "author": "sr.rpo | wobi848",
+  "license": "MIT"
+}

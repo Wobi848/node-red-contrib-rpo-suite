@@ -1,0 +1,9 @@
+{
+  "deadband": {
+    "label": {
+      "name": "Name",
+      "deadband": "Totband",
+      "initialValue": "Anfangswert"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "hysteresis": {
+    "label": {
+      "name": "Name",
+      "setpoint": "Sollwert",
+      "hysteresis": "Hysterese",
+      "mode": "Modus",
+      "initialState": "Anfangszustand"
+    }
+  }
+}

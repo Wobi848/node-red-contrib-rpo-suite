@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-multi-stat",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node-RED multi-source statistics - calculates min/max/avg across multiple topics",
   "repository": {
     "type": "git",

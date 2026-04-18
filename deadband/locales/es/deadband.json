@@ -1,0 +1,9 @@
+{
+  "deadband": {
+    "label": {
+      "name": "Nombre",
+      "deadband": "Zona muerta",
+      "initialValue": "Valor inicial"
+    }
+  }
+}

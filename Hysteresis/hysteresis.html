@@ -21,26 +21,26 @@
 
 <script type="text/html" data-template-name="hysteresis">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="hysteresis.label.name">Name</span></label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-setpoint"><i class="fa fa-crosshairs"></i> Setpoint</label>
+        <label for="node-input-setpoint"><i class="fa fa-crosshairs"></i> <span data-i18n="hysteresis.label.setpoint">Setpoint</span></label>
         <input type="text" id="node-input-setpoint" placeholder="50">
     </div>
     <div class="form-row">
-        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> Hysteresis (±)</label>
+        <label for="node-input-hysteresis"><i class="fa fa-arrows-h"></i> <span data-i18n="hysteresis.label.hysteresis">Hysteresis</span> (±)</label>
         <input type="text" id="node-input-hysteresis" placeholder="5">
     </div>
     <div class="form-row">
-        <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+        <label for="node-input-mode"><i class="fa fa-sliders"></i> <span data-i18n="hysteresis.label.mode">Mode</span></label>
         <select id="node-input-mode">
             <option value="high">High (ON when above setpoint)</option>
             <option value="low">Low (ON when below setpoint)</option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-initialState"><i class="fa fa-play"></i> Initial State</label>
+        <label for="node-input-initialState"><i class="fa fa-play"></i> <span data-i18n="hysteresis.label.initialState">Initial State</span></label>
         <select id="node-input-initialState">
             <option value="undefined">Undefined (wait for first input)</option>
             <option value="true">ON (true)</option>

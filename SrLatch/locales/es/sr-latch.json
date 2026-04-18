@@ -1,0 +1,9 @@
+{
+  "sr-latch": {
+    "label": {
+      "name": "Nombre",
+      "initialState": "Estado inicial",
+      "outputMode": "Salida"
+    }
+  }
+}

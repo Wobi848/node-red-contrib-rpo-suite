@@ -1,0 +1,10 @@
+{
+  "ton-toff": {
+    "label": {
+      "name": "Name",
+      "onDelay": "Einschaltverzögerung",
+      "offDelay": "Ausschaltverzögerung",
+      "delayUnit": "Einheit"
+    }
+  }
+}

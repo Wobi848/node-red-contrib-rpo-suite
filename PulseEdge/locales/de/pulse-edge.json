@@ -1,0 +1,9 @@
+{
+  "pulse-edge": {
+    "label": {
+      "name": "Name",
+      "mode": "Flanken-Modus",
+      "initialState": "Anfangszustand"
+    }
+  }
+}
