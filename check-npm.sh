@@ -23,8 +23,8 @@ printf "%-28s %-42s %-10s %-10s %s\n" "FOLDER" "PACKAGE" "LOCAL" "NPM" "STATUS"
 echo "-----------------------------------------------------------------------------------------------------"
 
 for dir in "${DIRS[@]}"; do
-  pkg=$(node -p "require('$BASE_DIR/$dir/package.json').name" 2>/dev/null)
-  local_ver=$(node -p "require('$BASE_DIR/$dir/package.json').version" 2>/dev/null)
+  pkg=$(cd "$BASE_DIR/$dir" && node -p "require('./package.json').name")
+  local_ver=$(cd "$BASE_DIR/$dir" && node -p "require('./package.json').version")
   npm_ver=$(npm view "$pkg" version 2>/dev/null)
 
   if [ -z "$npm_ver" ]; then
