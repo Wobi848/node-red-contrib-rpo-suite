@@ -1,0 +1,16 @@
+{
+  "predictive-heating": {
+    "label": {
+      "name": "Name",
+      "weights": "Weights",
+      "weightCurrent": "Current AT",
+      "weightDay0": "Forecast Day 0 (today)",
+      "weightDay1": "Forecast Day 1 (tomorrow)",
+      "weightDay2": "Forecast Day 2",
+      "uvMaxOffset": "Max UV Offset (°C)"
+    },
+    "hint": {
+      "uvMaxOffset": "max solar correction at UV=12"
+    }
+  }
+}

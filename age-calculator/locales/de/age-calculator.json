@@ -1,0 +1,18 @@
+{
+  "age-calculator": {
+    "label": {
+      "name": "Name",
+      "birthdate": "Geburtsdatum",
+      "outputFields": "Ausgabefelder",
+      "outputYears": "Jahre",
+      "outputMonths": "Monate",
+      "outputWeeks": "Wochen",
+      "outputDays": "Tage",
+      "outputHours": "Stunden",
+      "outputMinutes": "Minuten",
+      "outputSeconds": "Sekunden",
+      "outputReadable": "Lesbar",
+      "outputTimestamp": "Zeitstempel"
+    }
+  }
+}

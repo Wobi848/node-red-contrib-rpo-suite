@@ -1,0 +1,145 @@
+<script type="text/html" data-help-name="pid-controller">
+  <p>Controlador PID de grado industrial usando el algoritmo estándar ISA. Comparable con Siemens FB41, Beckhoff Tc2_Pid, Allen-Bradley PIDE.</p>
+
+  <h3>Características</h3>
+  <ul>
+    <li>Algoritmo PID estándar ISA</li>
+    <li>Feed-Forward con limitación de seguridad</li>
+    <li>Modo Tracking para control en cascada</li>
+    <li>Anti-Windup (integración condicional)</li>
+    <li>Limitador suave del integrador (recuperación rápida)</li>
+    <li>Transferencia sin golpe (manual → auto)</li>
+    <li>Suavizado derivativo (filtro EMA, siempre activo)</li>
+    <li>Límite de tasa de salida (protege actuadores)</li>
+    <li>Supervisión de intervalo máximo (fallo de sensor)</li>
+    <li>Protección NaN/Infinito (operación robusta)</li>
+    <li>Modo de acción inversa (para enfriamiento)</li>
+    <li>Alias compatibles con industria (pv, sp, ff, external, cascade)</li>
+  </ul>
+
+  <h3>Fórmula (Estándar ISA)</h3>
+  <pre>salida = Kp × [ e(t) + (1/Ti) × ∫e(t)dt + Td × de(t)/dt ]
+
+Directo:  e(t) = setpoint - valorProceso
+Inverso:  e(t) = valorProceso - setpoint</pre>
+
+  <h3>Entradas</h3>
+  <dl class="message-properties">
+    <dt>payload / pv <span class="property-type">number</span></dt>
+    <dd>Valor de proceso (temperatura, presión, etc.)</dd>
+    <dt>setpoint / sp <span class="property-type">number</span></dt>
+    <dd><i>(opcional)</i> Sobrescribir setpoint (persistente)</dd>
+    <dt>manual <span class="property-type">boolean</span></dt>
+    <dd><i>(opcional)</i> Cambiar modo manual/auto</dd>
+    <dt>manualValue <span class="property-type">number</span></dt>
+    <dd><i>(opcional)</i> Establecer salida manual (0-100%)</dd>
+    <dt>reset <span class="property-type">boolean</span></dt>
+    <dd><i>(opcional)</i> Reiniciar estado (incluyendo setpoint)</dd>
+    <dt>feedForward / ff <span class="property-type">number</span></dt>
+    <dd><i>(opcional)</i> Valor feed-forward (limitado a ±rango)</dd>
+    <dt>trackingValue / external / cascade <span class="property-type">number</span></dt>
+    <dd><i>(opcional)</i> Valor de tracking para control en cascada</dd>
+    <dt>Kp / Xp / Ti / Td <span class="property-type">number</span></dt>
+    <dd><i>(opcional)</i> Sobrescritura de parámetros en tiempo de ejecución</dd>
+  </dl>
+
+  <h3>Salidas</h3>
+  <p><b>Salida 1 - Salida de Control:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Salida de control (0-100%)</dd>
+    <dt>pid <span class="property-type">object</span></dt>
+    <dd>Info detallada (P, I, D, FF, error, limitado, etc.)</dd>
+  </dl>
+  <p><b>Salida 2 - Estado:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>Estado con manual, setpoint, valorProceso, error, salida</dd>
+  </dl>
+
+  <h3>Configuración</h3>
+  <dl class="message-properties">
+    <dt>Setpoint</dt>
+    <dd>Valor objetivo</dd>
+    <dt>Usar Xp</dt>
+    <dd>Usar banda proporcional en lugar de ganancia Kp</dd>
+    <dt>Kp / Xp</dt>
+    <dd>Kp: Ganancia. Xp: Banda proporcional % (Kp = rangoSalida/Xp)</dd>
+    <dt>Ti</dt>
+    <dd>Tiempo integral en segundos (0 = desactivado)</dd>
+    <dt>Td</dt>
+    <dd>Tiempo derivativo en segundos (0 = desactivado)</dd>
+    <dt>Rango Salida</dt>
+    <dd>Min/Max salida en % (defecto: 0-100)</dd>
+    <dt>Límite Cambio</dt>
+    <dd>Cambio máximo por segundo (0 = desactivado)</dd>
+    <dt>Intervalo Máx.</dt>
+    <dd>Tiempo máximo entre mensajes. Si se excede: D=0, I congelado, estado rojo. (0 = desactivado)</dd>
+    <dt>Acción Inversa</dt>
+    <dd>Activar para control de enfriamiento</dd>
+    <dt>Banda Centrada</dt>
+    <dd>Salida 50% en setpoint (estilo DDC)</dd>
+    <dt>Feed-Forward</dt>
+    <dd>Activar entrada msg.feedForward o msg.ff</dd>
+    <dt>Ganancia FF</dt>
+    <dd>salida += ffGain × feedForward</dd>
+  </dl>
+
+  <h3>Sobrescrituras en Tiempo de Ejecución (Alias Industria)</h3>
+  <dl class="message-properties">
+    <dt>msg.pv</dt>
+    <dd>Valor de proceso (alternativa a msg.payload)</dd>
+    <dt>msg.sp / msg.setpoint</dt>
+    <dd>Sobrescribir setpoint (persiste hasta cambio/reset)</dd>
+    <dt>msg.Kp / msg.Xp / msg.Ti / msg.Td</dt>
+    <dd>Sobrescribir parámetros PID</dd>
+    <dt>msg.ff / msg.feedForward</dt>
+    <dd>Entrada feed-forward (limitada a ±rangoSalida)</dd>
+    <dt>msg.trackingValue / msg.external / msg.cascade</dt>
+    <dd>Valor de tracking para control en cascada</dd>
+    <dt>msg.manual</dt>
+    <dd>Cambiar a manual (true) o auto (false)</dd>
+    <dt>msg.manualValue</dt>
+    <dd>Establecer valor de salida manual</dd>
+    <dt>msg.reset</dt>
+    <dd>Reiniciar integral, estado y setpoint por defecto</dd>
+  </dl>
+
+  <h3>Feed-Forward</h3>
+  <p>Compensa perturbaciones antes de que causen errores. Ejemplo: Temperatura exterior en calefacción.</p>
+  <pre>salida = PID(error) + ffGain × feedForward</pre>
+  <p>FF no afecta el integrador y está limitado a ±rangoSalida.</p>
+
+  <h3>Control en Cascada (Modo Tracking)</h3>
+  <p>Para control en cascada: el PID exterior debe seguir la salida real del PID interior.</p>
+  <pre>[PID Exterior] → setpoint → [PID Interior] → Válvula
+      ↑                            │
+      └─── trackingValue ──────────┘</pre>
+  <p>Enviar salida del interior como <code>msg.trackingValue</code> al exterior.</p>
+
+  <h3>Anti-Windup</h3>
+  <p>Integración condicional: el integral solo acumula cuando no empuja la salida más hacia saturación.</p>
+
+  <h3>Limitador Suave del Integrador</h3>
+  <p>Integrador limitado a ±(rangoSalida/Ki). Previene valores extremos durante saturación larga → recuperación rápida.</p>
+
+  <h3>Transferencia Sin Golpe</h3>
+  <p>Al cambiar de manual a auto, el integral se precarga para que la salida continúe suavemente desde el valor manual.</p>
+
+  <h3>Funciones de Seguridad</h3>
+  <ul>
+    <li><b>Protección NaN/Infinito</b> - Valores inválidos se detectan y congelan a última salida válida</li>
+    <li><b>Limitación Feed-Forward</b> - FF limitado a ±rangoSalida</li>
+    <li><b>Protección NaN en Tracking</b> - Entrada tracking inválida retrocede a integración normal</li>
+  </ul>
+
+  <h3>Estado del Nodo</h3>
+  <ul>
+    <li><b>SP:22 PV:18 → 45.2%</b> - Modo auto (verde)</li>
+    <li><b>MANUAL → 50.0%</b> - Modo manual (azul)</li>
+    <li><b>SP:22 PV:18 → 100% (clamped)</b> - Salida saturada (amarillo)</li>
+    <li><b>SP:22 PV:18 → 45.2% (rate limited)</b> - Tasa limitada (amarillo)</li>
+    <li><b>SP:22 PV:18 → 45.2% (tracking)</b> - Modo tracking activo (cyan)</li>
+    <li><b>SP:22 PV:18 → 45.2% (interval!)</b> - Intervalo máximo excedido (rojo)</li>
+  </ul>
+</script>

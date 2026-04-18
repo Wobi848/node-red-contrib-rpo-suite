@@ -1,0 +1,129 @@
+{
+  "control": {
+    "palette": "rpo-control",
+    "color": "#D4600A",
+    "title": "Control & Regulation",
+    "description": "Feedback control, temperature regulation, and closed-loop algorithms.",
+    "nodes": [
+      "pid-controller",
+      "pt1",
+      "i-element",
+      "heat-curve",
+      "thermal-valve",
+      "three-point",
+      "adaptive-curve",
+      "optimization",
+      "setpoint-shift",
+      "predictive-heating"
+    ]
+  },
+  "logic": {
+    "palette": "rpo-logic",
+    "color": "#3FADB5",
+    "title": "Logic & Boolean",
+    "description": "Boolean logic, latches, edge detection, and state comparison.",
+    "nodes": [
+      "sr-latch",
+      "pulse-edge",
+      "ton-toff",
+      "toggle",
+      "change-detect",
+      "edge-filter",
+      "logic-combiner",
+      "hysteresis",
+      "deadband",
+      "comparator"
+    ]
+  },
+  "math": {
+    "palette": "rpo-math",
+    "color": "#87A980",
+    "title": "Math & Numeric",
+    "description": "Arithmetic, formulas, scaling, clamping, and statistical calculations.",
+    "nodes": [
+      "arithmetic",
+      "formula",
+      "adder",
+      "scale",
+      "clamp",
+      "difference",
+      "gradient",
+      "int-bits",
+      "average",
+      "multi-stat"
+    ]
+  },
+  "time": {
+    "palette": "rpo-time",
+    "color": "#EAB75C",
+    "title": "Time & Signal",
+    "description": "Timers, counters, rate limiting, signal generation, and scheduling.",
+    "nodes": [
+      "counter",
+      "limit-counter",
+      "ring-counter",
+      "debounce",
+      "rate-limiter",
+      "signal-gen",
+      "pwm",
+      "min-on-time",
+      "min-off-time",
+      "operating-hours",
+      "watchdog",
+      "time-shift",
+      "weekly-schedule"
+    ]
+  },
+  "hvac": {
+    "palette": "rpo-hvac",
+    "color": "#A18CD1",
+    "title": "HVAC & Building",
+    "description": "Domain-specific nodes for heating, cooling, and building operation modes.",
+    "nodes": [
+      "heat-quantity",
+      "degree-days",
+      "frost-protection",
+      "free-cooling",
+      "co2-controller",
+      "standby",
+      "idle-mode",
+      "priority",
+      "sequencer",
+      "startup"
+    ]
+  },
+  "sensor": {
+    "palette": "rpo-sensor",
+    "color": "#6EB1EB",
+    "title": "Sensors & Physics",
+    "description": "Psychrometric calculations and sensor-value validation.",
+    "nodes": [
+      "abs-humidity",
+      "dewpoint",
+      "enthalpy",
+      "sensor-check"
+    ]
+  },
+  "flow": {
+    "palette": "rpo-flow",
+    "color": "#E9967A",
+    "title": "Flow Control",
+    "description": "Routing, lookup, sorting, storage, and alarm dispatch.",
+    "nodes": [
+      "multiplexer",
+      "lookup-table",
+      "sort",
+      "mmm-store",
+      "alarm-new-val"
+    ]
+  },
+  "misc": {
+    "palette": "rpo-misc",
+    "color": "#A6BBCF",
+    "title": "Miscellaneous",
+    "description": "Utility nodes that don't fit other categories.",
+    "nodes": [
+      "age-calculator"
+    ]
+  }
+}

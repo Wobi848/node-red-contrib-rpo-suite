@@ -1,0 +1,61 @@
+[
+    {
+        "id": "ph_comment",
+        "type": "comment",
+        "name": "=== Predictive Heating Example ===",
+        "info": "Fetches weather forecast and calculates a predictive outdoor temperature for heating curve control.\n\nConnect at_predictive output to your heat-curve node as outdoor temperature.",
+        "x": 250,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ph_inject",
+        "type": "inject",
+        "name": "Every 15 min",
+        "props": [{"p": "payload"}],
+        "repeat": "900",
+        "once": true,
+        "onceDelay": 0.1,
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
+        "wires": [["ph_weather"]]
+    },
+    {
+        "id": "ph_weather",
+        "type": "function",
+        "name": "Build Weather Input",
+        "func": "// Replace with your actual WeatherAPI / Home Assistant data\n// Example using static values for demo:\nmsg.at_current = 3.5;   // current outdoor temp\nmsg.avg_day0   = 2.0;   // today avg forecast\nmsg.avg_day1   = -1.0;  // tomorrow avg forecast\nmsg.avg_day2   = -4.0;  // day after tomorrow avg\nmsg.uv_day0    = 1;     // UV index today\nmsg.uv_day1    = 2;     // UV index tomorrow\nreturn msg;",
+        "outputs": 1,
+        "x": 360,
+        "y": 100,
+        "wires": [["ph_node"]]
+    },
+    {
+        "id": "ph_node",
+        "type": "predictive-heating",
+        "name": "Predictive AT",
+        "weightCurrent": 4,
+        "weightDay0": 2,
+        "weightDay1": 1,
+        "weightDay2": 0.5,
+        "maxDeltaDown": 3,
+        "uvMaxOffset": 2,
+        "asymmetric": true,
+        "x": 570,
+        "y": 100,
+        "wires": [["ph_debug"]]
+    },
+    {
+        "id": "ph_debug",
+        "type": "debug",
+        "name": "Predictive AT Result",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 780,
+        "y": 100,
+        "wires": []
+    }
+]

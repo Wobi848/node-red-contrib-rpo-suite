@@ -1,0 +1,22 @@
+{
+  "pid-controller": {
+    "label": {
+      "name": "Name",
+      "setpoint": "Sollwert",
+      "useXp": "Xp (Proportionalband) statt Kp verwenden",
+      "Kp": "Kp (Verstärkung)",
+      "Ti": "Ti (s)",
+      "Td": "Td (s)",
+      "outputRange": "Ausgangsbereich",
+      "rateLimit": "Änderungsrate",
+      "reverseActing": "Umgekehrt (Kühlung)",
+      "centeredBand": "Zentriertes Band (50% bei Sollwert)",
+      "ffEnable": "Störgrößenaufschaltung aktivieren",
+      "ffGain": "FF Verstärkung",
+      "manualMode": "Im Handbetrieb starten",
+      "manualValue": "Handwert",
+      "decimals": "Dezimalstellen",
+      "maxInterval": "Max. Intervall"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "pid-controller": {
+    "label": {
+      "name": "Name",
+      "setpoint": "Setpoint",
+      "useXp": "Use Xp (Proportional Band) instead of Kp",
+      "Kp": "Kp (Gain)",
+      "Ti": "Ti (s)",
+      "Td": "Td (s)",
+      "outputRange": "Output Range",
+      "rateLimit": "Rate Limit",
+      "reverseActing": "Reverse Acting (Cooling)",
+      "centeredBand": "Centered Band (50% at Setpoint)",
+      "ffEnable": "Enable Feed-Forward",
+      "ffGain": "FF Gain",
+      "manualMode": "Start in Manual Mode",
+      "manualValue": "Manual Value",
+      "decimals": "Decimals",
+      "maxInterval": "Max Interval"
+    }
+  }
+}

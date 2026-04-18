@@ -1,0 +1,352 @@
+<script type="text/javascript">
+  RED.nodes.registerType("pid-controller", {
+    category: 'rpo-control',
+    color: '#D4600A',
+    defaults: {
+      name: { value: "" },
+      setpoint: { value: 20 },
+      useXp: { value: false },
+      Kp: { value: 1.0 },
+      Ti: { value: 60 },
+      Td: { value: 0 },
+      outMin: { value: 0 },
+      outMax: { value: 100 },
+      rateLimit: { value: 0 },
+      reverseActing: { value: false },
+      centeredBand: { value: false },
+      manualMode: { value: false },
+      manualValue: { value: 0 },
+      decimals: { value: 1 },
+      maxInterval: { value: 0 },
+      ffEnable: { value: false },
+      ffGain: { value: 1.0 },
+    },
+    inputs: 1,
+    outputs: 2,
+    outputLabels: ["Control Output", "Status"],
+    icon: "font-awesome/fa-sliders",
+    label: function () {
+      return this.name || "pid-controller";
+    },
+    paletteLabel: "pid-controller",
+    oneditprepare: function () {
+      var node = this;
+
+      // Manual mode visibility
+      var updateManualVisibility = function () {
+        if ($("#node-input-manualMode").is(":checked")) {
+          $("#row-manualValue").show();
+        } else {
+          $("#row-manualValue").hide();
+        }
+      };
+      $("#node-input-manualMode").on("change", updateManualVisibility);
+      updateManualVisibility();
+
+      // Xp/Kp mode toggle
+      var updateGainLabel = function () {
+        if ($("#node-input-useXp").is(":checked")) {
+          $("#label-gain-mode").text("Xp (%)");
+          $("#hint-gain").text("Proportional band");
+        } else {
+          $("#label-gain-mode").text("Kp (Gain)");
+          $("#hint-gain").text("Proportional gain");
+        }
+      };
+      $("#node-input-useXp").on("change", updateGainLabel);
+      updateGainLabel();
+
+      // Feed-Forward visibility
+      var updateFFVisibility = function () {
+        if ($("#node-input-ffEnable").is(":checked")) {
+          $("#row-ffGain").show();
+        } else {
+          $("#row-ffGain").hide();
+        }
+      };
+      $("#node-input-ffEnable").on("change", updateFFVisibility);
+      updateFFVisibility();
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="pid-controller">
+  <div class="form-row">
+    <label for="node-input-name"
+      ><i class="fa fa-tag"></i>
+      <span data-i18n="pid-controller.label.name">Name</span></label
+    >
+    <input type="text" id="node-input-name" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-setpoint"
+      ><i class="fa fa-crosshairs"></i>
+      <span data-i18n="pid-controller.label.setpoint">Setpoint</span></label
+    >
+    <input type="number" id="node-input-setpoint" style="width: 80px;" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-useXp">&nbsp;</label>
+    <input
+      type="checkbox"
+      id="node-input-useXp"
+      style="width: auto; margin-right: 5px;"
+    />
+    <span data-i18n="pid-controller.label.useXp">Use Xp (Proportional Band) instead of Kp</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-Kp"
+      ><i class="fa fa-balance-scale"></i>
+      <span id="label-gain-mode">Kp (Gain)</span></label
+    >
+    <input type="number" id="node-input-Kp" step="0.1" min="0" style="width: 80px;" />
+    <span id="hint-gain" style="margin-left: 5px; color: #888;">Proportional gain</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-Ti"
+      ><i class="fa fa-clock-o"></i>
+      <span data-i18n="pid-controller.label.Ti">Ti (s)</span></label
+    >
+    <input type="number" id="node-input-Ti" min="0" style="width: 80px;" />
+    <span style="margin-left: 5px; color: #888;">0 = disabled</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-Td"
+      ><i class="fa fa-forward"></i>
+      <span data-i18n="pid-controller.label.Td">Td (s)</span></label
+    >
+    <input type="number" id="node-input-Td" min="0" style="width: 80px;" />
+    <span style="margin-left: 5px; color: #888;">0 = disabled</span>
+  </div>
+  <div class="form-row">
+    <label
+      ><i class="fa fa-arrows-v"></i>
+      <span data-i18n="pid-controller.label.outputRange">Output Range</span></label
+    >
+    <input type="number" id="node-input-outMin" style="width: 60px;" placeholder="Min" />
+    <span> – </span>
+    <input type="number" id="node-input-outMax" style="width: 60px;" placeholder="Max" />
+    <span> %</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-rateLimit"
+      ><i class="fa fa-tachometer"></i>
+      <span data-i18n="pid-controller.label.rateLimit">Rate Limit</span></label
+    >
+    <input type="number" id="node-input-rateLimit" min="0" style="width: 80px;" />
+    <span style="margin-left: 5px;">%/s (0 = disabled)</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-maxInterval"
+      ><i class="fa fa-clock-o"></i>
+      <span data-i18n="pid-controller.label.maxInterval">Max Interval</span></label
+    >
+    <input type="number" id="node-input-maxInterval" min="0" style="width: 80px;" />
+    <span style="margin-left: 5px;">s (0 = disabled)</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-reverseActing">&nbsp;</label>
+    <input
+      type="checkbox"
+      id="node-input-reverseActing"
+      style="width: auto; margin-right: 5px;"
+    />
+    <span data-i18n="pid-controller.label.reverseActing">Reverse Acting (Cooling)</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-centeredBand">&nbsp;</label>
+    <input
+      type="checkbox"
+      id="node-input-centeredBand"
+      style="width: auto; margin-right: 5px;"
+    />
+    <span data-i18n="pid-controller.label.centeredBand">Centered Band (50% at Setpoint)</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-ffEnable">&nbsp;</label>
+    <input
+      type="checkbox"
+      id="node-input-ffEnable"
+      style="width: auto; margin-right: 5px;"
+    />
+    <span data-i18n="pid-controller.label.ffEnable">Enable Feed-Forward</span>
+  </div>
+  <div class="form-row" id="row-ffGain">
+    <label for="node-input-ffGain"
+      ><i class="fa fa-plus-circle"></i>
+      <span data-i18n="pid-controller.label.ffGain">FF Gain</span></label
+    >
+    <input type="number" id="node-input-ffGain" step="0.1" style="width: 80px;" />
+    <span style="margin-left: 5px; color: #888;">msg.feedForward × Gain</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-manualMode">&nbsp;</label>
+    <input
+      type="checkbox"
+      id="node-input-manualMode"
+      style="width: auto; margin-right: 5px;"
+    />
+    <span data-i18n="pid-controller.label.manualMode">Start in Manual Mode</span>
+  </div>
+  <div class="form-row" id="row-manualValue">
+    <label for="node-input-manualValue"
+      ><i class="fa fa-hand-paper-o"></i>
+      <span data-i18n="pid-controller.label.manualValue">Manual Value</span></label
+    >
+    <input type="number" id="node-input-manualValue" min="0" max="100" style="width: 80px;" />
+    <span> %</span>
+  </div>
+  <div class="form-row">
+    <label for="node-input-decimals"
+      ><i class="fa fa-hashtag"></i>
+      <span data-i18n="pid-controller.label.decimals">Decimals</span></label
+    >
+    <input type="number" id="node-input-decimals" min="0" max="2" style="width: 60px;" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="pid-controller">
+  <p>Industrial-grade PID controller using the ISA standard algorithm. Comparable to Siemens FB41, Beckhoff Tc2_Pid, Allen-Bradley PIDE.</p>
+
+  <h3>Features</h3>
+  <ul>
+    <li>ISA standard PID algorithm</li>
+    <li>Feed-Forward with safety limiting</li>
+    <li>Tracking Mode for cascade control</li>
+    <li>Anti-Windup (conditional integration)</li>
+    <li>Integrator Soft Clamp (fast recovery)</li>
+    <li>Bumpless Transfer (smooth manual to auto)</li>
+    <li>Derivative Smoothing (EMA filter, always active)</li>
+    <li>Output Rate Limiting (protects actuators)</li>
+    <li>Max Interval Timeout (detects sensor failures)</li>
+    <li>NaN/Infinity Protection (robust operation)</li>
+    <li>Reverse Acting mode (for cooling)</li>
+    <li>Industry-compatible aliases (pv, sp, ff, external, cascade)</li>
+  </ul>
+
+  <h3>Formula (ISA Standard)</h3>
+  <pre>output = Kp × [ e(t) + (1/Ti) × ∫e(t)dt + Td × de(t)/dt ]
+
+Direct:  e(t) = setpoint - processValue
+Reverse: e(t) = processValue - setpoint</pre>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload / pv <span class="property-type">number</span></dt>
+    <dd>Process value (temperature, pressure, etc.)</dd>
+    <dt>setpoint / sp <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Override setpoint (sticky)</dd>
+    <dt>manual <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> Switch manual/auto mode</dd>
+    <dt>manualValue <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Set manual output (0-100%)</dd>
+    <dt>reset <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> Reset controller state (restores default setpoint)</dd>
+    <dt>feedForward / ff <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Feed-forward value (limited to output span)</dd>
+    <dt>trackingValue / external / cascade <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Tracking value for cascade control</dd>
+    <dt>Kp / Xp / Ti / Td <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Runtime parameter overrides</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <p><b>Output 1 - Control Output:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Control output (0-100%)</dd>
+    <dt>pid <span class="property-type">object</span></dt>
+    <dd>Detailed info (P, I, D, error, clamped, etc.)</dd>
+  </dl>
+  <p><b>Output 2 - Status:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>Status with manual, setpoint, processValue, error, output</dd>
+  </dl>
+
+  <h3>Configuration</h3>
+  <dl class="message-properties">
+    <dt>Setpoint</dt>
+    <dd>Control target value</dd>
+    <dt>Use Xp</dt>
+    <dd>Switch between Kp (gain) and Xp (proportional band) mode</dd>
+    <dt>Kp / Xp</dt>
+    <dd>Kp: Proportional gain. Xp: Proportional band in % (Kp = outputSpan/Xp, works for any range)</dd>
+    <dt>Ti</dt>
+    <dd>Integral time in seconds (0 = disabled)</dd>
+    <dt>Td</dt>
+    <dd>Derivative time in seconds (0 = disabled)</dd>
+    <dt>Output Range</dt>
+    <dd>Min/Max output in % (default: 0-100)</dd>
+    <dt>Rate Limit</dt>
+    <dd>Max output change per second (0 = disabled)</dd>
+    <dt>Max Interval</dt>
+    <dd>Max time between samples in seconds. If exceeded: D-term=0, I-term frozen, red warning. (0 = disabled)</dd>
+    <dt>Reverse Acting</dt>
+    <dd>Enable for cooling control</dd>
+    <dt>Centered Band</dt>
+    <dd>Output is 50% at setpoint (DDC-style). Above SP: output decreases. Below SP: output increases.</dd>
+    <dt>Enable Feed-Forward</dt>
+    <dd>Enable feed-forward input via msg.feedForward</dd>
+    <dt>FF Gain</dt>
+    <dd>Feed-forward gain (output += ffGain × feedForward)</dd>
+  </dl>
+
+  <h3>Runtime Overrides (Industry Aliases)</h3>
+  <dl class="message-properties">
+    <dt>msg.pv</dt>
+    <dd>Process value (alternative to msg.payload)</dd>
+    <dt>msg.sp / msg.setpoint</dt>
+    <dd>Override setpoint (sticky - stays until changed)</dd>
+    <dt>msg.Kp / msg.Xp / msg.Ti / msg.Td</dt>
+    <dd>Override PID parameters</dd>
+    <dt>msg.ff / msg.feedForward</dt>
+    <dd>Feed-forward input (limited to ±outputSpan)</dd>
+    <dt>msg.trackingValue / msg.external / msg.cascade</dt>
+    <dd>Tracking value for cascade control</dd>
+    <dt>msg.manual</dt>
+    <dd>Switch to manual (true) or auto (false)</dd>
+    <dt>msg.manualValue</dt>
+    <dd>Set manual output value</dd>
+    <dt>msg.reset</dt>
+    <dd>Reset integral, state, and restore default setpoint</dd>
+  </dl>
+
+  <h3>Feed-Forward</h3>
+  <p>Compensates for disturbances before they cause errors. Example: Outdoor temperature affecting room heating.</p>
+  <pre>output = PID(error) + ffGain × feedForward</pre>
+  <p>Feed-forward is additive and does not affect the integrator.</p>
+
+  <h3>Tracking Mode (Cascade Control)</h3>
+  <p>For cascade control, the outer PID must track the inner PID's actual output to prevent integrator windup when the inner loop saturates.</p>
+  <pre>[Outer PID] → setpoint → [Inner PID] → Valve
+      ↑                        │
+      └── trackingValue ───────┘</pre>
+  <p>Send the inner loop's output as <code>msg.trackingValue</code> to the outer loop. The integrator is forced to follow this value, preventing windup.</p>
+
+  <h3>Anti-Windup</h3>
+  <p>Uses conditional integration: integral only accumulates when not driving further into saturation.</p>
+
+  <h3>Integrator Soft Clamp</h3>
+  <p>Integrator is limited to ±(outputSpan/Ki) to prevent extreme windup during long saturation. Ensures fast recovery.</p>
+
+  <h3>Bumpless Transfer</h3>
+  <p>When switching from manual to auto, the integral is pre-loaded so output continues smoothly from the manual value.</p>
+
+  <h3>Safety Features</h3>
+  <ul>
+    <li><b>NaN/Infinity Protection</b> - Bad values are caught and frozen to last valid output</li>
+    <li><b>Feed-Forward Limiting</b> - FF is clamped to ±outputSpan to prevent runaway</li>
+    <li><b>Tracking NaN Guard</b> - Invalid tracking input falls back to normal integration</li>
+  </ul>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>SP:22 PV:18 → 45.2%</b> - Auto mode (green)</li>
+    <li><b>MANUAL → 50.0%</b> - Manual mode (blue)</li>
+    <li><b>SP:22 PV:18 → 100% (clamped)</b> - Output saturated (yellow)</li>
+    <li><b>SP:22 PV:18 → 45.2% (rate limited)</b> - Rate limited (yellow)</li>
+    <li><b>SP:22 PV:18 → 45.2% (tracking)</b> - Tracking mode active (cyan)</li>
+    <li><b>SP:22 PV:18 → 45.2% (interval!)</b> - Max interval exceeded (red)</li>
+  </ul>
+</script>

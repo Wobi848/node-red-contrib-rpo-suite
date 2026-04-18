@@ -1,49 +1,56 @@
 #!/usr/bin/env node
-// Regenerates the root README.md package table from current folder versions.
-// Preserves the existing folder order.
+// Regenerates the root README.md using categories.json and each node's
+// package.json description. Groups nodes by category with one-line descriptions.
 
 const fs = require('fs');
 const path = require('path');
 
 const base = path.resolve(__dirname, '..');
-const readmePath = path.join(base, 'README.md');
+const cats = JSON.parse(fs.readFileSync(path.join(base, 'categories.json'), 'utf8'));
 
-const existing = fs.readFileSync(readmePath, 'utf8');
-const rowRe = /^\|\s*([^|\s][^|]*?)\s*\|\s*(node-red-contrib-[^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm;
-const orderedFolders = [];
-let m;
-while ((m = rowRe.exec(existing)) !== null) {
-  if (m[1] === 'Folder') continue;
-  orderedFolders.push(m[1]);
-}
-
-// Append any new folders not yet in the table
-const dirs = fs.readdirSync(base).filter(d => {
+function loadPkg(folder) {
   try {
-    return fs.statSync(path.join(base, d)).isDirectory()
-      && fs.existsSync(path.join(base, d, 'package.json'))
-      && d !== 'rpo-suite'
-      && d !== 'node_modules';
-  } catch (e) { return false; }
-});
-for (const d of dirs) {
-  if (!orderedFolders.includes(d)) orderedFolders.push(d);
-}
-
-const rows = orderedFolders.map(folder => {
-  try {
-    const p = JSON.parse(fs.readFileSync(path.join(base, folder, 'package.json'), 'utf8'));
-    return `| ${folder} | ${p.name} | ${p.version} |`;
+    return JSON.parse(fs.readFileSync(path.join(base, folder, 'package.json'), 'utf8'));
   } catch (e) {
-    return `| ${folder} | (missing) | - |`;
+    return null;
   }
-});
+}
+
+// Stats
+let totalNodes = 0;
+for (const cat of Object.values(cats)) totalNodes += cat.nodes.length;
+
+const sections = [];
+for (const [key, cat] of Object.entries(cats)) {
+  const rows = cat.nodes.map(folder => {
+    const pkg = loadPkg(folder);
+    if (!pkg) return `| ${folder} | (missing) | - | - |`;
+    const desc = (pkg.description || '').replace(/\|/g, '\\|');
+    return `| ${folder} | ${pkg.name} | ${pkg.version} | ${desc} |`;
+  });
+
+  sections.push(`### ${cat.title} \`${cat.palette}\`
+
+${cat.description}
+
+| Folder | Package | Version | Description |
+|--------|---------|---------|-------------|
+${rows.join('\n')}
+`);
+}
+
+const suitePkg = loadPkg('rpo-suite');
+const suiteLine = suitePkg
+  ? `**Meta-package:** [${suitePkg.name}](rpo-suite/) v${suitePkg.version} — installs everything.`
+  : '';
 
 const newReadme = `# node-red-contrib-rpo — Monorepo
 
 Building automation and industrial control nodes for Node-RED by **sr.rpo**.
 
-All packages are available individually on npm or as a single install via [node-red-contrib-rpo-suite](rpo-suite/).
+${totalNodes} nodes organized into ${Object.keys(cats).length} palette categories. Each package is individually available on npm.
+
+${suiteLine}
 
 ## Install Everything
 
@@ -51,16 +58,36 @@ All packages are available individually on npm or as a single install via [node-
 npm install node-red-contrib-rpo-suite
 \`\`\`
 
-## Packages
+## Palette Categories
 
-| Folder | Package | Version |
-|--------|---------|---------|
-${rows.join('\n')}
+In the Node-RED editor palette, nodes are grouped by category:
+
+${Object.values(cats).map(c => `- \`${c.palette}\` — ${c.title} (${c.nodes.length})`).join('\n')}
+
+## Packages by Category
+
+${sections.join('\n')}
+
+## Development
+
+Scripts in \`scripts/\` automate common tasks:
+
+\`\`\`bash
+npm run check        # Verify README, locales, data-i18n, examples for all packages
+npm run check:npm    # Compare local versions with npm registry
+npm run sync         # Sync rpo-suite dependency versions with local versions
+npm run readme       # Regenerate this README from categories.json
+npm run apply-cats   # Apply categories.json to all node HTML files
+npm test             # Run tests in every package with a test/ folder
+npm run verify       # Check + test
+\`\`\`
+
+\`categories.json\` is the single source of truth for palette grouping. Edit it, then run \`npm run apply-cats && npm run readme\`.
 
 ## License
 
 MIT — sr.rpo | wobi848
 `;
 
-fs.writeFileSync(readmePath, newReadme);
-console.log('README.md updated with ' + rows.length + ' packages.');
+fs.writeFileSync(path.join(base, 'README.md'), newReadme);
+console.log('README.md regenerated with ' + totalNodes + ' nodes in ' + Object.keys(cats).length + ' categories.');

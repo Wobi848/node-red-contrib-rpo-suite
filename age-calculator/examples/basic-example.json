@@ -1,0 +1,45 @@
+[
+    {
+        "id": "inject1",
+        "type": "inject",
+        "name": "Trigger",
+        "props": [{"p": "payload"}],
+        "payload": "1990-05-15",
+        "payloadType": "str",
+        "topic": "",
+        "repeat": "",
+        "once": false,
+        "x": 150,
+        "y": 100,
+        "wires": [["age1"]]
+    },
+    {
+        "id": "age1",
+        "type": "age-calculator",
+        "name": "Calculate Age",
+        "birthdate": "",
+        "outputYears": true,
+        "outputMonths": true,
+        "outputWeeks": false,
+        "outputDays": true,
+        "outputHours": false,
+        "outputMinutes": false,
+        "outputSeconds": false,
+        "outputReadable": true,
+        "outputTimestamp": false,
+        "x": 340,
+        "y": 100,
+        "wires": [["debug1"]]
+    },
+    {
+        "id": "debug1",
+        "type": "debug",
+        "name": "Result",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "x": 530,
+        "y": 100,
+        "wires": []
+    }
+]

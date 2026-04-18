@@ -1,0 +1,49 @@
+{
+  "name": "node-red-contrib-pid-controller-isa",
+  "version": "1.0.2",
+  "description": "Industrial-grade PID controller using ISA standard algorithm for Node-RED",
+  "files": [
+    "pid-controller.js",
+    "pid-controller.html",
+    "locales",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "pid",
+    "controller",
+    "hvac",
+    "automation",
+    "isa",
+    "building-automation",
+    "process-control",
+    "cascade",
+    "tracking"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "pid-controller": "pid-controller.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}

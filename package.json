@@ -9,6 +9,7 @@
     "check:npm": "bash check-npm.sh",
     "sync": "node scripts/sync-deps.js",
     "readme": "node scripts/update-readme.js",
+    "apply-cats": "node scripts/apply-categories.js",
     "verify": "bash check-quality.sh && bash scripts/test-all.sh"
   },
   "repository": {

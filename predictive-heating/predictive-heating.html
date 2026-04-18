@@ -1,0 +1,114 @@
+<script type="text/javascript">
+    RED.nodes.registerType('predictive-heating', {
+        category: 'rpo-control',
+        color: '#D4600A',
+        defaults: {
+            name:          { value: "" },
+            weightCurrent: { value: 4 },
+            weightDay0:    { value: 2 },
+            weightDay1:    { value: 1 },
+            weightDay2:    { value: 0.5 },
+            uvMaxOffset:   { value: 2 }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-thermometer-half",
+        label: function() {
+            return this.name || "predictive-heating";
+        },
+        paletteLabel: "predictive-heating"
+    });
+</script>
+
+<script type="text/html" data-template-name="predictive-heating">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="predictive-heating.label.name">Name</span></label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-balance-scale"></i> <span data-i18n="predictive-heating.label.weights">Weights</span></label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-weightCurrent" style="width:180px;"><span data-i18n="predictive-heating.label.weightCurrent">Current AT</span></label>
+        <input type="number" id="node-input-weightCurrent" step="0.5" min="0" style="width: 80px;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-weightDay0" style="width:180px;"><span data-i18n="predictive-heating.label.weightDay0">Forecast Day 0 (today)</span></label>
+        <input type="number" id="node-input-weightDay0" step="0.5" min="0" style="width: 80px;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-weightDay1" style="width:180px;"><span data-i18n="predictive-heating.label.weightDay1">Forecast Day 1 (tomorrow)</span></label>
+        <input type="number" id="node-input-weightDay1" step="0.5" min="0" style="width: 80px;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-weightDay2" style="width:180px;"><span data-i18n="predictive-heating.label.weightDay2">Forecast Day 2</span></label>
+        <input type="number" id="node-input-weightDay2" step="0.5" min="0" style="width: 80px;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-uvMaxOffset"><i class="fa fa-sun-o"></i> <span data-i18n="predictive-heating.label.uvMaxOffset">Max UV Offset (°C)</span></label>
+        <input type="number" id="node-input-uvMaxOffset" step="0.5" min="0" style="width: 80px;">
+        <span style="margin-left: 5px; color: #888;" data-i18n="predictive-heating.hint.uvMaxOffset">max solar correction at UV=12</span>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="predictive-heating">
+    <p>Calculates a predictive outdoor temperature for heating and cooling curve control using weather forecast and solar UV correction.</p>
+
+    <h3>How it works</h3>
+    <ul>
+        <li>Cold front coming → AT_pred drops → heating reacts earlier</li>
+        <li>Warm front coming → AT_pred rises → cooling reacts earlier</li>
+        <li>High UV / solar gain → AT_pred rises → passive solar heating accounted for</li>
+        <li>Works automatically for both heating and cooling</li>
+    </ul>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>at_current <span class="property-type">number</span></dt>
+        <dd><b>Required</b> - Current outdoor temperature (°C). Tip: use a 24h rolling average for best results.</dd>
+        <dt>avg_day0 <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Forecast avg temperature today (°C). Stored in node context — only needs to be sent when updated.</dd>
+        <dt>avg_day1 <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Forecast avg temperature tomorrow (°C). Stored in node context.</dd>
+        <dt>avg_day2 <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> Forecast avg temperature day after tomorrow (°C). Stored in node context.</dd>
+        <dt>uv_day0 <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> UV index today (0–12). Stored in node context.</dd>
+        <dt>uv_day1 <span class="property-type">number</span></dt>
+        <dd><i>(optional)</i> UV index tomorrow (0–12). Stored in node context.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload.at_predictive <span class="property-type">number</span></dt>
+        <dd>Predictive outdoor temperature → use as AT input for heat/cool curve</dd>
+        <dt>payload.correction <span class="property-type">number</span></dt>
+        <dd>Delta from forecast influence only</dd>
+        <dt>payload.solar_offset <span class="property-type">number</span></dt>
+        <dd>Solar UV correction applied (°C)</dd>
+        <dt>payload.mode <span class="property-type">string</span></dt>
+        <dd>"warming" / "cooling" / "stable"</dd>
+    </dl>
+
+    <h3>Algorithm</h3>
+    <pre>AT_pred = (AT_current × w0 + avg_day0 × w1 + avg_day1 × w2 + avg_day2 × w3) / total_weight
+solar_offset = (uv_avg / 12) × uvMaxOffset
+AT_final = AT_pred + solar_offset</pre>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Current AT weight</dt>
+        <dd>Relative weight of the current outdoor temperature</dd>
+        <dt>Forecast Day 0 / 1 / 2</dt>
+        <dd>Relative weight of each forecast day. Higher = more influence.</dd>
+        <dt>Max UV Offset</dt>
+        <dd>Maximum solar correction in °C at UV index 12</dd>
+    </dl>
+
+    <h3>Node Status</h3>
+    <ul>
+        <li><b>AT 5 → 3.5°C (cooling)</b> - Cold front detected (blue)</li>
+        <li><b>AT 5 → 7.2°C (warming)</b> - Warm front detected (yellow)</li>
+        <li><b>AT 5 → 5.4°C (stable)</b> - Stable weather (green)</li>
+    </ul>
+</script>

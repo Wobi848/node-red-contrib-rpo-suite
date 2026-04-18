@@ -1,0 +1,16 @@
+{
+  "predictive-heating": {
+    "label": {
+      "name": "Nombre",
+      "weights": "Ponderación",
+      "weightCurrent": "TA actual",
+      "weightDay0": "Pronóstico Día 0 (hoy)",
+      "weightDay1": "Pronóstico Día 1 (mañana)",
+      "weightDay2": "Pronóstico Día 2 (pasado mañana)",
+      "uvMaxOffset": "Corrección UV máx. (°C)"
+    },
+    "hint": {
+      "uvMaxOffset": "corrección solar máx. a UV=12"
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<script type="text/javascript">
+    RED.nodes.registerType('age-calculator', {
+        category: 'rpo-misc',
+        color: '#A6BBCF',
+        defaults: {
+            name: { value: "" },
+            birthdate: { value: "" },
+            outputYears: { value: true },
+            outputMonths: { value: true },
+            outputWeeks: { value: true },
+            outputDays: { value: true },
+            outputHours: { value: true },
+            outputMinutes: { value: true },
+            outputSeconds: { value: true },
+            outputReadable: { value: true },
+            outputTimestamp: { value: true }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-birthday-cake",
+        label: function() {
+            return this.name || "age calculator";
+        },
+        paletteLabel: "age calculator"
+    });
+</script>
+
+<script type="text/html" data-template-name="age-calculator">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="age-calculator.label.name">Name</span></label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-birthdate"><i class="fa fa-calendar"></i> <span data-i18n="age-calculator.label.birthdate">Birth Date</span></label>
+        <input type="text" id="node-input-birthdate" placeholder="DD.MM.YYYY, DD.MM.YYYY HH:MM, or YYYY-MM-DD">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-list"></i> <span data-i18n="age-calculator.label.outputFields">Output Fields</span></label>
+    </div>
+    <div class="form-row" style="margin-left: 100px;">
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputYears" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputYears">Years</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputMonths" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputMonths">Months</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputWeeks" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputWeeks">Weeks</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputDays" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputDays">Days</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputHours" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputHours">Hours</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputMinutes" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputMinutes">Minutes</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputSeconds" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputSeconds">Seconds</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputReadable" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputReadable">Readable</span></label>
+        <label style="display: block; margin-bottom: 5px;"><input type="checkbox" id="node-input-outputTimestamp" style="width: auto; margin-right: 5px;"><span data-i18n="age-calculator.label.outputTimestamp">Timestamp</span></label>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="age-calculator">
+    <p>Calculates the time elapsed since a birth date.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd>The birth date (overrides configured date if provided)</dd>
+        <dt class="optional">outputFields <span class="property-type">object</span></dt>
+        <dd>Override which fields to include: <code>{ years: true, months: false, readable: true, ... }</code></dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>An object containing only the selected output fields</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>Enter a birth date in the configuration or pass it via <code>msg.payload</code>.</p>
+    <p>Use the checkboxes to select which fields to include in the output.</p>
+    <p>Supported date formats:</p>
+    <ul>
+        <li><code>DD.MM.YYYY</code> (German format, e.g. 15.05.1990)</li>
+        <li><code>DD.MM.YYYY HH:MM</code> (with time, e.g. 15.05.1990 14:30)</li>
+        <li><code>DD.MM.YYYY HH:MM:SS</code> (with seconds)</li>
+        <li><code>YYYY-MM-DD</code> (ISO format)</li>
+        <li><code>YYYY-MM-DD HH:MM</code> (ISO with time)</li>
+        <li><code>YYYY-MM-DD HH:MM:SS</code> (ISO with seconds)</li>
+    </ul>
+    <p>The "Readable" field outputs a human-readable string like "33 Jahre, 10 Monate, 5 Tage, 3 Stunden".</p>
+    <p>The "Timestamp" field outputs the Unix timestamp (milliseconds since 1970-01-01) of the birth date.</p>
+
+    <h3>Example</h3>
+    <p>Input: <code>"12.09.1991 06:05"</code></p>
+    <p>Output (all fields selected):</p>
+    <pre>{
+  "years": 33,
+  "months": 402,
+  "weeks": 1749,
+  "days": 12247,
+  "hours": 293935,
+  "minutes": 17636130,
+  "seconds": 1058167800,
+  "readable": "33 Jahre, 6 Monate, 8 Tage, 5 Stunden, 55 Minuten",
+  "timestamp": 684741900000,
+  "birthdate": "12.09.1991 06:05",
+  "calculated": "2025-03-21T12:00:00.000Z"
+}</pre>
+</script>

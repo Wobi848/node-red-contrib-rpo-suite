@@ -1,0 +1,16 @@
+{
+  "predictive-heating": {
+    "label": {
+      "name": "Name",
+      "weights": "Gewichtung",
+      "weightCurrent": "Aktueller AT",
+      "weightDay0": "Prognose Tag 0 (heute)",
+      "weightDay1": "Prognose Tag 1 (morgen)",
+      "weightDay2": "Prognose Tag 2 (übermorgen)",
+      "uvMaxOffset": "Max. UV-Korrektur (°C)"
+    },
+    "hint": {
+      "uvMaxOffset": "max. Solarkorrektur bei UV=12"
+    }
+  }
+}

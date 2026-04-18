@@ -1,0 +1,145 @@
+<script type="text/html" data-help-name="pid-controller">
+  <p>Industrietauglicher PID-Regler nach ISA-Standard. Vergleichbar mit Siemens FB41, Beckhoff Tc2_Pid, Allen-Bradley PIDE.</p>
+
+  <h3>Funktionen</h3>
+  <ul>
+    <li>ISA-Standard PID-Algorithmus</li>
+    <li>Störgrößenaufschaltung (Feed-Forward) mit Begrenzung</li>
+    <li>Tracking-Modus für Kaskadenregelung</li>
+    <li>Anti-Windup (bedingte Integration)</li>
+    <li>Integrator Soft-Clamp (schnelle Erholung)</li>
+    <li>Stoßfreie Umschaltung (Hand → Automatik)</li>
+    <li>D-Glättung (EMA-Filter, immer aktiv)</li>
+    <li>Ausgangsbegrenzungsrate (schützt Aktoren)</li>
+    <li>Max. Intervall-Überwachung (Sensorausfall)</li>
+    <li>NaN/Infinity-Schutz (robuster Betrieb)</li>
+    <li>Umgekehrte Wirkrichtung (für Kühlung)</li>
+    <li>Industriekompatible Aliase (pv, sp, ff, external, cascade)</li>
+  </ul>
+
+  <h3>Formel (ISA-Standard)</h3>
+  <pre>Ausgang = Kp × [ e(t) + (1/Ti) × ∫e(t)dt + Td × de(t)/dt ]
+
+Direkt:   e(t) = Sollwert - Istwert
+Umgekehrt: e(t) = Istwert - Sollwert</pre>
+
+  <h3>Eingänge</h3>
+  <dl class="message-properties">
+    <dt>payload / pv <span class="property-type">number</span></dt>
+    <dd>Istwert (Temperatur, Druck, etc.)</dd>
+    <dt>setpoint / sp <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Sollwert überschreiben (bleibt aktiv)</dd>
+    <dt>manual <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> Hand-/Automatikumschaltung</dd>
+    <dt>manualValue <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Handwert setzen (0-100%)</dd>
+    <dt>reset <span class="property-type">boolean</span></dt>
+    <dd><i>(optional)</i> Regler zurücksetzen (inkl. Sollwert)</dd>
+    <dt>feedForward / ff <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Störgrößenaufschaltung (auf ±Ausgangsbereich begrenzt)</dd>
+    <dt>trackingValue / external / cascade <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Tracking-Wert für Kaskadenregelung</dd>
+    <dt>Kp / Xp / Ti / Td <span class="property-type">number</span></dt>
+    <dd><i>(optional)</i> Laufzeit-Parameterüberschreibung</dd>
+  </dl>
+
+  <h3>Ausgänge</h3>
+  <p><b>Ausgang 1 - Stellgröße:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>Stellgröße (0-100%)</dd>
+    <dt>pid <span class="property-type">object</span></dt>
+    <dd>Detailinfos (P, I, D, FF, Fehler, begrenzt, etc.)</dd>
+  </dl>
+  <p><b>Ausgang 2 - Status:</b></p>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">object</span></dt>
+    <dd>Status mit Hand, Sollwert, Istwert, Fehler, Ausgang</dd>
+  </dl>
+
+  <h3>Konfiguration</h3>
+  <dl class="message-properties">
+    <dt>Sollwert</dt>
+    <dd>Regelziel</dd>
+    <dt>Xp verwenden</dt>
+    <dd>Proportionalband statt Kp-Verstärkung</dd>
+    <dt>Kp / Xp</dt>
+    <dd>Kp: Verstärkung. Xp: Proportionalband % (Kp = Ausgangsbereich/Xp)</dd>
+    <dt>Ti</dt>
+    <dd>Nachstellzeit in Sekunden (0 = deaktiviert)</dd>
+    <dt>Td</dt>
+    <dd>Vorhaltzeit in Sekunden (0 = deaktiviert)</dd>
+    <dt>Ausgangsbereich</dt>
+    <dd>Min/Max Ausgang in % (Standard: 0-100)</dd>
+    <dt>Änderungsrate</dt>
+    <dd>Max. Änderung pro Sekunde (0 = deaktiviert)</dd>
+    <dt>Max. Intervall</dt>
+    <dd>Max. Zeit zwischen Nachrichten. Bei Überschreitung: D=0, I eingefroren, roter Status. (0 = deaktiviert)</dd>
+    <dt>Umgekehrt</dt>
+    <dd>Für Kühlregelung aktivieren</dd>
+    <dt>Zentriertes Band</dt>
+    <dd>Ausgang ist 50% bei Sollwert (DDC-Stil)</dd>
+    <dt>Störgrößenaufschaltung</dt>
+    <dd>msg.feedForward oder msg.ff aktivieren</dd>
+    <dt>FF Verstärkung</dt>
+    <dd>Ausgang += ffGain × feedForward</dd>
+  </dl>
+
+  <h3>Laufzeit-Überschreibungen (Industrie-Aliase)</h3>
+  <dl class="message-properties">
+    <dt>msg.pv</dt>
+    <dd>Istwert (Alternative zu msg.payload)</dd>
+    <dt>msg.sp / msg.setpoint</dt>
+    <dd>Sollwert überschreiben (bleibt bis Änderung/Reset)</dd>
+    <dt>msg.Kp / msg.Xp / msg.Ti / msg.Td</dt>
+    <dd>PID-Parameter überschreiben</dd>
+    <dt>msg.ff / msg.feedForward</dt>
+    <dd>Störgrößenaufschaltung (auf ±Ausgangsbereich begrenzt)</dd>
+    <dt>msg.trackingValue / msg.external / msg.cascade</dt>
+    <dd>Tracking-Wert für Kaskadenregelung</dd>
+    <dt>msg.manual</dt>
+    <dd>Auf Hand (true) oder Automatik (false) schalten</dd>
+    <dt>msg.manualValue</dt>
+    <dd>Handwert setzen</dd>
+    <dt>msg.reset</dt>
+    <dd>Integral, Zustand und Sollwert zurücksetzen</dd>
+  </dl>
+
+  <h3>Störgrößenaufschaltung (Feed-Forward)</h3>
+  <p>Kompensiert Störungen bevor sie Fehler verursachen. Beispiel: Außentemperatur bei Raumheizung.</p>
+  <pre>Ausgang = PID(Fehler) + ffGain × feedForward</pre>
+  <p>FF beeinflusst den Integrator nicht und ist auf ±Ausgangsbereich begrenzt.</p>
+
+  <h3>Kaskadenregelung (Tracking-Modus)</h3>
+  <p>Für Kaskadenregelung: Der äußere Regler muss dem tatsächlichen Ausgang des inneren Reglers folgen.</p>
+  <pre>[Äußerer PID] → Sollwert → [Innerer PID] → Ventil
+      ↑                          │
+      └── trackingValue ─────────┘</pre>
+  <p>Inneren Ausgang als <code>msg.trackingValue</code> an den äußeren Regler senden.</p>
+
+  <h3>Anti-Windup</h3>
+  <p>Bedingte Integration: Integral akkumuliert nur wenn Ausgang nicht weiter in Sättigung getrieben wird.</p>
+
+  <h3>Integrator Soft-Clamp</h3>
+  <p>Integrator auf ±(Ausgangsbereich/Ki) begrenzt. Verhindert extreme Werte bei langer Sättigung → schnelle Erholung.</p>
+
+  <h3>Stoßfreie Umschaltung</h3>
+  <p>Bei Umschaltung von Hand auf Automatik wird das Integral vorgeladen, sodass der Ausgang nahtlos vom Handwert fortfährt.</p>
+
+  <h3>Sicherheitsfunktionen</h3>
+  <ul>
+    <li><b>NaN/Infinity-Schutz</b> - Ungültige Werte werden erkannt und zum letzten gültigen Ausgang eingefroren</li>
+    <li><b>Feed-Forward-Begrenzung</b> - FF auf ±Ausgangsbereich begrenzt</li>
+    <li><b>Tracking NaN-Schutz</b> - Ungültiger Tracking-Input fällt auf normale Integration zurück</li>
+  </ul>
+
+  <h3>Node Status</h3>
+  <ul>
+    <li><b>SP:22 PV:18 → 45.2%</b> - Automatik (grün)</li>
+    <li><b>MANUAL → 50.0%</b> - Handbetrieb (blau)</li>
+    <li><b>SP:22 PV:18 → 100% (clamped)</b> - Ausgang begrenzt (gelb)</li>
+    <li><b>SP:22 PV:18 → 45.2% (rate limited)</b> - Rate begrenzt (gelb)</li>
+    <li><b>SP:22 PV:18 → 45.2% (tracking)</b> - Tracking-Modus (cyan)</li>
+    <li><b>SP:22 PV:18 → 45.2% (interval!)</b> - Max. Intervall überschritten (rot)</li>
+  </ul>
+</script>

@@ -1,0 +1,22 @@
+{
+  "pid-controller": {
+    "label": {
+      "name": "Nombre",
+      "setpoint": "Setpoint",
+      "useXp": "Usar Xp (Banda Proporcional) en vez de Kp",
+      "Kp": "Kp (Ganancia)",
+      "Ti": "Ti (s)",
+      "Td": "Td (s)",
+      "outputRange": "Rango Salida",
+      "rateLimit": "Límite Cambio",
+      "reverseActing": "Acción Inversa (Enfriamiento)",
+      "centeredBand": "Banda Centrada (50% en Setpoint)",
+      "ffEnable": "Activar Feed-Forward",
+      "ffGain": "Ganancia FF",
+      "manualMode": "Iniciar en Modo Manual",
+      "manualValue": "Valor Manual",
+      "decimals": "Decimales",
+      "maxInterval": "Intervalo Máx."
+    }
+  }
+}

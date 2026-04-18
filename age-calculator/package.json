@@ -1,0 +1,44 @@
+{
+  "name": "node-red-contrib-age-calculator",
+  "version": "1.0.5",
+  "description": "Node-RED node to calculate age/time alive from a birth date",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wobi848/node-red-contrib-rpo-suite/issues"
+  },
+  "files": [
+    "age-calculator.js",
+    "age-calculator.html",
+    "examples"
+  ],
+  "keywords": [
+    "node-red",
+    "age",
+    "birthday",
+    "calculator",
+    "time"
+  ],
+  "author": "sr.rpo",
+  "license": "MIT",
+  "node-red": {
+    "version": ">=4.0.0",
+    "nodes": {
+      "age-calculator": "age-calculator.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "mocha \"test/**/*_spec.js\" --exit"
+  },
+  "devDependencies": {
+    "@node-red/registry": "^3.1.15",
+    "mocha": "^10.2.0",
+    "node-red": "^3.1.0",
+    "node-red-node-test-helper": "^0.3.6"
+  }
+}
