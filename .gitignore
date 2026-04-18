@@ -8,3 +8,7 @@ test-flow*.json
 test-flow*.txt
 update-status.md
 publish-log.txt
+
+# Runtime data files
+predictive-heating/alarms_*.json
+**/notiz_*.md
