@@ -14,16 +14,16 @@ npm install node-red-contrib-rpo-suite
 
 | Folder | Package | Version |
 |--------|---------|---------|
-| BirthTimeCalc | node-red-contrib-age-calculator | 1.0.5 |
-| Hysteresis | node-red-contrib-threshold-hysteresis | 1.0.2 |
-| SrLatch | node-red-contrib-sr-latch | 1.0.2 |
-| PulseEdge | node-red-contrib-pulse-edge | 1.0.2 |
-| TonToff | node-red-contrib-ton-toff | 1.0.3 |
+| age-calculator | node-red-contrib-age-calculator | 1.0.5 |
+| hysteresis | node-red-contrib-threshold-hysteresis | 1.0.2 |
+| sr-latch | node-red-contrib-sr-latch | 1.0.2 |
+| pulse-edge | node-red-contrib-pulse-edge | 1.0.2 |
+| ton-toff | node-red-contrib-ton-toff | 1.0.3 |
 | deadband | node-red-contrib-deadband | 1.0.3 |
 | multi-stat | node-red-contrib-multi-stat | 1.0.3 |
 | scale | node-red-contrib-scale | 1.0.1 |
 | clamp | node-red-contrib-clamp | 1.0.1 |
-| avarage | node-red-contrib-avg | 1.0.1 |
+| average | node-red-contrib-avg | 1.0.1 |
 | difference | node-red-contrib-difference | 1.0.1 |
 | logic-combiner | node-red-contrib-logic-combiner | 1.0.1 |
 | heat-curve | node-red-contrib-heat-curve | 1.0.1 |
