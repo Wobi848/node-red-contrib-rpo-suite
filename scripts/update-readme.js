@@ -91,3 +91,66 @@ MIT — sr.rpo | wobi848
 
 fs.writeFileSync(path.join(base, 'README.md'), newReadme);
 console.log('README.md regenerated with ' + totalNodes + ' nodes in ' + Object.keys(cats).length + ' categories.');
+
+if (suitePkg) {
+  const suiteSections = [];
+  for (const [key, cat] of Object.entries(cats)) {
+    const rows = cat.nodes.map(folder => {
+      const pkg = loadPkg(folder);
+      if (!pkg) return `| ${folder} | (missing) | - |`;
+      const desc = (pkg.description || '').replace(/\|/g, '\\|');
+      const npmUrl = `https://www.npmjs.com/package/${pkg.name}`;
+      return `| ${folder} | [${pkg.name}](${npmUrl}) | ${desc} |`;
+    });
+    suiteSections.push(`### ${cat.title} \`${cat.palette}\`
+
+${cat.description}
+
+| Folder | Package | Description |
+|--------|---------|-------------|
+${rows.join('\n')}
+`);
+  }
+
+  const suiteReadme = `# ${suitePkg.name}
+
+One-line install for the complete sr.rpo building automation node suite for Node-RED.
+
+**v${suitePkg.version}** — bundles ${totalNodes} nodes across ${Object.keys(cats).length} palette categories.
+
+## Installation
+
+\`\`\`bash
+npm install ${suitePkg.name}
+\`\`\`
+
+Or via Node-RED Palette Manager: Search for \`rpo-suite\`
+
+## Palette Categories
+
+${Object.values(cats).map(c => `- \`${c.palette}\` — ${c.title} (${c.nodes.length})`).join('\n')}
+
+## Included Nodes (${totalNodes})
+
+${suiteSections.join('\n')}
+
+## Use Cases
+
+- HVAC control systems
+- Building automation (GLT)
+- Industrial process control
+- Sensor data processing
+- PLC-style logic in Node-RED
+
+## Author
+
+sr.rpo
+
+## License
+
+MIT
+`;
+
+  fs.writeFileSync(path.join(base, 'rpo-suite', 'README.md'), suiteReadme);
+  console.log('rpo-suite/README.md regenerated with ' + totalNodes + ' nodes.');
+}
