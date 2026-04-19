@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-min-on-time",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Minimum ON time - ensures output stays ON for a minimum duration",
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-logic-combiner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node-RED logic combiner - combines multiple boolean inputs with AND/OR",
   "files": [
     "logic-combiner.js",

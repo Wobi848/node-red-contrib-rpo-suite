@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-rpo-change-detect",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Forwards messages only when the value has changed (supports tolerance for numbers)",
   "repository": {
     "type": "git",

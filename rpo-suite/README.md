@@ -2,7 +2,7 @@
 
 One-line install for the complete sr.rpo building automation node suite for Node-RED.
 
-**v1.4.11** — bundles 63 nodes across 8 palette categories.
+**v1.4.12** — bundles 63 nodes across 8 palette categories.
 
 ## Installation
 

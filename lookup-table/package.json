@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-lookup-table",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Linear interpolation lookup table for Node-RED",
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-rpo-sort",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Array sorter - sorts arrays numerically or alphabetically with topN support",
   "repository": {
     "type": "git",

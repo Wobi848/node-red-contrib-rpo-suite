@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-setpoint-shift",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Sliding setpoint / heating curve based on outdoor temperature for HVAC systems",
   "repository": {
     "type": "git",

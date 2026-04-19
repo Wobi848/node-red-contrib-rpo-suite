@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-pt1",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "PT1 first-order low-pass filter for smoothing noisy measurement values",
   "repository": {
     "type": "git",

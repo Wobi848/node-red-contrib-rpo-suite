@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-alarm-new-val",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "New value alarm - signals when a new or changed value is received",
   "repository": {
     "type": "git",
