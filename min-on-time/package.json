@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-min-on-time",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Minimum ON time - ensures output stays ON for a minimum duration",
   "repository": {
     "type": "git",
@@ -32,14 +32,14 @@
     }
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.5"
   },
   "scripts": {
     "test": "mocha \"test/**/*_spec.js\" --exit"
   },
   "devDependencies": {
     "mocha": "^10.2.0",
-    "node-red": "^3.1.0",
+    "node-red": "^4.1.0",
     "node-red-node-test-helper": "^0.3.6"
   }
 }
