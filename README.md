@@ -4,7 +4,7 @@ Building automation and industrial control nodes for Node-RED by **sr.rpo**.
 
 63 nodes organized into 8 palette categories. Each package is individually available on npm.
 
-**Meta-package:** [node-red-contrib-rpo-suite](rpo-suite/) v1.4.12 — installs everything.
+**Meta-package:** [node-red-contrib-rpo-suite](rpo-suite/) v1.4.13 — installs everything.
 
 ## Install Everything
 
@@ -34,7 +34,7 @@ Feedback control, temperature regulation, and closed-loop algorithms.
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
 | pid-controller | node-red-contrib-pid-controller-isa | 1.0.3 | Industrial-grade PID controller using ISA standard algorithm for Node-RED |
-| pt1 | node-red-contrib-pt1 | 1.0.4 | PT1 first-order low-pass filter for smoothing noisy measurement values |
+| pt1 | node-red-contrib-pt1 | 1.0.5 | PT1 first-order low-pass filter for smoothing noisy measurement values |
 | i-element | node-red-contrib-i-element | 1.0.4 | Integral element (I-Glied) with anti-windup for control systems |
 | heat-curve | node-red-contrib-heat-curve | 1.0.2 | Node-RED heating curve node - calculates flow temperature setpoint based on outdoor temperature |
 | thermal-valve | node-red-contrib-thermal-valve | 1.0.4 | PWM controller for thermal actuator valves - converts 0-100% to timed on/off signal |
@@ -50,15 +50,15 @@ Boolean logic, latches, edge detection, and state comparison.
 
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
-| sr-latch | node-red-contrib-sr-latch | 1.0.3 | Node-RED SR Latch (Set-Reset Flip-Flop) - memory element with set/reset control |
-| pulse-edge | node-red-contrib-pulse-edge | 1.0.3 | Node-RED node for edge detection - outputs pulse on rising/falling edge |
-| ton-toff | node-red-contrib-ton-toff | 1.0.4 | Node-RED TON/TOFF timer - On-Delay and Off-Delay timer functions |
+| sr-latch | node-red-contrib-sr-latch | 1.0.4 | Node-RED SR Latch (Set-Reset Flip-Flop) - memory element with set/reset control |
+| pulse-edge | node-red-contrib-pulse-edge | 1.0.4 | Node-RED node for edge detection - outputs pulse on rising/falling edge |
+| ton-toff | node-red-contrib-ton-toff | 1.0.5 | Node-RED TON/TOFF timer - On-Delay and Off-Delay timer functions |
 | toggle | node-red-contrib-rpo-toggle | 1.0.4 | Toggle flip-flop - converts push button to switch (boolean output on every truthy input) |
 | change-detect | node-red-contrib-rpo-change-detect | 1.0.4 | Forwards messages only when the value has changed (supports tolerance for numbers) |
 | edge-filter | node-red-contrib-edge-filter | 1.0.4 | Edge filter - forwards only first event in a time window (re-trigger protection) |
 | logic-combiner | node-red-contrib-logic-combiner | 1.0.2 | Node-RED logic combiner - combines multiple boolean inputs with AND/OR |
-| hysteresis | node-red-contrib-threshold-hysteresis | 1.0.3 | Node-RED node for hysteresis logic - outputs boolean based on high/low thresholds |
-| deadband | node-red-contrib-deadband | 1.0.4 | Node-RED deadband filter - only passes values when change exceeds threshold |
+| hysteresis | node-red-contrib-threshold-hysteresis | 1.0.4 | Node-RED node for hysteresis logic - outputs boolean based on high/low thresholds |
+| deadband | node-red-contrib-deadband | 1.0.5 | Node-RED deadband filter - only passes values when change exceeds threshold |
 | comparator | node-red-contrib-comparator | 1.0.4 | Compares two numeric values with configurable operator and outputs boolean result |
 
 ### Math & Numeric `rpo-math`
@@ -76,7 +76,7 @@ Arithmetic, formulas, scaling, clamping, and statistical calculations.
 | gradient | node-red-contrib-gradient | 1.0.4 | Gradient calculator - computes rate of change of numeric values over time |
 | int-bits | node-red-contrib-int-bits | 1.0.4 | Integer to bits converter - bidirectional integer and boolean array conversion |
 | average | node-red-contrib-avg | 1.0.2 | Node-RED average node - calculates moving average over count or time window |
-| multi-stat | node-red-contrib-multi-stat | 1.0.4 | Node-RED multi-source statistics - calculates min/max/avg across multiple topics |
+| multi-stat | node-red-contrib-multi-stat | 1.0.5 | Node-RED multi-source statistics - calculates min/max/avg across multiple topics |
 
 ### Time & Signal `rpo-time`
 
@@ -144,7 +144,7 @@ Utility nodes that don't fit other categories.
 
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
-| age-calculator | node-red-contrib-age-calculator | 1.0.6 | Node-RED node to calculate age/time alive from a birth date |
+| age-calculator | node-red-contrib-age-calculator | 1.0.7 | Node-RED node to calculate age/time alive from a birth date |
 
 
 ## Development

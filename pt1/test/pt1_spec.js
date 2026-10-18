@@ -80,4 +80,24 @@ describe('pt1 node', function() {
             }, 100);
         });
     });
+    it('should not stall when per-step change is below the rounding resolution', function(done) {
+        helper.load(pt1Node, flow(60, 's', 0), function() {
+            var n1 = helper.getNode('n1'), n2 = helper.getNode('n2'), results = [];
+            n2.on('input', function(msg) { results.push(msg); });
+            var realNow = Date.now, t = realNow();
+            Date.now = function() { return t; };
+            try {
+                n1.receive({ payload: 20 });
+                // 1 s steps with T1=60 s: each step moves < 0.5, so a rounded state would never leave 20
+                for (var k = 0; k < 120; k++) { t += 1000; n1.receive({ payload: 30 }); }
+            } finally { Date.now = realNow; }
+            setTimeout(function() {
+                try {
+                    results[results.length - 1].payload.should.be.above(25);
+                    results[1].pt1.dt.should.equal(1);
+                    done();
+                } catch(e) { done(e); }
+            }, 50);
+        });
+    });
 });
