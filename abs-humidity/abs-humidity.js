@@ -14,17 +14,18 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.temp = null;
                 node.rh   = null;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
+                done();
                 return;
             }
 
             var pressure = (msg.pressure !== undefined) ? parseFloat(msg.pressure) : node.pressure;
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); return; }
+            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); done(); return; }
 
             if (msg.topic === node.topicTemp) node.temp = val;
             else if (msg.topic === node.topicRh) node.rh = val;
@@ -32,10 +33,11 @@ module.exports = function(RED) {
             if (node.temp === null || node.rh === null) {
                 var waiting = node.temp === null ? 'temp' : 'rh';
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for ' + waiting + '...' });
+                done();
                 return;
             }
 
-            if (node.rh < 0 || node.rh > 100) { node.warn('rh out of range (0-100): ' + node.rh); return; }
+            if (node.rh < 0 || node.rh > 100) { node.warn('rh out of range (0-100): ' + node.rh); done(); return; }
 
             var T  = node.temp;
             var rh = node.rh;
@@ -62,8 +64,9 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload     = info.absHumidity;
             out.absHumidity = info;
-            node.send(out);
+            send(out);
             node.status({ fill: 'green', shape: 'dot', text: T + '°C ' + rh + '% → ' + info.absHumidity + ' g/kg' });
+            done();
         });
     }
 

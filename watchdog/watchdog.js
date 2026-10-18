@@ -50,9 +50,10 @@ module.exports = function(RED) {
         if (startAlarm) resetTimer();
         updateStatus();
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 resetTimer();
+                done();
                 return;
             }
 
@@ -61,7 +62,7 @@ module.exports = function(RED) {
             node.alarming    = false;
             resetTimer();
 
-            node.send([msg, wasAlarming ? {
+            send([msg, wasAlarming ? {
                 payload: false,
                 watchdog: {
                     alarm:       false,
@@ -72,6 +73,7 @@ module.exports = function(RED) {
             } : null]);
 
             updateStatus();
+            done();
         });
 
         node.on('close', function() {

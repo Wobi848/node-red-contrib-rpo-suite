@@ -8,7 +8,7 @@ module.exports = function(RED) {
 
         node.status({ fill:'grey', shape:'dot', text:'Ready (' + node.bits + ' bits, ' + node.order + ')' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (Array.isArray(msg.payload)) {
                 // bits-to-int: array [1,0,1,...] LSB or MSB first
                 var arr = msg.payload.slice();
@@ -24,7 +24,7 @@ module.exports = function(RED) {
             } else {
                 // int-to-bits
                 var n = parseInt(msg.payload, 10);
-                if (isNaN(n)) { node.warn('Input is not an integer or array: ' + msg.payload); return; }
+                if (isNaN(n)) { node.warn('Input is not an integer or array: ' + msg.payload); done(); return; }
                 n = Math.floor(Math.abs(n)) >>> 0;
 
                 var bitsArr = [];
@@ -39,7 +39,8 @@ module.exports = function(RED) {
                 var preview = bitsArr.join(',');
                 node.status({ fill:'green', shape:'dot', text:n + ' → [' + preview + ']' });
             }
-            node.send(msg);
+            send(msg);
+            done();
         });
     }
 

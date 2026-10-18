@@ -17,7 +17,7 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var previous = node.state;
 
             if (msg.reset === true) {
@@ -31,7 +31,7 @@ module.exports = function(RED) {
                 node.state = (msg.set === true || msg.set === 'true');
                 if (node.persistent) node.context().set('state', node.state);
             } else {
-                if (!msg.payload) return; // falsy input → ignore silently
+                if (!msg.payload) { done(); return; } // falsy input → ignore silently
                 node.state = !node.state;
                 node.toggleCount++;
                 if (node.persistent) {
@@ -48,7 +48,8 @@ module.exports = function(RED) {
             };
 
             updateStatus(node);
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function updateStatus(n) {

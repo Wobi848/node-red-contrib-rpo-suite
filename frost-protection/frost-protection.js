@@ -20,7 +20,7 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for temp...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.override === true)  { node.override = true;  }
             else if (msg.override === false) { node.override = false; }
             else if (msg.clearOverride) { node.override = undefined; }
@@ -33,6 +33,7 @@ module.exports = function(RED) {
 
             if (node.outdoor === null && node.override === undefined) {
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for temp...' });
+                done();
                 return;
             }
 
@@ -79,7 +80,7 @@ module.exports = function(RED) {
                 msg2 = { payload: alarm, frostProtection: info };
             }
 
-            node.send([msg1, msg2]);
+            send([msg1, msg2]);
 
             if (node.override !== undefined) {
                 node.status({ fill: 'yellow', shape: 'dot', text: 'OVERRIDE ' + (node.override ? 'ON' : 'OFF') });
@@ -88,6 +89,7 @@ module.exports = function(RED) {
             } else {
                 node.status({ fill: 'green', shape: 'dot', text: temp + '°C → OFF (ok)' });
             }
+            done();
         });
     }
 

@@ -11,7 +11,7 @@ module.exports = function(RED) {
 
         node.status({ fill:'grey', shape:'dot', text:'Ready (' + node.debounceTime + 'ms)' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var debounceTime = msg.debounceTime !== undefined ? parseInt(msg.debounceTime, 10) : node.debounceTime;
 
             if (msg.flush === true) {
@@ -20,8 +20,9 @@ module.exports = function(RED) {
                     node.timer      = null;
                     node.pendingMsg = null;
                     node.status({ fill:'green', shape:'dot', text:'Forwarded (flush)' });
-                    node.send(msg);
+                    send(msg);
                 }
+                done();
                 return;
             }
 
@@ -39,7 +40,7 @@ module.exports = function(RED) {
                 if (!node.inCooldown) {
                     node.inCooldown = true;
                     node.status({ fill:'green', shape:'dot', text:'Forwarded (leading)' });
-                    node.send(msg);
+                    send(msg);
                     node.timer = setTimeout(function() {
                         node.inCooldown = false;
                         node.status({ fill:'grey', shape:'dot', text:'Ready (' + debounceTime + 'ms)' });
@@ -51,7 +52,7 @@ module.exports = function(RED) {
             } else if (node.mode === 'both') {
                 if (!node.inCooldown) {
                     node.inCooldown = true;
-                    node.send(msg);
+                    send(msg);
                 }
                 clearTimeout(node.timer);
                 node.timer = setTimeout(function() {
@@ -61,6 +62,7 @@ module.exports = function(RED) {
                     node.pendingMsg = null;
                 }, debounceTime);
             }
+            done();
         });
 
         node.on('close', function() {

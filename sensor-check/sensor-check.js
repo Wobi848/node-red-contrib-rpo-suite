@@ -22,11 +22,12 @@ module.exports = function(RED) {
         updateStatus(node);
         if (node.timeout > 0) startTimeout(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.acknowledge === true) {
                 node.fault     = false;
                 node.faultType = null;
                 updateStatus(node);
+                done();
                 return;
             }
 
@@ -37,7 +38,7 @@ module.exports = function(RED) {
             }
 
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             var outOfRange = false;
             if (node.fault && node.faultType === 'outOfRange') {
@@ -56,6 +57,7 @@ module.exports = function(RED) {
             }
 
             sendOutputs(node, msg, val);
+            done();
         });
 
         node.on('close', function() {

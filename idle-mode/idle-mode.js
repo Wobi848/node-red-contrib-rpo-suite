@@ -57,13 +57,14 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'dot', text: 'IDLE' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.idleTime = 0;
                 if (node.persistent) ctx.set('idleTime', 0);
+                done();
                 return;
             }
-            if (msg.exercise === true) { startExercise(); return; }
+            if (msg.exercise === true) { startExercise(); done(); return; }
 
             var running = Boolean(msg.payload);
             var wasRunning = node.running;
@@ -75,6 +76,7 @@ module.exports = function(RED) {
                 if (node.persistent) ctx.set('idleTime', 0);
                 node.status({ fill: 'green', shape: 'dot', text: 'RUNNING (no exercise needed)' });
             }
+            done();
         });
 
         node.on('close', function() {

@@ -62,30 +62,35 @@ module.exports = function(RED) {
             }, pulseTime * 1000);
         }
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 stopMovement(true);
                 node.position = node.initPos;
                 node.status({ fill: 'grey', shape: 'dot', text: 'RESET → ' + node.position + '%' });
+                done();
                 return;
             }
             if (msg.stop === true) {
                 stopMovement(true);
                 node.status({ fill: 'grey', shape: 'dot', text: 'STOPPED @ ' + node.position.toFixed(1) + '%' });
+                done();
                 return;
             }
             if (msg.open === true) {
                 move(100);
+                done();
                 return;
             }
             if (msg.close === true) {
                 move(0);
+                done();
                 return;
             }
             var sp = parseFloat(msg.payload);
-            if (isNaN(sp)) { node.warn('Non-numeric setpoint: ' + msg.payload); return; }
+            if (isNaN(sp)) { node.warn('Non-numeric setpoint: ' + msg.payload); done(); return; }
             sp = Math.max(0, Math.min(100, sp));
             move(sp);
+            done();
         });
 
         node.on('close', function() {

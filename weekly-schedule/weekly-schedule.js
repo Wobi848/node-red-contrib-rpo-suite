@@ -26,7 +26,7 @@ module.exports = function(RED) {
             }
         }, 10000);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.override !== undefined) {
                 node.override = (msg.override === true || msg.override === 'true') ? true : false;
             }
@@ -39,12 +39,13 @@ module.exports = function(RED) {
 
             if (current !== node.lastState) {
                 node.lastState = current;
-                node.send([buildMsg(node, active, current), buildMsg(node, active, current)]);
+                send([buildMsg(node, active, current), buildMsg(node, active, current)]);
             } else {
-                node.send([buildMsg(node, active, current), null]);
+                send([buildMsg(node, active, current), null]);
             }
 
             updateStatus(node);
+            done();
         });
 
         node.on('close', function() {

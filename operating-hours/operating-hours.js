@@ -88,7 +88,7 @@ module.exports = function(RED) {
 
         updateStatus();
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.running          = false;
                 node.accumulatedHours = 0;
@@ -99,6 +99,7 @@ module.exports = function(RED) {
                 node.lastStop         = null;
                 saveState();
                 sendOutput(msg);
+                done();
                 return;
             }
 
@@ -108,6 +109,7 @@ module.exports = function(RED) {
                 if (node.running && node.startTime) node.startTime = Date.now();
                 saveState();
                 sendOutput(msg);
+                done();
                 return;
             }
 
@@ -126,6 +128,7 @@ module.exports = function(RED) {
             }
 
             sendOutput(msg);
+            done();
         });
 
         node.on('close', function() {

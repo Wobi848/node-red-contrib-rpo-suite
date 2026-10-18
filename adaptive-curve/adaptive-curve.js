@@ -22,21 +22,24 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for temperatures...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.shift = 0;
                 if (node.persistent) ctx.set('shift', 0);
                 node.status({ fill: 'grey', shape: 'dot', text: 'Reset → shift=0' });
+                done();
                 return;
             }
             if (msg.shift !== undefined) {
                 node.shift = Math.max(-node.maxShift, Math.min(node.maxShift, parseFloat(msg.shift) || 0));
                 if (node.persistent) ctx.set('shift', node.shift);
                 node.status({ fill: 'blue', shape: 'dot', text: 'Set shift=' + node.shift });
+                done();
                 return;
             }
             if (msg.pauseAdaptation !== undefined) {
                 node.paused = Boolean(msg.pauseAdaptation);
+                done();
                 return;
             }
 
@@ -46,7 +49,7 @@ module.exports = function(RED) {
             var roomSetpoint = msg.roomSetpoint !== undefined ? parseFloat(msg.roomSetpoint) : node.roomSetpoint;
             if (isNaN(roomSetpoint)) roomSetpoint = node.roomSetpoint;
 
-            if (node.roomTemp === undefined || node.outdoor === undefined) return;
+            if (node.roomTemp === undefined || node.outdoor === undefined) { done(); return; }
 
             var now = Date.now();
             var adapting = false;
@@ -83,7 +86,7 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload       = result;
             out.adaptiveCurve = info;
-            node.send(out);
+            send(out);
 
             if (node.outdoor >= node.heatingLimit) {
                 node.status({ fill: 'grey', shape: 'dot', text: 'Summer mode (no adapt)' });
@@ -92,6 +95,7 @@ module.exports = function(RED) {
             } else {
                 node.status({ fill: 'green', shape: 'dot', text: 'Stable: shift=' + result + 'K (room ' + node.roomTemp + '°C)' });
             }
+            done();
         });
     }
 

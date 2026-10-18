@@ -47,13 +47,14 @@ module.exports = function (RED) {
       smoothedPV: null // For derivative smoothing
     };
 
-    node.on("input", function (msg) {
+    node.on("input", function (msg, send, done) {
       // Industry-compatible aliases: msg.pv for process value
       var processValue = parseFloat(msg.pv !== undefined ? msg.pv : msg.payload);
 
       // Validate input
       if (isNaN(processValue)) {
         node.warn("Payload is not a valid number: " + (msg.pv !== undefined ? msg.pv : msg.payload));
+        done();
         return;
       }
 
@@ -67,6 +68,7 @@ module.exports = function (RED) {
         state.smoothedPV = null;
         state.currentSetpoint = node.setpoint; // Restore default setpoint
         node.status({ fill: "yellow", shape: "ring", text: "Reset" });
+        done();
         return;
       }
 
@@ -452,7 +454,8 @@ module.exports = function (RED) {
       }
       node.status({ fill: statusColor, shape: "dot", text: statusText });
 
-      node.send([msg1, msg2]);
+      send([msg1, msg2]);
+      done();
     });
 
     node.on("close", function () {

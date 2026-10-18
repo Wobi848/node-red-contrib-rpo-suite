@@ -68,10 +68,11 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.state = {};
                 updateStatus(node);
+                done();
                 return;
             }
 
@@ -79,21 +80,24 @@ module.exports = function(RED) {
             var val   = parseFloat(msg.payload);
 
             if (topic && node.varNames.indexOf(topic) !== -1) {
-                if (isNaN(val)) { node.warn('Not a number for variable "' + topic + '": ' + msg.payload); return; }
+                if (isNaN(val)) { node.warn('Not a number for variable "' + topic + '": ' + msg.payload); done(); return; }
                 node.state[topic] = val;
             } else if (!isNaN(val) && node.varNames.length === 0) {
                 // Formula has no variables — evaluate immediately
             } else if (topic && node.varNames.indexOf(topic) === -1) {
                 node.warn('Unknown variable "' + topic + '" — formula uses: ' + node.varNames.join(', '));
+                done();
                 return;
             } else if (!topic) {
                 node.warn('msg.topic required (variable name)');
+                done();
                 return;
             }
 
             var have = node.varNames.filter(function(v) { return v in node.state; }).length;
             if (have < node.minVars) {
                 updateStatus(node);
+                done();
                 return;
             }
 
@@ -107,6 +111,7 @@ module.exports = function(RED) {
                 if (typeof result !== 'number' || !isFinite(result)) {
                     node.warn('Formula result is not finite: ' + result + ' (division by zero?)');
                     node.status({ fill:'yellow', shape:'dot', text:'Result: ' + result });
+                    done();
                     return;
                 }
                 result = parseFloat(result.toFixed(node.decimals));
@@ -118,11 +123,12 @@ module.exports = function(RED) {
                     decimals:  node.decimals
                 };
                 node.status({ fill:'green', shape:'dot', text:node.formula + ' = ' + result });
-                node.send(msg);
+                send(msg);
             } catch(e) {
                 node.error('Evaluation error: ' + e.message);
                 node.status({ fill:'red', shape:'dot', text:'Error: ' + e.message });
             }
+            done();
         });
     }
 

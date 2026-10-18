@@ -20,10 +20,11 @@ module.exports = function(RED) {
         node.status({ fill:'grey', shape:'dot', text:'STOPPED' });
         if (node.autoStart) startGen(node);
 
-        node.on('input', function(msg) {
-            if (msg.payload === 'start')  { startGen(node); return; }
-            if (msg.payload === 'stop')   { stopGen(node);  return; }
-            if (msg.payload === 'reset')  { node.startTime = Date.now(); return; }
+        node.on('input', function(msg, send, done) {
+            if (msg.payload === 'start')  { startGen(node); done(); return; }
+            if (msg.payload === 'stop')   { stopGen(node);  done(); return; }
+            if (msg.payload === 'reset')  { node.startTime = Date.now(); done(); return; }
+            done();
         });
 
         node.on('close', function() { stopGen(node); });

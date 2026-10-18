@@ -10,7 +10,7 @@ module.exports = function(RED) {
 
         node.status({ fill:'grey', shape:'ring', text:'Waiting...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var current = msg.payload;
             var changed = false;
 
@@ -40,7 +40,8 @@ module.exports = function(RED) {
                 node.status({ fill:'grey', shape:'dot', text:String(current) + ' (no change)' });
             }
 
-            node.send([msg, out2]);
+            send([msg, out2]);
+            done();
         });
     }
 

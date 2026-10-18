@@ -30,7 +30,7 @@ module.exports = function (RED) {
     var lastOutdoorTemp = null;
     var lastSetbackActive = false;
 
-    node.on("input", function (msg) {
+    node.on("input", function (msg, send, done) {
       var outdoorTemp = parseFloat(msg.payload);
 
       // If payload is invalid, try to use last known outdoor temp
@@ -39,6 +39,7 @@ module.exports = function (RED) {
           outdoorTemp = lastOutdoorTemp;
         } else {
           node.warn("Payload is not a valid number: " + msg.payload);
+          done();
           return;
         }
       } else {
@@ -80,7 +81,8 @@ module.exports = function (RED) {
         var msg2 = { payload: false };
 
         node.status({ fill: "yellow", shape: "dot", text: outdoorTemp + "°C → locked out" });
-        node.send([msg1, msg2]);
+        send([msg1, msg2]);
+        done();
         return;
       }
 
@@ -175,7 +177,8 @@ module.exports = function (RED) {
 
       node.status({ fill: statusIcon, shape: "dot", text: statusText });
 
-      node.send([msg1, msg2]);
+      send([msg1, msg2]);
+      done();
     });
 
     node.on("close", function () {

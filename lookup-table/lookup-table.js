@@ -34,9 +34,9 @@ module.exports = function(RED) {
         node.points = pts;
         node.status({ fill: 'grey', shape: 'ring', text: 'Ready (' + pts.length + ' points)' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var x = parseFloat(msg.payload);
-            if (isNaN(x)) { node.warn('Non-numeric input: ' + msg.payload); return; }
+            if (isNaN(x)) { node.warn('Non-numeric input: ' + msg.payload); done(); return; }
 
             var pts = node.points;
             var output, interpolated, lowerPoint, upperPoint;
@@ -78,12 +78,13 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload     = output;
             out.lookupTable = info;
-            node.send(out);
+            send(out);
 
             var statusText = clamped
                 ? x + ' → ' + output + ' (clamped)'
                 : x + ' → ' + output;
             node.status({ fill: clamped ? 'yellow' : 'green', shape: 'dot', text: statusText });
+            done();
         });
     }
 

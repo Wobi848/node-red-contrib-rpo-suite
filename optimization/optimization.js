@@ -75,16 +75,18 @@ module.exports = function(RED) {
 
         node.ticker = setInterval(function() { evaluate(); }, 60000);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.force === true) {
-                node.send([{ payload: true }, null]);
+                send([{ payload: true }, null]);
                 node.status({ fill: 'yellow', shape: 'dot', text: 'FORCED' });
+                done();
                 return;
             }
             if (msg.topic === node.topicRoom)     node.roomTemp = parseFloat(msg.payload);
             if (msg.topic === node.topicOutdoor)  node.outdoor  = parseFloat(msg.payload);
             if (msg.topic === node.topicSetpoint) node.setpoint = parseFloat(msg.payload);
             evaluate(msg.occupancyTime);
+            done();
         });
 
         node.on('close', function() { clearInterval(node.ticker); });

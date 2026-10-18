@@ -14,12 +14,13 @@ module.exports = function(RED) {
 
         node.status({ fill:'green', shape:'dot', text:'Ready (window: ' + wRaw + wUnit + ')' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.blocked = false;
                 if (node.timer) { clearTimeout(node.timer); node.timer = null; }
                 node.lastValue = undefined;
                 node.status({ fill:'green', shape:'dot', text:'Ready (reset)' });
+                done();
                 return;
             }
 
@@ -29,6 +30,7 @@ module.exports = function(RED) {
                     (typeof cur === 'object' ? JSON.stringify(cur) !== JSON.stringify(node.lastValue) : cur !== node.lastValue);
                 if (!changed) {
                     node.status({ fill:'grey', shape:'dot', text:'Blocked (no change)' });
+                    done();
                     return;
                 }
                 node.lastValue = cur;
@@ -36,17 +38,19 @@ module.exports = function(RED) {
 
             if (node.blocked) {
                 node.status({ fill:'red', shape:'dot', text:'Blocked (window active)' });
+                done();
                 return;
             }
 
             node.blocked = true;
             node.status({ fill:'green', shape:'dot', text:'Forwarded (window: ' + wRaw + wUnit + ')' });
-            node.send(msg);
+            send(msg);
 
             node.timer = setTimeout(function() {
                 node.blocked = false;
                 node.status({ fill:'green', shape:'dot', text:'Ready (window: ' + wRaw + wUnit + ')' });
             }, node.window);
+            done();
         });
 
         node.on('close', function() {

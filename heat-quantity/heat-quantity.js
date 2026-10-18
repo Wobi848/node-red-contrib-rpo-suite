@@ -31,17 +31,18 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.resetEnergy === true) {
                 node.energyKwh = 0;
                 node.lastTime  = null;
                 saveState();
                 node.status({ fill: 'grey', shape: 'dot', text: 'Energy reset. 0 kWh' });
+                done();
                 return;
             }
 
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); return; }
+            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); done(); return; }
 
             if (msg.topic === node.topicFlow)   node.flow       = val;
             else if (msg.topic === node.topicSupply) node.supplyTemp = val;
@@ -49,6 +50,7 @@ module.exports = function(RED) {
 
             if (node.flow === null || node.supplyTemp === null || node.returnTemp === null) {
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
+                done();
                 return;
             }
 
@@ -82,9 +84,10 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload      = info.power;
             out.heatQuantity = info;
-            node.send(out);
+            send(out);
             saveState();
             node.status({ fill: 'green', shape: 'dot', text: info.power + ' kW | Total: ' + info.energyKwh + ' kWh' });
+            done();
         });
     }
 

@@ -17,17 +17,18 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.temp = null; node.rh = null; node.surfaceTemp = null;
                 node.alarming = false;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
+                done();
                 return;
             }
 
             var alarmOffset = (msg.alarmOffset !== undefined) ? parseFloat(msg.alarmOffset) : node.alarmOffset;
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); return; }
+            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); done(); return; }
 
             if (msg.topic === node.topicTemp) node.temp = val;
             else if (msg.topic === node.topicRh) node.rh = val;
@@ -35,6 +36,7 @@ module.exports = function(RED) {
 
             if (node.temp === null || node.rh === null) {
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
+                done();
                 return;
             }
 
@@ -69,7 +71,7 @@ module.exports = function(RED) {
                 msg2 = { payload: alarm, dewPoint: info };
             }
 
-            node.send([msg1, msg2]);
+            send([msg1, msg2]);
 
             if (alarm) {
                 node.status({ fill: 'red', shape: 'dot', text: 'ALARM DP: ' + info.dewPoint + '°C (condensation risk!)' });
@@ -78,6 +80,7 @@ module.exports = function(RED) {
             } else {
                 node.status({ fill: 'green', shape: 'dot', text: 'DP: ' + info.dewPoint + '°C (margin: ' + info.margin + 'K)' });
             }
+            done();
         });
     }
 

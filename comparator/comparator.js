@@ -13,11 +13,12 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.valueA = undefined;
                 node.valueB = undefined;
                 updateStatus(node);
+                done();
                 return;
             }
 
@@ -27,19 +28,20 @@ module.exports = function(RED) {
 
             if (topic === node.topicA) {
                 var val = parseFloat(msg.payload);
-                if (isNaN(val)) { node.warn('Input A is not a number: ' + msg.payload); return; }
+                if (isNaN(val)) { node.warn('Input A is not a number: ' + msg.payload); done(); return; }
                 node.valueA = val;
             } else if (topic === node.topicB) {
                 var val = parseFloat(msg.payload);
-                if (isNaN(val)) { node.warn('Input B is not a number: ' + msg.payload); return; }
+                if (isNaN(val)) { node.warn('Input B is not a number: ' + msg.payload); done(); return; }
                 node.valueB = val;
             } else {
                 node.warn('Unknown topic: ' + topic + ' (expected "' + node.topicA + '" or "' + node.topicB + '")');
+                done();
                 return;
             }
 
-            if (node.valueA === undefined) { node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for A...' }); return; }
-            if (node.valueB === undefined) { node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for B...' }); return; }
+            if (node.valueA === undefined) { node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for A...' }); done(); return; }
+            if (node.valueB === undefined) { node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for B...' }); done(); return; }
 
             var a = node.valueA, b = node.valueB;
             var result;
@@ -51,7 +53,7 @@ module.exports = function(RED) {
                 case '<=': result = a <= b;                     break;
                 case '==': result = Math.abs(a - b) <= tol;     break;
                 case '!=': result = Math.abs(a - b) > tol;      break;
-                default:   node.warn('Unknown operator: ' + op); return;
+                default:   node.warn('Unknown operator: ' + op); done(); return;
             }
 
             msg.payload    = result;
@@ -63,7 +65,8 @@ module.exports = function(RED) {
                 node.status({ fill: 'grey',  shape: 'dot', text: a + ' ' + op + ' ' + b + ' → false' });
             }
 
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function updateStatus(n) {

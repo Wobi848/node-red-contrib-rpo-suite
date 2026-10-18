@@ -16,9 +16,9 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for outdoor temp...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var outdoor = parseFloat(msg.payload);
-            if (isNaN(outdoor)) { node.warn('Non-numeric outdoor temperature: ' + msg.payload); return; }
+            if (isNaN(outdoor)) { node.warn('Non-numeric outdoor temperature: ' + msg.payload); done(); return; }
 
             var setpoint;
             if (outdoor >= node.outdoorRef) {
@@ -48,9 +48,10 @@ module.exports = function(RED) {
             out.payload           = setpoint;
             out.setpointShift     = info;
 
-            node.send(out);
+            send(out);
 
             node.status({ fill: 'green', shape: 'dot', text: outdoor + '°C → SP ' + setpoint + '°C' });
+            done();
         });
     }
 

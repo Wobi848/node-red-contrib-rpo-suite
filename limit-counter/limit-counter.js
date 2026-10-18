@@ -19,7 +19,7 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.count          = 0;
                 node.aboveThreshold = false;
@@ -29,11 +29,12 @@ module.exports = function(RED) {
                 }
                 updateStatus(node);
                 sendOutputs(node, msg);
+                done();
                 return;
             }
 
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             var wasAbove = node.aboveThreshold;
             var isAbove  = val >= node.threshold;
@@ -53,6 +54,7 @@ module.exports = function(RED) {
 
             updateStatus(node);
             sendOutputs(node, msg);
+            done();
         });
 
         function sendOutputs(n, msg) {

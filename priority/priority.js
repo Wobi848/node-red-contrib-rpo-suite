@@ -21,16 +21,17 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.values = {};
                 node.status({ fill: 'grey', shape: 'ring', text: 'Reset' });
+                done();
                 return;
             }
 
             var topic = msg.topic;
             var def = node.topicDefs.find(function(d) { return d.topic === topic; });
-            if (!def) { node.warn('Unknown topic: ' + topic); return; }
+            if (!def) { node.warn('Unknown topic: ' + topic); done(); return; }
 
             node.values[topic] = msg.payload;
 
@@ -66,13 +67,14 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload  = outputVal;
             out.priority = info;
-            node.send(out);
+            send(out);
 
             if (winner) {
                 node.status({ fill: 'green', shape: 'dot', text: winner.label + '(P' + winner.priority + '): ' + outputVal });
             } else {
                 node.status({ fill: 'grey', shape: 'dot', text: 'No active input → ' + outputVal });
             }
+            done();
         });
     }
 

@@ -9,11 +9,12 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.channelValues   = {};
                 node.selectedChannel = parseInt(config.initialChannel, 10) || 0;
                 updateStatus(node);
+                done();
                 return;
             }
 
@@ -23,6 +24,7 @@ module.exports = function(RED) {
                 var ch = parseInt(msg.payload, 10);
                 if (isNaN(ch) || ch < 0 || ch >= node.numChannels) {
                     node.warn('Channel out of range: ' + msg.payload + ' (0–' + (node.numChannels - 1) + ')');
+                    done();
                     return;
                 }
                 node.selectedChannel = ch;
@@ -30,17 +32,20 @@ module.exports = function(RED) {
                 var idx = parseInt(topic.slice(2), 10);
                 if (idx >= node.numChannels) {
                     node.warn('Channel ' + topic + ' out of range (configured: ' + node.numChannels + ')');
+                    done();
                     return;
                 }
                 node.channelValues[topic] = msg.payload;
             } else {
                 node.warn('Unknown topic: ' + topic + ' (use "select" or "ch0"–"ch' + (node.numChannels - 1) + '")');
+                done();
                 return;
             }
 
             var selKey = 'ch' + node.selectedChannel;
             if (!(selKey in node.channelValues)) {
                 node.status({ fill:'grey', shape:'ring', text:'CH' + node.selectedChannel + ' → (no value yet)' });
+                done();
                 return;
             }
 
@@ -52,7 +57,8 @@ module.exports = function(RED) {
                 channels:        Object.assign({}, node.channelValues)
             };
             node.status({ fill:'green', shape:'dot', text:'CH' + node.selectedChannel + ' → ' + val });
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function updateStatus(n) {

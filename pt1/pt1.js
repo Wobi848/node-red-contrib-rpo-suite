@@ -17,16 +17,17 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Initializing...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.lastOutput = undefined;
                 node.lastTime   = undefined;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Initializing...' });
+                done();
                 return;
             }
 
             var x = parseFloat(msg.payload);
-            if (isNaN(x)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(x)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             var T1 = (msg.T1 !== undefined) ? parseFloat(msg.T1) : node.T1;
             if (isNaN(T1) || T1 < 0) T1 = node.T1;
@@ -66,7 +67,8 @@ module.exports = function(RED) {
             };
 
             node.status({ fill: 'green', shape: 'dot', text: 'in: ' + x + ' → out: ' + output + ' (T1: ' + T1 + 's)' });
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function toSeconds(val, unit) {

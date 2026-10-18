@@ -96,7 +96,7 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'dot', text: 'STOPPED 0%' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, _send, done) {
             var cmd = Boolean(msg.payload);
             var bypass = msg.bypass === true;
 
@@ -111,7 +111,7 @@ module.exports = function(RED) {
                     node.phaseTimer = setTimeout(function() { startRampUp(); }, node.preRunTime * 1000);
                 }
             } else {
-                if (node.phase === 'stopped') return;
+                if (node.phase === 'stopped') { done(); return; }
                 clearTimers();
                 if (bypass || node.rampDownTime <= 0) {
                     node.speed = 0;
@@ -133,6 +133,7 @@ module.exports = function(RED) {
                     doStop();
                 }
             }
+            done();
         });
 
         node.on('close', function() {
