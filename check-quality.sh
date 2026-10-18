@@ -4,12 +4,13 @@
 #  - README.md exists and has content (> 100 bytes)
 #  - locales/{en,de,es}/*.json exist and are non-empty
 #  - HTML files contain data-i18n attributes
+#  - package.json "files" includes locales (otherwise i18n is not published)
 #  - package.json has repository field
 #  - examples/ folder has at least one file
 #
 # rpo-suite is exempted from README/locales/HTML checks (it's a meta-package).
 
-BASE_DIR="/c/Coding/NodeRedPlugin"
+BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 FAIL=0
 CHECKED=0
 
@@ -41,6 +42,12 @@ for d in "$BASE_DIR"/*/; do
       issues+=("HTML no data-i18n")
     fi
 
+    # locales must be shipped to npm
+    if [ -d "$d/locales" ]; then
+      ships_locales=$(cd "$BASE_DIR" && node -e "const p = require('./$dir/package.json'); console.log(!p.files || p.files.some(f => f.replace(/\/$/, '') === 'locales') ? 'YES' : 'NO')" 2>/dev/null)
+      [ "$ships_locales" = "NO" ] && issues+=("locales not in package.json files")
+    fi
+
     # examples folder
     if [ ! -d "$d/examples" ] || [ -z "$(ls -A "$d/examples" 2>/dev/null)" ]; then
       issues+=("no examples")
@@ -48,7 +55,7 @@ for d in "$BASE_DIR"/*/; do
   fi
 
   # repository field (applies to all)
-  has_repo=$(node -e "const p = require('$d/package.json'); console.log(p.repository ? 'YES' : 'NO')" 2>/dev/null)
+  has_repo=$(cd "$BASE_DIR" && node -e "const p = require('./$dir/package.json'); console.log(p.repository ? 'YES' : 'NO')" 2>/dev/null)
   [ "$has_repo" = "NO" ] && issues+=("no repository field")
 
   if [ ${#issues[@]} -gt 0 ]; then

@@ -3,7 +3,7 @@
 # Auto-discovers all packages and checks npm publish status.
 # Shows: package name, local version, npm version, and whether a publish is needed.
 
-BASE_DIR="/c/Coding/NodeRedPlugin"
+BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 mapfile -t DIRS < <(
   cd "$BASE_DIR" || exit 1
