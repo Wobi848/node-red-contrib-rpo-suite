@@ -45,13 +45,14 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'dot', text: 'OFF' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 if (node.timer) { clearTimeout(node.timer); node.timer = null; }
                 node.output = false;
                 node.held   = false;
                 node.input  = false;
                 sendMsg(msg);
+                done();
                 return;
             }
 
@@ -61,6 +62,7 @@ module.exports = function(RED) {
                 node.output = node.input;
                 node.held   = false;
                 sendMsg(msg);
+                done();
                 return;
             }
 
@@ -91,6 +93,7 @@ module.exports = function(RED) {
                     sendMsg(msg);
                 }
             }
+            done();
         });
 
         node.on('close', function() {

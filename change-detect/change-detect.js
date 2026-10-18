@@ -19,10 +19,11 @@ module.exports = function(RED) {
             node.status({ fill: 'grey', shape: 'dot', text: 'Initial: ' + node.lastValue });
         }
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.lastValue = undefined;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for first value' });
+                done();
                 return;
             }
 
@@ -51,10 +52,11 @@ module.exports = function(RED) {
             if (changed) {
                 node.lastValue = current;
                 node.status({ fill: 'green', shape: 'dot', text: String(current) + ' (changed)' });
-                node.send(msg);
+                send(msg);
             } else {
                 node.status({ fill: 'grey', shape: 'dot', text: String(current) + ' (no change)' });
             }
+            done();
         });
     }
 

@@ -16,16 +16,17 @@ module.exports = function(RED) {
 
         node.status({ fill:'grey', shape:'ring', text:'Waiting...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.lastOutput = undefined;
                 node.lastTime   = undefined;
                 node.status({ fill:'grey', shape:'ring', text:'Waiting...' });
+                done();
                 return;
             }
 
             var x = parseFloat(msg.payload);
-            if (isNaN(x)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(x)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             var maxRatePerS = (msg.maxRate !== undefined) ? parseFloat(msg.maxRate) : node.maxRatePerS;
 
@@ -68,7 +69,8 @@ module.exports = function(RED) {
             } else {
                 node.status({ fill:'green',  shape:'dot', text:output + ' (at target)' });
             }
-            node.send(msg);
+            send(msg);
+            done();
         });
     }
 

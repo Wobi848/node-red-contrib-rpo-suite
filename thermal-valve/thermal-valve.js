@@ -34,7 +34,7 @@ module.exports = function(RED) {
             }
         }, 1000);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.clearBypass === true) {
                 node.bypass = null;
             } else if (msg.bypass !== undefined) {
@@ -43,11 +43,12 @@ module.exports = function(RED) {
 
             if (msg.bypass === undefined && msg.clearBypass !== true) {
                 var val = parseFloat(msg.payload);
-                if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); return; }
+                if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
                 node.input = Math.max(0, Math.min(100, val));
             }
 
             updateStatus(node);
+            done();
         });
 
         node.on('close', function() {

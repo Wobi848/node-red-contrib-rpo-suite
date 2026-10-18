@@ -24,29 +24,30 @@ module.exports = function(RED) {
             return { enthalpy: h, absHumidity: x * 1000 };
         }
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.tempIn = null; node.rhIn = null;
                 node.tempOut = null; node.rhOut = null;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for values...' });
+                done();
                 return;
             }
 
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); return; }
+            if (isNaN(val)) { node.warn('Non-numeric payload ignored'); done(); return; }
 
             var t = msg.topic;
             if (node.mode === 'single') {
                 if (t === node.topicTempIn)  node.tempIn = val;
                 else if (t === node.topicRhIn) node.rhIn = val;
-                if (node.tempIn === null || node.rhIn === null) { node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' }); return; }
+                if (node.tempIn === null || node.rhIn === null) { node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' }); done(); return; }
                 var res = calcEnthalpy(node.tempIn, node.rhIn);
                 var h   = parseFloat(res.enthalpy.toFixed(node.decimals));
                 var info = { temp: node.tempIn, rh: node.rhIn, absHumidity: parseFloat((res.absHumidity).toFixed(node.decimals)), enthalpy: h, unit: 'kJ/kg' };
                 var out = RED.util.cloneMessage(msg);
                 out.payload  = h;
                 out.enthalpy = info;
-                node.send(out);
+                send(out);
                 node.status({ fill: 'green', shape: 'dot', text: h + ' kJ/kg' });
             } else {
                 if (t === node.topicTempIn)  node.tempIn  = val;
@@ -54,7 +55,7 @@ module.exports = function(RED) {
                 else if (t === node.topicTempOut) node.tempOut = val;
                 else if (t === node.topicRhOut)  node.rhOut  = val;
                 if (node.tempIn === null || node.rhIn === null || node.tempOut === null || node.rhOut === null) {
-                    node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' }); return;
+                    node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' }); done(); return;
                 }
                 var resIn  = calcEnthalpy(node.tempIn,  node.rhIn);
                 var resOut = calcEnthalpy(node.tempOut, node.rhOut);
@@ -71,9 +72,10 @@ module.exports = function(RED) {
                 var out2 = RED.util.cloneMessage(msg);
                 out2.payload  = useHR;
                 out2.enthalpy = info2;
-                node.send(out2);
+                send(out2);
                 node.status({ fill: 'green', shape: 'dot', text: 'IN:' + hIn + ' OUT:' + hOut + ' → WRG ' + (useHR ? 'ON' : 'OFF') });
             }
+            done();
         });
     }
 

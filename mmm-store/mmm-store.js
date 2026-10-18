@@ -18,7 +18,7 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.min = null; node.max = null; node.avg = null; node.count = 0;
                 if (node.persistent) {
@@ -26,11 +26,12 @@ module.exports = function(RED) {
                     node.context().set('avg', null); node.context().set('count', 0);
                 }
                 node.status({ fill:'grey', shape:'ring', text:'Reset – waiting for values' });
+                done();
                 return;
             }
 
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             node.count++;
             if (node.min === null || val < node.min) node.min = val;
@@ -51,7 +52,8 @@ module.exports = function(RED) {
             msg.payload  = stats;
             msg.mmmStore = stats;
             updateStatus(node);
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function updateStatus(n) {

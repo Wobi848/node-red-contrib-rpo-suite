@@ -17,17 +17,18 @@ module.exports = function(RED) {
 
         node.status({ fill:'grey', shape:'ring', text:'Waiting for second value...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.lastValue  = undefined;
                 node.lastTime   = undefined;
                 node.gradBuffer = [];
                 node.status({ fill:'grey', shape:'ring', text:'Waiting for second value...' });
+                done();
                 return;
             }
 
             var x = parseFloat(msg.payload);
-            if (isNaN(x)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(x)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             var now = Date.now();
 
@@ -35,11 +36,12 @@ module.exports = function(RED) {
                 node.lastValue = x;
                 node.lastTime  = now;
                 node.status({ fill:'grey', shape:'ring', text:'Waiting for second value...' });
+                done();
                 return;
             }
 
             var dt = (now - node.lastTime) / 1000;
-            if (dt === 0) { node.warn('dt is 0, skipping'); return; }
+            if (dt === 0) { node.warn('dt is 0, skipping'); done(); return; }
 
             var gradPerS = (x - node.lastValue) / dt;
             var gradOut;
@@ -83,7 +85,8 @@ module.exports = function(RED) {
                 node.status({ fill:'yellow', shape:'dot', text:smoothed + ' ' + unitStr + ' (falling)' });
             }
 
-            node.send(msg);
+            send(msg);
+            done();
         });
     }
 

@@ -13,15 +13,16 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Buffering...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.buffer = [];
                 node.status({ fill: 'grey', shape: 'ring', text: 'Buffer cleared' });
+                done();
                 return;
             }
 
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Non-numeric input: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Non-numeric input: ' + msg.payload); done(); return; }
 
             var delay = msg.delay !== undefined ? parseFloat(msg.delay) * (multipliers[config.delayUnit] || 1) : node.delay;
             if (isNaN(delay) || delay <= 0) delay = node.delay;
@@ -50,6 +51,7 @@ module.exports = function(RED) {
             if (best === null) {
                 var elapsed = delay - (now - node.buffer[0].timestamp) / 1000;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Buffering... (' + Math.round(Math.max(0, elapsed)) + 's remaining)' });
+                done();
                 return;
             }
 
@@ -68,9 +70,10 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload   = delayed;
             out.timeShift = info;
-            node.send(out);
+            send(out);
 
             node.status({ fill: 'green', shape: 'dot', text: 'now:' + val + ' → delayed:' + delayed + ' (' + actualDelay + 's)' });
+            done();
         });
     }
 

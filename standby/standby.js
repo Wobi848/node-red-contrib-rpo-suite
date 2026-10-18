@@ -41,7 +41,7 @@ module.exports = function(RED) {
         var fills = { comfort: 'green', standby: 'blue', frost: 'grey' };
         node.status({ fill: fills[node.mode] || 'grey', shape: 'dot', text: node.mode.toUpperCase() + ' ' + initSP + '°C' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var comfortSP = msg.comfortSetpoint !== undefined ? parseFloat(msg.comfortSetpoint) : node.comfortSetpoint;
             var offset    = msg.standbyOffset   !== undefined ? parseFloat(msg.standbyOffset)   : node.standbyOffset;
             if (isNaN(comfortSP)) comfortSP = node.comfortSetpoint;
@@ -57,6 +57,7 @@ module.exports = function(RED) {
             node.mode = newMode;
 
             sendOutput(msg, newMode, comfortSP, offset, node.frostSetpoint, modeChanged);
+            done();
         });
     }
 

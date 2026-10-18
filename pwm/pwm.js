@@ -15,18 +15,20 @@ module.exports = function(RED) {
         node.status({ fill:'grey', shape:'dot', text:'OFF 0%' });
         scheduleCycle(node);
 
-        node.on('input', function(msg) {
-            if (msg.clearBypass === true) { node.bypass = null; return; }
+        node.on('input', function(msg, send, done) {
+            if (msg.clearBypass === true) { node.bypass = null; done(); return; }
             if (msg.bypass !== undefined) {
                 node.bypass = (msg.bypass === true || msg.bypass === 'true') ? true : false;
                 updateStatus(node);
+                done();
                 return;
             }
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
             node.input = Math.max(0, Math.min(100, val));
             if (node.timer) clearTimeout(node.timer);
             scheduleCycle(node);
+            done();
         });
 
         node.on('close', function() {

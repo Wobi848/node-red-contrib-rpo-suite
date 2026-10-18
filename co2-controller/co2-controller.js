@@ -23,12 +23,12 @@ module.exports = function(RED) {
             return 'I';
         }
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.clearOverride === true) { node.override = undefined; }
             if (msg.override !== undefined) { node.override = parseFloat(msg.override); }
 
             var co2 = parseFloat(msg.payload);
-            if (isNaN(co2)) { node.warn('Non-numeric CO2 value: ' + msg.payload); return; }
+            if (isNaN(co2)) { node.warn('Non-numeric CO2 value: ' + msg.payload); done(); return; }
 
             var ventilation;
             if (node.override !== undefined) {
@@ -67,7 +67,7 @@ module.exports = function(RED) {
                 msg2 = { payload: alarm, co2Controller: info };
             }
 
-            node.send([msg1, msg2]);
+            send([msg1, msg2]);
 
             if (node.override !== undefined) {
                 node.status({ fill: 'yellow', shape: 'dot', text: 'OVERRIDE ' + ventilation + '%' });
@@ -77,6 +77,7 @@ module.exports = function(RED) {
                 var fill = category === 'I' ? 'green' : category === 'II' ? 'yellow' : 'orange';
                 node.status({ fill: fill, shape: 'dot', text: co2 + 'ppm → ' + ventilation + '% (Cat ' + category + ')' });
             }
+            done();
         });
     }
 

@@ -23,7 +23,7 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var dir  = node.direction;
             var step = msg.step !== undefined ? parseFloat(msg.step) : node.step;
 
@@ -32,23 +32,25 @@ module.exports = function(RED) {
                 if (node.persistent) node.context().set('count', node.count);
                 updateStatus(node);
                 sendOutput(node, msg, false, null);
+                done();
                 return;
             }
 
             if (msg.topic === 'set') {
                 var target = parseFloat(msg.payload);
-                if (isNaN(target)) { node.warn('Set value is not a number'); return; }
+                if (isNaN(target)) { node.warn('Set value is not a number'); done(); return; }
                 node.count = target;
                 if (node.persistent) node.context().set('count', node.count);
                 updateStatus(node);
                 sendOutput(node, msg, false, null);
+                done();
                 return;
             }
 
             if (msg.topic === 'up')   dir = 'up';
             if (msg.topic === 'down') dir = 'down';
 
-            if (!msg.payload) return; // falsy → ignore
+            if (!msg.payload) { done(); return; } // falsy → ignore
 
             var delta = dir === 'up' ? step : -step;
             var next  = node.count + delta;
@@ -69,6 +71,7 @@ module.exports = function(RED) {
 
             updateStatus(node);
             sendOutput(node, msg, atLimit, limitType);
+            done();
         });
 
         function sendOutput(n, msg, atLimit, limitType) {

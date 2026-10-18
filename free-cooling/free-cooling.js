@@ -17,14 +17,14 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting for temperatures...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Non-numeric temperature: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Non-numeric temperature: ' + msg.payload); done(); return; }
 
             if (msg.topic === node.topicIndoor)  node.indoor  = val;
             if (msg.topic === node.topicOutdoor) node.outdoor = val;
 
-            if (node.indoor === undefined || node.outdoor === undefined) return;
+            if (node.indoor === undefined || node.outdoor === undefined) { done(); return; }
 
             var delta    = parseFloat((node.indoor - node.outdoor).toFixed(node.decimals));
             var active   = (delta >= node.minDelta) &&
@@ -51,13 +51,14 @@ module.exports = function(RED) {
                 msg2 = { payload: active, freeCooling: info };
             }
 
-            node.send([msg1, msg2]);
+            send([msg1, msg2]);
 
             var fill = active ? 'blue' : 'green';
             var text = active
                 ? 'FREE COOLING ON (ΔT=' + delta + 'K)'
                 : 'OFF (ΔT=' + delta + 'K, out=' + node.outdoor + '°C)';
             node.status({ fill: fill, shape: 'dot', text: text });
+            done();
         });
     }
 

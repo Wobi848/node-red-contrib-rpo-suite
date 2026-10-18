@@ -9,9 +9,10 @@ module.exports = function(RED) {
 
         node.status({ fill:'grey', shape:'dot', text:'Ready' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (!Array.isArray(msg.payload)) {
                 node.warn('Input is not an array');
+                done();
                 return;
             }
 
@@ -48,7 +49,8 @@ module.exports = function(RED) {
 
             var preview = sorted.length <= 4 ? '['+sorted.join(',')+']' : '['+sorted.slice(0,3).join(',')+',...]';
             node.status({ fill:'green', shape:'dot', text:preview + ' ('+sorted.length+' values, '+order+')' });
-            node.send(msg);
+            send(msg);
+            done();
         });
     }
 

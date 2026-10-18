@@ -85,17 +85,19 @@ module.exports = function(RED) {
                 text: demand + '% → ' + activeCount + '/' + node.channels + ' [' + node.states.map(function(s) { return s ? 'ON' : 'OFF'; }).join(',') + ']' });
         }
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.runtimes = new Array(node.channels).fill(0);
                 ctx.set('runtimes', node.runtimes);
                 node.states = new Array(node.channels).fill(false);
-                node.send({ payload: node.states.slice(), sequencer: { demand: 0, activeChannels: 0, channels: node.states.slice(), runtimes: node.runtimes, wearLevel: node.wearLevel } });
+                send({ payload: node.states.slice(), sequencer: { demand: 0, activeChannels: 0, channels: node.states.slice(), runtimes: node.runtimes, wearLevel: node.wearLevel } });
                 node.status({ fill: 'grey', shape: 'dot', text: 'Reset' });
+                done();
                 return;
             }
             if (Array.isArray(msg.forceChannel)) {
                 applyDemand(node.demand, msg.forceChannel);
+                done();
                 return;
             }
             var demand;
@@ -103,14 +105,15 @@ module.exports = function(RED) {
                 demand = msg.payload ? 100 : 0;
             } else {
                 demand = parseFloat(msg.payload);
-                if (isNaN(demand)) { node.warn('Non-numeric demand: ' + msg.payload); return; }
+                if (isNaN(demand)) { node.warn('Non-numeric demand: ' + msg.payload); done(); return; }
                 demand = Math.max(0, Math.min(100, demand));
             }
             // Hysteresis
             var delta = demand - node.demand;
-            if (Math.abs(delta) < node.hysteresis && demand !== 0 && demand !== 100) return;
+            if (Math.abs(delta) < node.hysteresis && demand !== 0 && demand !== 100) { done(); return; }
             node.demand = demand;
             applyDemand(demand);
+            done();
         });
 
         node.on('close', function() {

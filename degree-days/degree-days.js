@@ -35,17 +35,18 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'dot', text: 'Total: ' + node.accumulated + ' HGT' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.accumulated   = 0;
                 node.lastResetYear = null;
                 saveState();
                 node.status({ fill: 'grey', shape: 'dot', text: 'Reset. Total: 0 HGT' });
+                done();
                 return;
             }
 
             var daily = parseFloat(msg.payload);
-            if (isNaN(daily)) { node.warn('Non-numeric payload: ' + msg.payload); return; }
+            if (isNaN(daily)) { node.warn('Non-numeric payload: ' + msg.payload); done(); return; }
 
             var now  = new Date();
             var doy  = dayOfYear(now);
@@ -74,11 +75,12 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload    = info.accumulated;
             out.degreeDays = info;
-            node.send(out);
+            send(out);
             saveState();
 
             var text = 'Today: ' + info.degreeDayToday + ' HGT | Total: ' + info.accumulated + ' HGT';
             node.status({ fill: heatingActive ? 'green' : 'grey', shape: 'dot', text: text });
+            done();
         });
     }
 

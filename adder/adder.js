@@ -30,26 +30,29 @@ module.exports = function(RED) {
         node.state = {};
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.state = {};
                 updateStatus(node);
+                done();
                 return;
             }
 
             var topic = (msg.topic !== undefined) ? String(msg.topic) : '';
             if (!(topic in node.topicMap)) {
                 node.warn('Unknown topic: ' + topic);
+                done();
                 return;
             }
             var val = parseFloat(msg.payload);
-            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); return; }
+            if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
 
             node.state[topic] = val;
 
             var knownCount = Object.keys(node.state).length;
             if (knownCount < node.minTopics) {
                 node.status({ fill:'grey', shape:'ring', text:'Waiting (' + knownCount + '/' + node.minTopics + ' topics)' });
+                done();
                 return;
             }
 
@@ -72,7 +75,8 @@ module.exports = function(RED) {
             msg.adder   = { mode:node.mode, result:result, count:knownCount, inputs:inputs, weights:weights, decimals:node.decimals };
 
             node.status({ fill:'green', shape:'dot', text:node.mode + ': ' + result + ' (' + knownCount + ' inputs)' });
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function updateStatus(n) {

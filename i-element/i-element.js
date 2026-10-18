@@ -15,22 +15,24 @@ module.exports = function(RED) {
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' });
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.integral = 0;
                 node.lastTime = null;
                 node.status({ fill: 'grey', shape: 'ring', text: 'Reset → 0' });
+                done();
                 return;
             }
             if (msg.set !== undefined) {
                 node.integral = parseFloat(msg.set) || 0;
                 node.lastTime = Date.now();
                 node.status({ fill: 'blue', shape: 'dot', text: 'Set → ' + node.integral });
+                done();
                 return;
             }
 
             var x = parseFloat(msg.payload);
-            if (isNaN(x)) { node.warn('Non-numeric input: ' + msg.payload); return; }
+            if (isNaN(x)) { node.warn('Non-numeric input: ' + msg.payload); done(); return; }
 
             var Ti = msg.Ti !== undefined ? parseFloat(msg.Ti) : node.Ti;
             if (isNaN(Ti) || Ti <= 0) Ti = node.Ti;
@@ -39,6 +41,7 @@ module.exports = function(RED) {
             if (node.lastTime === null) {
                 node.lastTime = now;
                 node.status({ fill: 'grey', shape: 'ring', text: 'First value received' });
+                done();
                 return;
             }
 
@@ -66,11 +69,12 @@ module.exports = function(RED) {
             var out = RED.util.cloneMessage(msg);
             out.payload  = result;
             out.iElement = info;
-            node.send(out);
+            send(out);
 
             var fill = clamped ? 'yellow' : 'green';
             var text = clamped ? '∫ ' + result + ' (clamped ' + clampedAt + ')' : '∫ ' + result + ' (Ti: ' + Ti + 's)';
             node.status({ fill: fill, shape: 'dot', text: text });
+            done();
         });
     }
 

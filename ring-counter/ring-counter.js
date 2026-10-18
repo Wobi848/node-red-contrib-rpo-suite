@@ -18,7 +18,7 @@ module.exports = function(RED) {
 
         updateStatus(node);
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             var previous = node.index;
 
             var topic = msg.topic || '';
@@ -29,6 +29,7 @@ module.exports = function(RED) {
                 var target = parseInt(msg.payload, 10);
                 if (isNaN(target) || target < 0 || target >= node.count) {
                     node.warn('Set index out of range: ' + msg.payload);
+                    done();
                     return;
                 }
                 node.index = target;
@@ -49,7 +50,8 @@ module.exports = function(RED) {
             msg.payload      = node.index;
             msg.ringCounter  = { index:node.index, count:node.count, previous:previous, stepCount:node.stepCount };
             updateStatus(node);
-            node.send(msg);
+            send(msg);
+            done();
         });
 
         function updateStatus(n) {
