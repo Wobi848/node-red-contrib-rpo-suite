@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-deadband",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node-RED deadband filter - only passes values when change exceeds threshold",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
   "files": [
     "deadband.js",
     "deadband.html",
+    "locales",
     "examples/"
   ],
   "keywords": [

@@ -12,7 +12,7 @@ module.exports = function(RED) {
         // Convert T1 to seconds
         node.T1 = toSeconds(T1raw, unit);
 
-        node.lastOutput = undefined;
+        node.lastOutput = undefined; // unrounded filter state
         node.lastTime   = undefined;
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Initializing...' });
@@ -32,32 +32,35 @@ module.exports = function(RED) {
             if (isNaN(T1) || T1 < 0) T1 = node.T1;
 
             var now = Date.now();
-            var output;
+            var state;
+            var dt = 0;
             var initialized = true;
 
             if (node.lastOutput === undefined || node.lastTime === undefined) {
-                output          = x;
+                state           = x;
                 initialized     = false;
             } else {
-                var dt = (now - node.lastTime) / 1000;
+                dt = (now - node.lastTime) / 1000;
                 if (T1 === 0) {
-                    output = x;
+                    state = x;
                 } else {
                     var alpha = dt / (T1 + dt);
-                    output    = node.lastOutput + alpha * (x - node.lastOutput);
+                    state     = node.lastOutput + alpha * (x - node.lastOutput);
                 }
             }
 
-            output          = parseFloat(output.toFixed(node.decimals));
-            node.lastOutput = output;
+            // Keep the unrounded value as filter state; rounding it would make
+            // the filter stall when the per-step change is below the resolution.
+            node.lastOutput = state;
             node.lastTime   = now;
+            var output      = parseFloat(state.toFixed(node.decimals));
 
             msg.payload = output;
             msg.pt1     = {
                 input:       x,
                 output:      output,
                 T1:          T1,
-                dt:          node.lastTime ? Math.round((now - (node.lastTime === now ? now : node.lastTime)) / 10) / 100 : 0,
+                dt:          Math.round(dt * 100) / 100,
                 decimals:    node.decimals,
                 initialized: initialized
             };

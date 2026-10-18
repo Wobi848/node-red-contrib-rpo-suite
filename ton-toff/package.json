@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-ton-toff",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node-RED TON/TOFF timer - On-Delay and Off-Delay timer functions",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
   "files": [
     "ton-toff.js",
     "ton-toff.html",
+    "locales",
     "examples/"
   ],
   "keywords": [
