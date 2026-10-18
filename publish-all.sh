@@ -3,7 +3,7 @@
 # Auto-discovers all folders containing a package.json and publishes them.
 # rpo-suite is always published last because it depends on the other packages.
 
-BASE_DIR="/c/Coding/NodeRedPlugin"
+BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Collect all dirs with package.json, excluding rpo-suite and node_modules
 mapfile -t DIRS < <(
