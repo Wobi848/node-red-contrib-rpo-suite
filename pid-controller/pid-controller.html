@@ -331,7 +331,7 @@ Reverse: e(t) = processValue - setpoint</pre>
   <p>Integrator is limited to ±(outputSpan/Ki) to prevent extreme windup during long saturation. Ensures fast recovery.</p>
 
   <h3>Bumpless Transfer</h3>
-  <p>When switching from manual to auto, the integral is pre-loaded so output continues smoothly from the manual value.</p>
+  <p>When switching from manual to auto, the integral is pre-loaded so output continues smoothly from the manual value. Works in Kp and Xp mode, also with a control error at the switch moment. Requires Ti &gt; 0.</p>
 
   <h3>Safety Features</h3>
   <ul>
