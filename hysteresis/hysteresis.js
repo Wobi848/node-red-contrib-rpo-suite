@@ -22,6 +22,8 @@ module.exports = function(RED) {
 
         node.on('input', function(msg, send, done) {
             var value = msg.payload;
+            // Numbers sent as text (e.g. from MQTT) are accepted like in the other nodes
+            if (typeof value === 'string' && value.trim() !== '' && !isNaN(Number(value))) value = Number(value);
 
             // Validate input is a number
             if (typeof value !== 'number' || isNaN(value)) {

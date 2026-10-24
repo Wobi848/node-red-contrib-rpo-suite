@@ -61,4 +61,18 @@ describe('idle-mode node', function() {
       done(); // no crash = pass
     });
   });
+
+  describe('exercise countdown', function () {
+    it('should count down the remaining exercise time', function (done) {
+      this.timeout(4000);
+      const flow = [{ id:'n1', type:'idle-mode', exerciseInterval:7, exerciseIntervalUnit:'days', exerciseDuration:10, persistent:false, wires:[['n2']] }, { id:'n2', type:'helper' }];
+      helper.load(require('../idle-mode.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        n1.receive({ exercise: true });
+        setTimeout(() => {
+          try { n1.remainingExercise.should.be.below(10); done(); } catch (e) { done(e); }
+        }, 2300);
+      });
+    });
+  });
 });

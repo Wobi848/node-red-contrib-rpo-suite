@@ -78,4 +78,13 @@ describe('optimization node', function() {
       });
     });
   });
+
+  describe('Config zero values (decimal defaults)', function () {
+    it('should keep an outdoorFactor of 0', function (done) {
+      const flow = [{ id:'n1', type:'optimization', outdoorFactor:0 }];
+      helper.load(require('../optimization.js'), flow, function () {
+        try { helper.getNode('n1').should.have.property('outdoorFactor', 0); done(); } catch (e) { done(e); }
+      });
+    });
+  });
 });

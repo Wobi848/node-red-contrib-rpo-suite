@@ -11,9 +11,9 @@ module.exports = function(RED) {
 
         node.roomSetpoint   = configNumber(config.roomSetpoint, 22);
         node.heatingLimit   = configNumber(config.heatingLimit, 15);
-        node.adaptationRate = parseFloat(config.adaptationRate) || 0.01;
+        node.adaptationRate = configNumber(config.adaptationRate, 0.01);
         node.maxShift       = configNumber(config.maxShift, 10);
-        node.deadband       = parseFloat(config.deadband)       || 0.5;
+        node.deadband       = configNumber(config.deadband, 0.5);
         node.topicRoom      = config.topicRoom    || 'room';
         node.topicOutdoor   = config.topicOutdoor || 'outdoor';
         node.persistent     = config.persistent !== false;

@@ -96,4 +96,13 @@ describe('comparator node', function() {
             n1.receive({ topic: 'b', payload: 10 });
         });
     });
+
+  describe('Config zero values (decimal defaults)', function () {
+    it('should keep a tolerance of 0', function (done) {
+      const flow = [{ id:'n1', type:'comparator', tolerance:0 }];
+      helper.load(require('../comparator.js'), flow, function () {
+        try { helper.getNode('n1').should.have.property('tolerance', 0); done(); } catch (e) { done(e); }
+      });
+    });
+  });
 });

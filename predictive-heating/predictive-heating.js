@@ -12,7 +12,7 @@ module.exports = function(RED) {
         this.weightCurrent = configNumber(config.weightCurrent, 4);
         this.weightDay0    = configNumber(config.weightDay0, 2);
         this.weightDay1    = configNumber(config.weightDay1, 1);
-        this.weightDay2    = parseFloat(config.weightDay2)    || 0.5;
+        this.weightDay2    = configNumber(config.weightDay2, 0.5);
         this.uvMaxOffset   = configNumber(config.uvMaxOffset, 2);
 
         node.status({ fill: "grey", shape: "ring", text: "Idle" });
@@ -56,12 +56,13 @@ module.exports = function(RED) {
 
             // 1. Weighted predictive AT
             var totalWeight = node.weightCurrent + node.weightDay0 + node.weightDay1 + node.weightDay2;
-            var atPred = (
+            // All weights 0 would divide by 0; then the current temperature is used
+            var atPred = totalWeight > 0 ? (
                 atCurrent * node.weightCurrent +
                 avgDay0   * node.weightDay0 +
                 avgDay1   * node.weightDay1 +
                 avgDay2   * node.weightDay2
-            ) / totalWeight;
+            ) / totalWeight : atCurrent;
 
             // 2. Solar UV correction (positive — high UV = warmer in reality)
             var solarOffset = 0;
