@@ -91,4 +91,17 @@ describe('frost-protection node', function() {
       n1.receive({ topic:'outdoor', payload: 10, override: true }); // warm but forced ON
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "frost-protection", name: "test", frostThreshold: 0, hysteresis: 0, minTemp: 0 }];
+      helper.load(require("../frost-protection.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("frostThreshold", 0);
+        n1.should.have.property("hysteresis", 0);
+        n1.should.have.property("minTemp", 0);
+        done();
+      });
+    });
+  });
 });

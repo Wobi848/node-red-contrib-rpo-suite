@@ -1,15 +1,21 @@
 module.exports = function (RED) {
+  // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+  function configNumber(value, fallback) {
+    var n = parseFloat(value);
+    return isNaN(n) ? fallback : n;
+  }
+
   function PIDControllerNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
 
     // Configuration
-    node.setpoint = parseFloat(config.setpoint) || 20;
+    node.setpoint = configNumber(config.setpoint, 20);
     node.useXp = config.useXp === true;
-    node.Ti = parseFloat(config.Ti) || 60;
+    node.Ti = configNumber(config.Ti, 60);
     node.Td = parseFloat(config.Td) || 0;
     node.outMin = parseFloat(config.outMin) || 0;
-    node.outMax = parseFloat(config.outMax) || 100;
+    node.outMax = configNumber(config.outMax, 100);
     // If using Xp mode, convert to Kp: Kp = outputSpan / Xp (physically correct)
     var configKp = parseFloat(config.Kp) || 1.0;
     if (node.useXp && configKp > 0) {
@@ -29,7 +35,7 @@ module.exports = function (RED) {
     }
     node.maxInterval = parseFloat(config.maxInterval) || 0;
     node.ffEnable = config.ffEnable === true;
-    node.ffGain = parseFloat(config.ffGain) || 1.0;
+    node.ffGain = configNumber(config.ffGain, 1.0);
 
     // Constants
     var D_SMOOTH_FACTOR = 4; // Derivative smoothing factor (always active)

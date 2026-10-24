@@ -4,7 +4,7 @@ Building automation and industrial control nodes for Node-RED by **sr.rpo**.
 
 63 nodes organized into 8 palette categories. Each package is individually available on npm.
 
-**Meta-package:** [node-red-contrib-rpo-suite](rpo-suite/) v1.4.13 — installs everything.
+**Meta-package:** [node-red-contrib-rpo-suite](rpo-suite/) v1.4.14 — installs everything.
 
 ## Install Everything
 
@@ -33,16 +33,16 @@ Feedback control, temperature regulation, and closed-loop algorithms.
 
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
-| pid-controller | node-red-contrib-pid-controller-isa | 1.0.4 | Industrial-grade PID controller using ISA standard algorithm for Node-RED |
+| pid-controller | node-red-contrib-pid-controller-isa | 1.0.5 | Industrial-grade PID controller using ISA standard algorithm for Node-RED |
 | pt1 | node-red-contrib-pt1 | 1.0.5 | PT1 first-order low-pass filter for smoothing noisy measurement values |
 | i-element | node-red-contrib-i-element | 1.0.5 | Integral element (I-Glied) with anti-windup for control systems |
-| heat-curve | node-red-contrib-heat-curve | 1.0.3 | Node-RED heating curve node - calculates flow temperature setpoint based on outdoor temperature |
+| heat-curve | node-red-contrib-heat-curve | 1.0.4 | Node-RED heating curve node - calculates flow temperature setpoint based on outdoor temperature |
 | thermal-valve | node-red-contrib-thermal-valve | 1.0.5 | PWM controller for thermal actuator valves - converts 0-100% to timed on/off signal |
 | three-point | node-red-contrib-three-point | 1.0.5 | Three-point actuator controller for HVAC dampers and valves |
-| adaptive-curve | node-red-contrib-adaptive-curve | 1.0.5 | Self-learning heating curve with room temperature feedback |
-| optimization | node-red-contrib-optimization | 1.0.5 | Optimal start time calculator for heating/cooling systems |
-| setpoint-shift | node-red-contrib-setpoint-shift | 1.0.5 | Sliding setpoint / heating curve based on outdoor temperature for HVAC systems |
-| predictive-heating | node-red-contrib-predictive-heating | 1.0.3 | Predictive outdoor temperature for heating curve control using weather forecast and solar UV correction |
+| adaptive-curve | node-red-contrib-adaptive-curve | 1.0.6 | Self-learning heating curve with room temperature feedback |
+| optimization | node-red-contrib-optimization | 1.0.6 | Optimal start time calculator for heating/cooling systems |
+| setpoint-shift | node-red-contrib-setpoint-shift | 1.0.6 | Sliding setpoint / heating curve based on outdoor temperature for HVAC systems |
+| predictive-heating | node-red-contrib-predictive-heating | 1.0.4 | Predictive outdoor temperature for heating curve control using weather forecast and solar UV correction |
 
 ### Logic & Boolean `rpo-logic`
 
@@ -76,7 +76,7 @@ Arithmetic, formulas, scaling, clamping, and statistical calculations.
 | gradient | node-red-contrib-gradient | 1.0.5 | Gradient calculator - computes rate of change of numeric values over time |
 | int-bits | node-red-contrib-int-bits | 1.0.5 | Integer to bits converter - bidirectional integer and boolean array conversion |
 | average | node-red-contrib-avg | 1.0.3 | Node-RED average node - calculates moving average over count or time window |
-| multi-stat | node-red-contrib-multi-stat | 1.0.5 | Node-RED multi-source statistics - calculates min/max/avg across multiple topics |
+| multi-stat | node-red-contrib-multi-stat | 1.0.6 | Node-RED multi-source statistics - calculates min/max/avg across multiple topics |
 
 ### Time & Signal `rpo-time`
 
@@ -105,15 +105,15 @@ Domain-specific nodes for heating, cooling, and building operation modes.
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
 | heat-quantity | node-red-contrib-heat-quantity | 1.0.4 | Thermal energy calculator - power and accumulated kWh |
-| degree-days | node-red-contrib-degree-days | 1.0.4 | Heating degree days calculator according to SIA 2028 |
-| frost-protection | node-red-contrib-frost-protection | 1.0.4 | Frost protection controller for HVAC systems |
-| free-cooling | node-red-contrib-free-cooling | 1.0.5 | Free cooling / night cooling recommendation for HVAC systems |
-| co2-controller | node-red-contrib-co2-controller | 1.0.5 | CO2-based ventilation controller for HVAC systems (SIA 382.1 / EN 13779) |
+| degree-days | node-red-contrib-degree-days | 1.0.5 | Heating degree days calculator according to SIA 2028 |
+| frost-protection | node-red-contrib-frost-protection | 1.0.5 | Frost protection controller for HVAC systems |
+| free-cooling | node-red-contrib-free-cooling | 1.0.6 | Free cooling / night cooling recommendation for HVAC systems |
+| co2-controller | node-red-contrib-co2-controller | 1.0.6 | CO2-based ventilation controller for HVAC systems (SIA 382.1 / EN 13779) |
 | standby | node-red-contrib-standby | 1.0.5 | Operating mode manager: Comfort / Standby / Frost for HVAC |
 | idle-mode | node-red-contrib-idle-mode | 1.0.5 | Periodic exercise runner for idle pumps and valves |
 | priority | node-red-contrib-priority | 1.0.5 | Priority-based input selector for DDC control (Hand/Remote/Auto) |
-| sequencer | node-red-contrib-rpo-sequencer | 1.0.5 | Sequential channel switching with wear leveling for HVAC |
-| startup | node-red-contrib-startup | 1.0.5 | Startup sequence with ramp-up and pre/post-run for pumps and fans |
+| sequencer | node-red-contrib-rpo-sequencer | 1.0.6 | Sequential channel switching with wear leveling for HVAC |
+| startup | node-red-contrib-startup | 1.0.6 | Startup sequence with ramp-up and pre/post-run for pumps and fans |
 
 ### Sensors & Physics `rpo-sensor`
 
@@ -122,7 +122,7 @@ Psychrometric calculations and sensor-value validation.
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
 | abs-humidity | node-red-contrib-abs-humidity | 1.0.4 | Absolute humidity calculator using Magnus formula |
-| dewpoint | node-red-contrib-dewpoint | 1.0.4 | Dew point calculator with condensation alarm |
+| dewpoint | node-red-contrib-dewpoint | 1.0.5 | Dew point calculator with condensation alarm |
 | enthalpy | node-red-contrib-enthalpy | 1.0.4 | Specific enthalpy of moist air with heat recovery recommendation |
 | sensor-check | node-red-contrib-sensor-check | 1.0.5 | Sensor plausibility monitor - detects out-of-range values and timeout with fallback output |
 

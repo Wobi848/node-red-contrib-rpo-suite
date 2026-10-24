@@ -1,4 +1,10 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function OptimizationNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
@@ -7,7 +13,7 @@ module.exports = function(RED) {
         node.thermalMass    = parseFloat(config.thermalMass)   || 30;
         node.heatingPower   = parseFloat(config.heatingPower)  || 1.0;
         node.outdoorFactor  = parseFloat(config.outdoorFactor) || 0.05;
-        node.maxPreHeat     = parseFloat(config.maxPreHeat)    || 240;
+        node.maxPreHeat     = configNumber(config.maxPreHeat, 240);
         node.topicRoom      = config.topicRoom     || 'room';
         node.topicOutdoor   = config.topicOutdoor  || 'outdoor';
         node.topicSetpoint  = config.topicSetpoint || 'setpoint';

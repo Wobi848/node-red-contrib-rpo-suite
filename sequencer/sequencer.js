@@ -1,12 +1,18 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function SequencerNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
         node.channels   = Math.max(2, Math.min(8, parseInt(config.channels, 10) || 3));
-        node.hysteresis = parseFloat(config.hysteresis) || 5;
-        node.minOnTime  = parseFloat(config.minOnTime)  || 60;
-        node.minOffTime = parseFloat(config.minOffTime) || 60;
+        node.hysteresis = configNumber(config.hysteresis, 5);
+        node.minOnTime  = configNumber(config.minOnTime, 60);
+        node.minOffTime = configNumber(config.minOffTime, 60);
         node.wearLevel  = config.wearLevel !== false;
 
         node.states    = new Array(node.channels).fill(false);

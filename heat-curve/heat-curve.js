@@ -1,4 +1,10 @@
 module.exports = function (RED) {
+  // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+  function configNumber(value, fallback) {
+    var n = parseFloat(value);
+    return isNaN(n) ? fallback : n;
+  }
+
   function HeatCurveNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
@@ -6,14 +12,14 @@ module.exports = function (RED) {
     // Configuration
     node.mode = config.mode || "slope";
     node.slope = parseFloat(config.slope) || 1.0;
-    node.designOutdoor = parseFloat(config.designOutdoor) || -15;
+    node.designOutdoor = configNumber(config.designOutdoor, -15);
     node.designFlow = parseFloat(config.designFlow) || 55;
-    node.roomTemp = parseFloat(config.roomTemp) || 20;
+    node.roomTemp = configNumber(config.roomTemp, 20);
     node.shift = parseFloat(config.shift) || 0;
-    node.minFlow = parseFloat(config.minFlow) || 20;
+    node.minFlow = configNumber(config.minFlow, 20);
     node.maxFlow = parseFloat(config.maxFlow) || 75;
-    node.setbackDelta = parseFloat(config.setbackDelta) || 10;
-    node.summerLockout = parseFloat(config.summerLockout) || 18;
+    node.setbackDelta = configNumber(config.setbackDelta, 10);
+    node.summerLockout = configNumber(config.summerLockout, 18);
     node.decimals = parseInt(config.decimals, 10);
     if (isNaN(node.decimals) || node.decimals < 0) {
       node.decimals = 1;

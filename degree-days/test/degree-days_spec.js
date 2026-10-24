@@ -80,4 +80,16 @@ describe('degree-days node', function() {
       setTimeout(() => { received.should.equal(false); done(); }, 50);
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "degree-days", name: "test", heatingBase: 0, heatingLimit: 0 }];
+      helper.load(require("../degree-days.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("heatingBase", 0);
+        n1.should.have.property("heatingLimit", 0);
+        done();
+      });
+    });
+  });
 });

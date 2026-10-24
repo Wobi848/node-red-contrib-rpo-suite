@@ -1,10 +1,16 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function DegreeDaysNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        node.heatingBase  = parseFloat(config.heatingBase)  || 20;
-        node.heatingLimit = parseFloat(config.heatingLimit) || 12;
+        node.heatingBase  = configNumber(config.heatingBase, 20);
+        node.heatingLimit = configNumber(config.heatingLimit, 12);
         node.resetDay     = parseInt(config.resetDay, 10)   || 1;
         node.persistent   = config.persistent !== false;
         node.decimals     = parseInt(config.decimals, 10);

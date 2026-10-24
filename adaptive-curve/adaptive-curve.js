@@ -1,12 +1,18 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function AdaptiveCurveNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        node.roomSetpoint   = parseFloat(config.roomSetpoint)   || 22;
-        node.heatingLimit   = parseFloat(config.heatingLimit)   || 15;
+        node.roomSetpoint   = configNumber(config.roomSetpoint, 22);
+        node.heatingLimit   = configNumber(config.heatingLimit, 15);
         node.adaptationRate = parseFloat(config.adaptationRate) || 0.01;
-        node.maxShift       = parseFloat(config.maxShift)       || 10;
+        node.maxShift       = configNumber(config.maxShift, 10);
         node.deadband       = parseFloat(config.deadband)       || 0.5;
         node.topicRoom      = config.topicRoom    || 'room';
         node.topicOutdoor   = config.topicOutdoor || 'outdoor';

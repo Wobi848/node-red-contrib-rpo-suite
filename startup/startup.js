@@ -1,15 +1,21 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function StartupNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
         node.startSpeed   = parseFloat(config.startSpeed)   || 0;
         node.preRunTime   = parseFloat(config.preRunTime)   || 0;
-        node.preRunSpeed  = parseFloat(config.preRunSpeed)  || 100;
+        node.preRunSpeed  = configNumber(config.preRunSpeed, 100);
         node.rampTime     = parseFloat(config.rampTime);     if (isNaN(node.rampTime)    || node.rampTime    < 0) node.rampTime    = 30;
         node.rampDownTime = parseFloat(config.rampDownTime); if (isNaN(node.rampDownTime)|| node.rampDownTime< 0) node.rampDownTime= 0;
         node.postRunTime  = parseFloat(config.postRunTime)  || 0;
-        node.postRunSpeed = parseFloat(config.postRunSpeed) || 30;
+        node.postRunSpeed = configNumber(config.postRunSpeed, 30);
 
         node.phase    = 'stopped';
         node.speed    = 0;

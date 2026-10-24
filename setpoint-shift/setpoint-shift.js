@@ -1,12 +1,18 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function SetpointShiftNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        node.outdoorRef   = parseFloat(config.outdoorRef)   || 15;
-        node.outdoorMin   = parseFloat(config.outdoorMin)   || -10;
-        node.setpointBase = parseFloat(config.setpointBase) || 20;
-        node.setpointMax  = parseFloat(config.setpointMax)  || 70;
+        node.outdoorRef   = configNumber(config.outdoorRef, 15);
+        node.outdoorMin   = configNumber(config.outdoorMin, -10);
+        node.setpointBase = configNumber(config.setpointBase, 20);
+        node.setpointMax  = configNumber(config.setpointMax, 70);
         node.limitLow     = parseFloat(config.limitLow);
         if (isNaN(node.limitLow)) node.limitLow = null;
         node.limitHigh    = parseFloat(config.limitHigh);
