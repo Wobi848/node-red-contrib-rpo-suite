@@ -1,4 +1,10 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function Co2ControllerNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
@@ -6,8 +12,8 @@ module.exports = function(RED) {
         node.minLevel       = parseFloat(config.minLevel)       || 800;
         node.maxLevel       = parseFloat(config.maxLevel)       || 1200;
         node.alarmLevel     = parseFloat(config.alarmLevel)     || 1500;
-        node.minVentilation = parseFloat(config.minVentilation) || 20;
-        node.hysteresis     = parseFloat(config.hysteresis)     || 50;
+        node.minVentilation = configNumber(config.minVentilation, 20);
+        node.hysteresis     = configNumber(config.hysteresis, 50);
         node.decimals       = parseInt(config.decimals, 10);
         if (isNaN(node.decimals)) node.decimals = 1;
 

@@ -77,4 +77,17 @@ describe('sequencer node', function() {
       helper.getNode('n1').receive({ payload: true });
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "sequencer", name: "test", hysteresis: 0, minOnTime: 0, minOffTime: 0 }];
+      helper.load(require("../sequencer.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("hysteresis", 0);
+        n1.should.have.property("minOnTime", 0);
+        n1.should.have.property("minOffTime", 0);
+        done();
+      });
+    });
+  });
 });

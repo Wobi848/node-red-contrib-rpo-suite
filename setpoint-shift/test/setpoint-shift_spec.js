@@ -98,4 +98,18 @@ describe('setpoint-shift node', function() {
       setTimeout(() => { received.should.equal(false); done(); }, 50);
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "setpoint-shift", name: "test", outdoorRef: 0, outdoorMin: 0, setpointBase: 0, setpointMax: 0 }];
+      helper.load(require("../setpoint-shift.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("outdoorRef", 0);
+        n1.should.have.property("outdoorMin", 0);
+        n1.should.have.property("setpointBase", 0);
+        n1.should.have.property("setpointMax", 0);
+        done();
+      });
+    });
+  });
 });

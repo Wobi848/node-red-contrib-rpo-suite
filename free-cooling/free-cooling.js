@@ -1,11 +1,17 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function FreeCoolingNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        node.minDelta    = parseFloat(config.minDelta)    || 3;
-        node.maxOutdoor  = parseFloat(config.maxOutdoor)  || 24;
-        node.minOutdoor  = parseFloat(config.minOutdoor)  || 8;
+        node.minDelta    = configNumber(config.minDelta, 3);
+        node.maxOutdoor  = configNumber(config.maxOutdoor, 24);
+        node.minOutdoor  = configNumber(config.minOutdoor, 8);
         node.topicIndoor  = config.topicIndoor  || 'indoor';
         node.topicOutdoor = config.topicOutdoor || 'outdoor';
         node.decimals    = parseInt(config.decimals, 10);

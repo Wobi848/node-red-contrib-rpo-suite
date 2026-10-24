@@ -662,4 +662,18 @@ describe("pid-controller Node", function () {
       });
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "pid-controller", name: "test", setpoint: 0, Ti: 0, outMax: 0, ffGain: 0 }];
+      helper.load(require("../pid-controller.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("setpoint", 0);
+        n1.should.have.property("Ti", 0);
+        n1.should.have.property("outMax", 0);
+        n1.should.have.property("ffGain", 0);
+        done();
+      });
+    });
+  });
 });

@@ -74,4 +74,15 @@ describe('dewpoint node', function() {
       n1.receive({ topic:'rh',   payload: 100 });
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "dewpoint", name: "test", alarmOffset: 0 }];
+      helper.load(require("../dewpoint.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("alarmOffset", 0);
+        done();
+      });
+    });
+  });
 });

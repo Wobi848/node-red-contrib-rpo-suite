@@ -1,13 +1,19 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function PredictiveHeatingNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        this.weightCurrent = parseFloat(config.weightCurrent) || 4;
-        this.weightDay0    = parseFloat(config.weightDay0)    || 2;
-        this.weightDay1    = parseFloat(config.weightDay1)    || 1;
+        this.weightCurrent = configNumber(config.weightCurrent, 4);
+        this.weightDay0    = configNumber(config.weightDay0, 2);
+        this.weightDay1    = configNumber(config.weightDay1, 1);
         this.weightDay2    = parseFloat(config.weightDay2)    || 0.5;
-        this.uvMaxOffset   = parseFloat(config.uvMaxOffset)   || 2;
+        this.uvMaxOffset   = configNumber(config.uvMaxOffset, 2);
 
         node.status({ fill: "grey", shape: "ring", text: "Idle" });
 

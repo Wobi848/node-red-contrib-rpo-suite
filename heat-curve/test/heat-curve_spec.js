@@ -410,4 +410,19 @@ describe("heat-curve Node", function () {
       });
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "heat-curve", name: "test", designOutdoor: 0, roomTemp: 0, minFlow: 0, setbackDelta: 0, summerLockout: 0 }];
+      helper.load(require("../heat-curve.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("designOutdoor", 0);
+        n1.should.have.property("roomTemp", 0);
+        n1.should.have.property("minFlow", 0);
+        n1.should.have.property("setbackDelta", 0);
+        n1.should.have.property("summerLockout", 0);
+        done();
+      });
+    });
+  });
 });

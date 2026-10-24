@@ -67,4 +67,15 @@ describe('optimization node', function() {
     unclamped.should.be.above(maxPreHeat);
     required.should.equal(60);
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "optimization", name: "test", maxPreHeat: 0 }];
+      helper.load(require("../optimization.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("maxPreHeat", 0);
+        done();
+      });
+    });
+  });
 });

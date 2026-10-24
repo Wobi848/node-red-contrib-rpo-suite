@@ -110,4 +110,16 @@ describe('co2-controller node', function() {
       helper.getNode('n1').receive({ payload: 700 });
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "co2-controller", name: "test", minVentilation: 0, hysteresis: 0 }];
+      helper.load(require("../co2-controller.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("minVentilation", 0);
+        n1.should.have.property("hysteresis", 0);
+        done();
+      });
+    });
+  });
 });

@@ -116,4 +116,17 @@ describe('adaptive-curve node', function() {
       done();
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "adaptive-curve", name: "test", roomSetpoint: 0, heatingLimit: 0, maxShift: 0 }];
+      helper.load(require("../adaptive-curve.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("roomSetpoint", 0);
+        n1.should.have.property("heatingLimit", 0);
+        n1.should.have.property("maxShift", 0);
+        done();
+      });
+    });
+  });
 });

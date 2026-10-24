@@ -277,4 +277,14 @@ describe('multi-stat Node', function() {
         });
     });
 
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "multi-stat", name: "test", decimals: 0 }];
+      helper.load(require("../multi-stat.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("decimals", 0);
+        done();
+      });
+    });
+  });
 });

@@ -1,4 +1,10 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function DewpointNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
@@ -6,7 +12,7 @@ module.exports = function(RED) {
         node.topicTemp    = config.topicTemp    || 'temp';
         node.topicRh      = config.topicRh      || 'rh';
         node.topicSurface = config.topicSurface || '';
-        node.alarmOffset  = parseFloat(config.alarmOffset) || 2;
+        node.alarmOffset  = configNumber(config.alarmOffset, 2);
         node.decimals     = parseInt(config.decimals, 10);
         if (isNaN(node.decimals)) node.decimals = 1;
 

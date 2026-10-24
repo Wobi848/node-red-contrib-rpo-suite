@@ -1,12 +1,18 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function FrostProtectionNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
         node.mode           = config.mode || 'binary';
-        node.frostThreshold = parseFloat(config.frostThreshold) || -5;
-        node.hysteresis     = parseFloat(config.hysteresis) || 2;
-        node.minTemp        = parseFloat(config.minTemp) || -15;
+        node.frostThreshold = configNumber(config.frostThreshold, -5);
+        node.hysteresis     = configNumber(config.hysteresis, 2);
+        node.minTemp        = configNumber(config.minTemp, -15);
         node.topicOutdoor   = config.topicOutdoor || 'outdoor';
         node.topicSupply    = config.topicSupply  || 'supply';
         node.decimals       = parseInt(config.decimals, 10);

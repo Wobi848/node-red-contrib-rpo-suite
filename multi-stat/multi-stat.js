@@ -3,7 +3,9 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        this.decimals = parseInt(config.decimals) || 2;
+        var decimals = parseInt(config.decimals, 10);
+
+        this.decimals = isNaN(decimals) || decimals < 0 ? 2 : decimals;
         this.minTopics = parseInt(config.minTopics) || 1;
         this.state = {};
 

@@ -116,4 +116,17 @@ describe('free-cooling node', function() {
       setTimeout(() => { received.should.equal(false); done(); }, 50);
     });
   });
+
+  describe("Config zero values", function () {
+    it("should keep an explicit 0 instead of falling back to the default", function (done) {
+      var flow = [{ id: "n1", type: "free-cooling", name: "test", minDelta: 0, maxOutdoor: 0, minOutdoor: 0 }];
+      helper.load(require("../free-cooling.js"), flow, function () {
+        var n1 = helper.getNode("n1");
+        n1.should.have.property("minDelta", 0);
+        n1.should.have.property("maxOutdoor", 0);
+        n1.should.have.property("minOutdoor", 0);
+        done();
+      });
+    });
+  });
 });
