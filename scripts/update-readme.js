@@ -80,6 +80,7 @@ npm run readme       # Regenerate this README from categories.json
 npm run apply-cats   # Apply categories.json to all node HTML files
 npm test             # Run tests in every package with a test/ folder
 npm run verify       # Check + test
+python3 scripts/test-examples.py   # Run all example flows in a running Node-RED (see script)
 \`\`\`
 
 \`categories.json\` is the single source of truth for palette grouping. Edit it, then run \`npm run apply-cats && npm run readme\`.

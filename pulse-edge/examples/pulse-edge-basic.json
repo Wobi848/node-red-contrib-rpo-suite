@@ -46,34 +46,22 @@
         "type": "pulse-edge",
         "z": "flow_pulse_edge",
         "name": "Door Sensor",
-        "risingEdge": true,
-        "fallingEdge": true,
+        "mode": "both",
+        "initialState": "false",
         "x": 360,
         "y": 130,
-        "wires": [["pe_debug_rising"], ["pe_debug_falling"]]
+        "wires": [["pe_debug_rising"]]
     },
     {
         "id": "pe_debug_rising",
         "type": "debug",
         "z": "flow_pulse_edge",
-        "name": "Rising Edge (Door Opened)",
+        "name": "Edge (msg.edge = rising / falling)",
         "active": true,
         "tosidebar": true,
-        "complete": "payload",
+        "complete": "edge",
         "x": 580,
         "y": 100,
-        "wires": []
-    },
-    {
-        "id": "pe_debug_falling",
-        "type": "debug",
-        "z": "flow_pulse_edge",
-        "name": "Falling Edge (Door Closed)",
-        "active": true,
-        "tosidebar": true,
-        "complete": "payload",
-        "x": 580,
-        "y": 160,
         "wires": []
     }
 ]

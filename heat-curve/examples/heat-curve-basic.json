@@ -4,7 +4,7 @@
         "type": "comment",
         "z": "flow_heat_curve",
         "name": "=== Heat Curve - Basic Example ===",
-        "info": "Demonstrates heating curve (Heizkurve):\n- Send outdoor temperature as msg.payload\n- Node calculates the required flow temperature setpoint\n- Slope and offset are configurable\n- Typical use: radiator or underfloor heating control",
+        "info": "Demonstrates heating curve (Heizkurve):\n- Send outdoor temperature as msg.payload\n- Node calculates the required flow temperature setpoint\n- Slope and room temperature are configurable\n- Typical use: radiator or underfloor heating control",
         "x": 270,
         "y": 40,
         "wires": []
@@ -63,7 +63,7 @@
         "z": "flow_heat_curve",
         "name": "Radiator Heating",
         "slope": "1.5",
-        "offset": "20",
+        "roomTemp": "20",
         "minFlow": "20",
         "maxFlow": "80",
         "x": 380,

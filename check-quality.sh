@@ -65,6 +65,10 @@ for d in "$BASE_DIR"/*/; do
   fi
 done
 
+# Example flows: settings, wiring, inject topics (see scripts/check-examples.js)
+echo ""
+node "$BASE_DIR/scripts/check-examples.js" || ((FAIL++))
+
 echo ""
 echo "==============================================="
 if [ $FAIL -eq 0 ]; then

@@ -62,8 +62,9 @@
         "type": "hysteresis",
         "z": "flow_hysteresis",
         "name": "Cooling Control",
-        "highThreshold": "25",
-        "lowThreshold": "20",
+        "setpoint": "25",
+        "hysteresis": "5",
+        "mode": "high",
         "x": 420,
         "y": 160,
         "wires": [["hy_debug"]]

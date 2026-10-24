@@ -62,8 +62,9 @@
         "type": "logic-combiner",
         "z": "flow_logic_combiner",
         "name": "Pump Interlock (AND)",
-        "logic": "AND",
-        "inputs": "2",
+        "topics": [{"topic": "1", "label": "Input 1", "invert": false, "operator": "AND"}, {"topic": "2", "label": "Input 2", "invert": false, "operator": "AND"}],
+        "minTopics": "",
+        "initialValue": "",
         "x": 400,
         "y": 160,
         "wires": [["lc_debug"]]
