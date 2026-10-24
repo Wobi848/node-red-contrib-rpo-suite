@@ -1,7 +1,7 @@
 # node-red-contrib-i-element
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-i-element`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-i-element`.
 <!-- rpo-suite-note:end -->
 
 Integral element (I-Glied) with anti-windup for control systems. Integrates an input signal over time with configurable integration time Ti and output clamping.

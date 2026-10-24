@@ -1,0 +1,14 @@
+{
+  "rpo-alarm": {
+    "label": {
+      "name": "Name",
+      "topicAlarm": "Topic Störung",
+      "topicAck": "Topic Quittieren",
+      "topicInhibit": "Topic Unterdrücken",
+      "delayOn": "Verzögerung kommt (s)",
+      "delayOff": "Verzögerung geht (s)",
+      "ackRequired": "Quittierpflicht",
+      "persistent": "Zustand nach Neustart behalten"
+    }
+  }
+}

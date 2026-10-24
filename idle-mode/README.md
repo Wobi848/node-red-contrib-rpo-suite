@@ -1,7 +1,7 @@
 # node-red-contrib-idle-mode
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-idle-mode`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-idle-mode`.
 <!-- rpo-suite-note:end -->
 
 Idle mode controller for HVAC components. Triggers a short exercise run when a device has been idle for too long, preventing mechanical seizure (e.g. pumps, valves).

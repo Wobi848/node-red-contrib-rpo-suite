@@ -1,7 +1,7 @@
 # node-red-contrib-comparator
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-comparator`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-comparator`.
 <!-- rpo-suite-note:end -->
 
 A Node-RED node that compares two numeric values identified by msg.topic and outputs a boolean result.

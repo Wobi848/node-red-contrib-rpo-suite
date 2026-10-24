@@ -1,7 +1,7 @@
 # node-red-contrib-standby
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-standby`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-standby`.
 <!-- rpo-suite-note:end -->
 
 Standby/setback manager for HVAC systems. Switches between comfort, standby and frost setpoints based on operating mode. Typically driven by a weekly-schedule node.

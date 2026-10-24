@@ -1,7 +1,7 @@
 # node-red-contrib-logic-combiner
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-logic-combiner`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-logic-combiner`.
 <!-- rpo-suite-note:end -->
 
 Node-RED Logic Combiner - combines multiple boolean inputs with individual AND/OR operators per input.

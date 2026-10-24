@@ -1,0 +1,116 @@
+<script type="text/javascript">
+    RED.nodes.registerType('rpo-alarm', {
+        category: 'rpo-logic',
+        color: '#3FADB5',
+        defaults: {
+            name: { value: "" },
+            topicAlarm: { value: "alarm", required: true },
+            topicAck: { value: "ack", required: true },
+            topicInhibit: { value: "inhibit", required: true },
+            delayOn: { value: 0, validate: RED.validators.number() },
+            delayOff: { value: 0, validate: RED.validators.number() },
+            ackRequired: { value: true },
+            persistent: { value: true }
+        },
+        inputs: 1,
+        outputs: 2,
+        outputLabels: ["active (true/false)", "alarm object"],
+        icon: "font-awesome/fa-bell",
+        label: function() {
+            return this.name || "alarm";
+        },
+        paletteLabel: "alarm"
+    });
+</script>
+
+<script type="text/html" data-template-name="rpo-alarm">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="rpo-alarm.label.name">Name</span></label>
+        <input type="text" id="node-input-name" placeholder="e.g. Boiler overtemperature">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicAlarm"><i class="fa fa-exclamation-triangle"></i> <span data-i18n="rpo-alarm.label.topicAlarm">Fault topic</span></label>
+        <input type="text" id="node-input-topicAlarm" placeholder="alarm">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicAck"><i class="fa fa-check"></i> <span data-i18n="rpo-alarm.label.topicAck">Acknowledge topic</span></label>
+        <input type="text" id="node-input-topicAck" placeholder="ack">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topicInhibit"><i class="fa fa-ban"></i> <span data-i18n="rpo-alarm.label.topicInhibit">Inhibit topic</span></label>
+        <input type="text" id="node-input-topicInhibit" placeholder="inhibit">
+    </div>
+    <div class="form-row">
+        <label for="node-input-delayOn"><i class="fa fa-hourglass-start"></i> <span data-i18n="rpo-alarm.label.delayOn">Delay on (s)</span></label>
+        <input type="number" id="node-input-delayOn" min="0" step="1" style="width:100px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-delayOff"><i class="fa fa-hourglass-end"></i> <span data-i18n="rpo-alarm.label.delayOff">Delay off (s)</span></label>
+        <input type="number" id="node-input-delayOff" min="0" step="1" style="width:100px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ackRequired"><i class="fa fa-hand-paper-o"></i> <span data-i18n="rpo-alarm.label.ackRequired">Acknowledge required</span></label>
+        <input type="checkbox" id="node-input-ackRequired" style="width:auto">
+    </div>
+    <div class="form-row">
+        <label for="node-input-persistent"><i class="fa fa-database"></i> <span data-i18n="rpo-alarm.label.persistent">Keep state on restart</span></label>
+        <input type="checkbox" id="node-input-persistent" style="width:auto">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="rpo-alarm">
+    <p>Alarm with acknowledgement: stays active until the fault is gone <b>and</b> the alarm was acknowledged.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>topic = <code>alarm</code> <span class="property-type">boolean | number | string</span></dt>
+        <dd>Fault condition in <code>payload</code>: <code>true</code>/<code>1</code>/<code>"on"</code> = fault, <code>false</code>/<code>0</code>/<code>"off"</code> = no fault.</dd>
+        <dt>topic = <code>ack</code></dt>
+        <dd>Acknowledges the alarm. Optional <code>msg.user</code> is stored as <code>ackedBy</code>.</dd>
+        <dt>topic = <code>inhibit</code> <span class="property-type">boolean</span></dt>
+        <dd>Suppresses the alarm while <code>payload</code> is true (e.g. plant off, maintenance). A latched alarm is dropped. When released, an alarm comes again if the fault is still present.</dd>
+        <dt class="optional">reset <span class="property-type">boolean</span></dt>
+        <dd><code>msg.reset = true</code> forces the normal state.</dd>
+    </dl>
+    <p>The topic names can be changed in the settings.</p>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Active
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">boolean</span></dt>
+                <dd><code>true</code> while the alarm is active, <code>false</code> when it is normal again. Sent only when it changes. Use it to lock equipment until acknowledged.</dd>
+            </dl>
+        </li>
+        <li>Alarm object
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Sent on every state change, for notifications, dashboards and logging:
+                    <code>name</code>, <code>state</code>, <code>active</code>, <code>acked</code>, <code>condition</code>, <code>inhibited</code>,
+                    <code>since</code>, <code>clearedAt</code>, <code>ackedAt</code>, <code>ackedBy</code>, <code>count</code>.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>States</h3>
+    <dl class="message-properties">
+        <dt>normal</dt><dd>No fault, nothing to acknowledge. Output 1 = false.</dd>
+        <dt>active_unacked</dt><dd>Fault present, not acknowledged yet.</dd>
+        <dt>active_acked</dt><dd>Fault present, acknowledged. Goes to normal when the fault is gone.</dd>
+        <dt>cleared_unacked</dt><dd>Fault gone, not acknowledged yet (latched). Goes to normal on acknowledge.</dd>
+        <dt>inhibited</dt><dd>Suppressed by the inhibit topic. Output 1 = false.</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>Delay on / off</dt>
+        <dd>The fault must be present (or gone) this many seconds before the alarm comes (or goes). Avoids false alarms from short spikes.</dd>
+        <dt>Acknowledge required</dt>
+        <dd>Off: the alarm comes and goes with the fault, no acknowledge needed.</dd>
+        <dt>Keep state on restart</dt>
+        <dd>Stores the alarm in the node context, so an unacknowledged alarm survives a restart. Needs a persistent context store (<code>contextStorage</code> in settings.js) to survive a Node-RED restart.</dd>
+    </dl>
+
+    <h3>Note</h3>
+    <p>This is an operational interlock, not a safety function. Safety functions (e.g. a safety temperature limiter) must be implemented in hardware.</p>
+</script>

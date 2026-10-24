@@ -2,9 +2,9 @@
 
 Building automation and industrial control nodes for Node-RED by **sr.rpo**.
 
-63 nodes organized into 8 palette categories. Each package is individually available on npm.
+64 nodes organized into 8 palette categories. Each package is individually available on npm.
 
-**Meta-package:** [node-red-contrib-rpo-suite](rpo-suite/) v1.4.16 — installs everything.
+**Meta-package:** [node-red-contrib-rpo-suite](rpo-suite/) v1.5.0 — installs everything.
 
 ## Install Everything
 
@@ -17,7 +17,7 @@ npm install node-red-contrib-rpo-suite
 In the Node-RED editor palette, nodes are grouped by category:
 
 - `rpo-control` — Control & Regulation (10)
-- `rpo-logic` — Logic & Boolean (10)
+- `rpo-logic` — Logic & Boolean (11)
 - `rpo-math` — Math & Numeric (10)
 - `rpo-time` — Time & Signal (13)
 - `rpo-hvac` — HVAC & Building (10)
@@ -60,6 +60,7 @@ Boolean logic, latches, edge detection, and state comparison.
 | hysteresis | node-red-contrib-threshold-hysteresis | 1.0.6 | Node-RED node for hysteresis logic - outputs boolean based on high/low thresholds |
 | deadband | node-red-contrib-deadband | 1.0.5 | Node-RED deadband filter - only passes values when change exceeds threshold |
 | comparator | node-red-contrib-comparator | 1.0.6 | Compares two numeric values with configurable operator and outputs boolean result |
+| alarm | node-red-contrib-rpo-alarm | 1.0.0 | Node-RED alarm with acknowledgement: stays active until the fault is gone and the alarm is acknowledged; on/off delay, inhibit, alarm object for notifications |
 
 ### Math & Numeric `rpo-math`
 

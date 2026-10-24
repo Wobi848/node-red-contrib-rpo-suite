@@ -1,0 +1,14 @@
+{
+  "rpo-alarm": {
+    "label": {
+      "name": "Nombre",
+      "topicAlarm": "Topic avería",
+      "topicAck": "Topic confirmar",
+      "topicInhibit": "Topic inhibir",
+      "delayOn": "Retardo activación (s)",
+      "delayOff": "Retardo desactivación (s)",
+      "ackRequired": "Confirmación obligatoria",
+      "persistent": "Mantener estado al reiniciar"
+    }
+  }
+}
