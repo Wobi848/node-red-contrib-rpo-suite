@@ -11,22 +11,22 @@ module.exports = function(RED) {
         node.bypass = null;
         node.output = false;
         node.timer  = null;
-
+        node.cycleStart = null;
         node.status({ fill:'grey', shape:'dot', text:'OFF 0%' });
         scheduleCycle(node);
 
         node.on('input', function(msg, send, done) {
-            if (msg.clearBypass === true) { node.bypass = null; done(); return; }
+            if (msg.clearBypass === true) { node.bypass = null; scheduleCycle(node); done(); return; }
             if (msg.bypass !== undefined) {
                 node.bypass = (msg.bypass === true || msg.bypass === 'true') ? true : false;
                 updateStatus(node);
+                scheduleCycle(node);
                 done();
                 return;
             }
             var val = parseFloat(msg.payload);
             if (isNaN(val)) { node.warn('Input is not a number: ' + msg.payload); done(); return; }
             node.input = Math.max(0, Math.min(100, val));
-            if (node.timer) clearTimeout(node.timer);
             scheduleCycle(node);
             done();
         });
@@ -35,31 +35,29 @@ module.exports = function(RED) {
             if (node.timer) clearTimeout(node.timer);
         });
 
+        // Sets the output for the current position in the running cycle and schedules the next
+        // switch. A new input does not restart the cycle; otherwise frequent inputs would keep
+        // the output in the ON phase forever.
         function scheduleCycle(n) {
-            var pct     = n.input / 100;
-            var onTime  = pct * n.period;
+            if (n.timer) clearTimeout(n.timer);
+            var now = Date.now();
+            if (n.cycleStart === null || now - n.cycleStart >= n.period) n.cycleStart = now;
+            var elapsed = now - n.cycleStart;
+            var onTime  = (n.input / 100) * n.period;
             var offTime = n.period - onTime;
-            var bypass  = n.bypass;
-
-            if (bypass !== null) {
-                setOutput(n, bypass, onTime, offTime);
-                n.timer = setTimeout(function() { scheduleCycle(n); }, n.period);
-                return;
-            }
-
-            if (pct <= 0) {
-                setOutput(n, false, onTime, offTime);
-                n.timer = setTimeout(function() { scheduleCycle(n); }, n.period);
-            } else if (pct >= 1) {
-                setOutput(n, true, onTime, offTime);
-                n.timer = setTimeout(function() { scheduleCycle(n); }, n.period);
+            var state, next;
+            if (n.bypass !== null) {
+                state = n.bypass;
+                next  = n.cycleStart + n.period;
+            } else if (elapsed < onTime) {
+                state = true;
+                next  = n.cycleStart + onTime;
             } else {
-                setOutput(n, true, onTime, offTime);
-                n.timer = setTimeout(function() {
-                    setOutput(n, false, onTime, offTime);
-                    n.timer = setTimeout(function() { scheduleCycle(n); }, offTime);
-                }, onTime);
+                state = false;
+                next  = n.cycleStart + n.period;
             }
+            setOutput(n, state, onTime, offTime);
+            n.timer = setTimeout(function() { scheduleCycle(n); }, Math.max(0, next - now));
         }
 
         function setOutput(n, rawState, onTime, offTime) {

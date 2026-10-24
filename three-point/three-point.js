@@ -11,18 +11,32 @@ module.exports = function(RED) {
         node.position = node.initPos;
         node.timer    = null;
         node.moving   = false;
+        node.moveStart = null;
+        node.moveDiff  = 0;
 
         node.status({ fill: 'grey', shape: 'dot', text: 'AT SETPOINT ' + node.position + '%' });
 
+        // Adds the part of a running movement that was already travelled to the position
+        function bookPartialMovement() {
+            if (!node.moving || node.moveStart === null) return;
+            var travelled = (Date.now() - node.moveStart) / 1000 / node.runtime * 100;
+            travelled = Math.min(Math.abs(node.moveDiff), travelled);
+            node.position = Math.max(0, Math.min(100, node.position + Math.sign(node.moveDiff) * travelled));
+        }
         function stopMovement(sendFalse) {
             if (node.timer) { clearTimeout(node.timer); node.timer = null; }
+            bookPartialMovement();
             node.moving = false;
+            node.moveStart = null;
             if (sendFalse) node.send([{ payload: false }, { payload: false }]);
         }
 
         function move(setpoint) {
+            var wasMoving = node.moving;
+            stopMovement(false);
             var diff = setpoint - node.position;
             if (Math.abs(diff) < node.deadband) {
+                if (wasMoving) node.send([{ payload: false }, { payload: false }]);
                 node.status({ fill: 'green', shape: 'dot', text: 'DEADBAND (diff: ' + Math.abs(diff).toFixed(1) + '%)' });
                 return;
             }
@@ -42,8 +56,9 @@ module.exports = function(RED) {
                 moving:     true
             };
 
-            stopMovement(false);
             node.moving = true;
+            node.moveStart = Date.now();
+            node.moveDiff  = diff;
 
             if (direction === 'open') {
                 node.send([{ payload: true, threePoint: info }, { payload: false, threePoint: info }]);
@@ -56,6 +71,7 @@ module.exports = function(RED) {
             node.timer = setTimeout(function() {
                 node.position = Math.max(0, Math.min(100, node.position + diff));
                 node.moving   = false;
+                node.moveStart = null;
                 node.timer    = null;
                 node.send([{ payload: false }, { payload: false }]);
                 node.status({ fill: 'green', shape: 'dot', text: 'AT SETPOINT ' + node.position.toFixed(1) + '%' });

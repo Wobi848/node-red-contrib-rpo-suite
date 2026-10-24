@@ -31,13 +31,12 @@ module.exports = function(RED) {
             var maxRatePerS = (msg.maxRate !== undefined) ? parseFloat(msg.maxRate) : node.maxRatePerS;
 
             var now = Date.now();
-            var output, limited;
-
+            var output, limited, dt = 0;
             if (node.lastOutput === undefined) {
                 output  = x;
                 limited = false;
             } else {
-                var dt    = (now - node.lastTime) / 1000;
+                dt = (now - node.lastTime) / 1000;
                 var maxDelta = maxRatePerS * dt;
                 var delta    = x - node.lastOutput;
                 if (Math.abs(delta) > maxDelta) {
@@ -49,17 +48,18 @@ module.exports = function(RED) {
                 }
             }
 
-            output          = parseFloat(output.toFixed(node.decimals));
+            // Keep the unrounded value as state; rounding it would stall the output when the
+            // allowed step per message is below the rounding resolution
             node.lastOutput = output;
             node.lastTime   = now;
-
+            output          = parseFloat(output.toFixed(node.decimals));
             msg.payload     = output;
             msg.rateLimiter = {
                 input:      x,
                 output:     output,
-                lastOutput: node.lastOutput,
+                lastOutput: output,
                 maxRate:    node.maxRate,
-                dt:         node.lastTime ? Math.round((now - now) * 100) / 100 : 0,
+                dt:         Math.round(dt * 100) / 100,
                 limited:    limited,
                 decimals:   node.decimals
             };

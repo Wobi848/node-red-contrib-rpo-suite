@@ -50,4 +50,33 @@ describe('mmm-store node', function() {
       n1.receive({ payload: 5 });
     });
   });
+
+  describe('persistent zero values', function () {
+    it('should keep a stored minimum of 0 after a restart', function (done) {
+      // Helper node created before n1: writes the state n1 would have stored before a restart
+      function seedModule(RED) {
+        RED.nodes.registerType('seed-context', function (config) {
+          RED.nodes.createNode(this, config);
+          var ctx = helper._context.get('n1', undefined);
+          ctx.set('min', 0); ctx.set('max', 4); ctx.set('avg', 2); ctx.set('count', 2);
+        });
+      }
+      const flow = [
+        { id:'s1', type:'seed-context' },
+        { id:'n1', type:'mmm-store', persistent:true, wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load([seedModule, require('../mmm-store.js')], flow, function () {
+        var n2 = helper.getNode('n2');
+        n2.on('input', msg => {
+          try {
+            msg.payload.min.should.equal(0);
+            msg.payload.count.should.equal(3);
+            done();
+          } catch (e) { done(e); }
+        });
+        helper.getNode('n1').receive({ payload: 7 });
+      });
+    });
+  });
 });

@@ -57,4 +57,29 @@ describe('pwm node', function() {
       n1.receive({ payload: 150 });
     });
   });
+
+  describe('frequent input updates', function () {
+    it('should still switch off within the period when the input is resent often', function (done) {
+      this.timeout(3000);
+      const flow = [
+        { id:'n1', type:'pwm', period:400, periodUnit:'ms', invert:false, wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../pwm.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var outputs = [];
+        n2.on('input', msg => outputs.push(msg.payload));
+        var timer = setInterval(() => n1.receive({ payload: 50 }), 50);
+        setTimeout(() => {
+          clearInterval(timer);
+          try {
+            outputs.should.containEql(1);
+            outputs.should.containEql(0);
+            done();
+          } catch (e) { done(e); }
+        }, 900);
+      });
+    });
+  });
 });

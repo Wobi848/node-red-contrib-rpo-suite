@@ -122,4 +122,28 @@ describe('min-off-time node', function() {
       }, 50);
     });
   });
+
+  describe('repeated input', function () {
+    it('should count the minimum off time from switching off, not from repeated false messages', function (done) {
+      const flow = [
+        { id:'n1', type:'min-off-time', minOffTime:200, minOffTimeUnit:'ms', wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../min-off-time.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var start = Date.now();
+        n2.on('input', msg => {
+          if (msg.payload !== true || Date.now() - start < 120) return;
+          try {
+            (Date.now() - start).should.be.below(270);
+            done();
+          } catch (e) { done(e); }
+        });
+        n1.receive({ payload: false });
+        setTimeout(() => n1.receive({ payload: false }), 100);
+        setTimeout(() => n1.receive({ payload: true }), 150);
+      });
+    });
+  });
 });

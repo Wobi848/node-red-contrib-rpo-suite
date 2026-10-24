@@ -69,19 +69,22 @@ module.exports = function(RED) {
             node.input = !!msg.payload;
 
             if (!node.input) {
-                if (node.output) node.output = false;
                 node.held = false;
-                if (node.timer) clearTimeout(node.timer);
-                node.timerStart = Date.now();
-                node.timer = setTimeout(function() {
-                    node.timer = null;
-                    node.held  = false;
-                    if (node.input) {
-                        node.output = true;
-                        node.send({ payload: true, minOffTime: { input: true, output: true, held: false, remainingMs: 0, minOffTime: node.minMs } });
-                        updateStatus();
-                    }
-                }, node.minMs);
+                // Minimum off time counts from switching off; repeated false messages don't restart it
+                if (node.output) {
+                    node.output = false;
+                    if (node.timer) clearTimeout(node.timer);
+                    node.timerStart = Date.now();
+                    node.timer = setTimeout(function() {
+                        node.timer = null;
+                        node.held  = false;
+                        if (node.input) {
+                            node.output = true;
+                            node.send({ payload: true, minOffTime: { input: true, output: true, held: false, remainingMs: 0, minOffTime: node.minMs } });
+                            updateStatus();
+                        }
+                    }, node.minMs);
+                }
                 sendMsg(msg);
             } else {
                 if (node.timer) {

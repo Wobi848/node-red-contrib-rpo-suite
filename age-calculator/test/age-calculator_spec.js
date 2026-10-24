@@ -363,4 +363,20 @@ describe('age-calculator Node', function() {
         });
     });
 
+  describe('numeric payload', function () {
+    it('should accept a timestamp as payload (default inject node)', function (done) {
+      const flow = [
+        { id:'n1', type:'age-calculator', wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../age-calculator.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        n2.on('input', msg => {
+          try { msg.payload.days.should.be.approximately(730, 1); done(); } catch (e) { done(e); }
+        });
+        n1.receive({ payload: Date.now() - 730 * 86400000 });
+      });
+    });
+  });
 });

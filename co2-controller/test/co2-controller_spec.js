@@ -122,4 +122,28 @@ describe('co2-controller node', function() {
       });
     });
   });
+
+  describe('alarm hysteresis', function () {
+    it('should keep the alarm until CO2 drops below alarmLevel - hysteresis', function (done) {
+      const flow = [
+        { id:'n1', type:'co2-controller', alarmLevel:1500, hysteresis:50, wires:[['n2'], ['n3']] },
+        { id:'n2', type:'helper' },
+        { id:'n3', type:'helper' }
+      ];
+      helper.load(require('../co2-controller.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var alarms = [];
+        n2.on('input', msg => {
+          alarms.push(msg.co2Controller.alarm);
+          if (alarms.length === 3) {
+            try { alarms.should.eql([true, true, false]); done(); } catch (e) { done(e); }
+          }
+        });
+        n1.receive({ payload: 1500 });
+        n1.receive({ payload: 1480 });
+        n1.receive({ payload: 1440 });
+      });
+    });
+  });
 });

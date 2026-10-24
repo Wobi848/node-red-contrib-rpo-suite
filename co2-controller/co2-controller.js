@@ -49,7 +49,8 @@ module.exports = function(RED) {
             }
 
             ventilation = parseFloat(ventilation.toFixed(node.decimals));
-            var alarm   = co2 >= node.alarmLevel;
+            // Alarm switches on at alarmLevel and off below alarmLevel - hysteresis
+            var alarm   = node.alarming ? co2 > node.alarmLevel - node.hysteresis : co2 >= node.alarmLevel;
             var category = getCategory(co2);
 
             var info = {

@@ -33,21 +33,26 @@ module.exports = function(RED) {
             var avgDay2 = parseFloat(msg.avg_day2);
             var uvDay0  = parseFloat(msg.uv_day0);
             var uvDay1  = parseFloat(msg.uv_day1);
+            // Stored forecasts can be 0 °C, so only missing values fall back
+            function stored(key, fallback) {
+                var v = node.context().get(key);
+                return (v === undefined || v === null) ? fallback : v;
+            }
 
             if (!isNaN(avgDay0)) node.context().set('avg_day0', avgDay0);
-            else avgDay0 = node.context().get('avg_day0') || atCurrent;
+            else avgDay0 = stored('avg_day0', atCurrent);
 
             if (!isNaN(avgDay1)) node.context().set('avg_day1', avgDay1);
-            else avgDay1 = node.context().get('avg_day1') || atCurrent;
+            else avgDay1 = stored('avg_day1', atCurrent);
 
             if (!isNaN(avgDay2)) node.context().set('avg_day2', avgDay2);
-            else avgDay2 = node.context().get('avg_day2') || atCurrent;
+            else avgDay2 = stored('avg_day2', atCurrent);
 
             if (!isNaN(uvDay0)) node.context().set('uv_day0', uvDay0);
-            else uvDay0 = node.context().get('uv_day0') || 0;
+            else uvDay0 = stored('uv_day0', 0);
 
             if (!isNaN(uvDay1)) node.context().set('uv_day1', uvDay1);
-            else uvDay1 = node.context().get('uv_day1') || 0;
+            else uvDay1 = stored('uv_day1', 0);
 
             // 1. Weighted predictive AT
             var totalWeight = node.weightCurrent + node.weightDay0 + node.weightDay1 + node.weightDay2;

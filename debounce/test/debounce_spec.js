@@ -46,4 +46,39 @@ describe('debounce node', function() {
       }, 50);
     });
   });
+
+  describe('both mode and flush', function () {
+    it('should send a single message only once in both mode', function (done) {
+      const flow = [
+        { id:'n1', type:'debounce', debounceTime:100, mode:'both', wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../debounce.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var count = 0;
+        n2.on('input', () => count++);
+        n1.receive({ payload: 'A' });
+        setTimeout(() => {
+          try { count.should.equal(1); done(); } catch (e) { done(e); }
+        }, 300);
+      });
+    });
+
+    it('should forward the pending message on flush', function (done) {
+      const flow = [
+        { id:'n1', type:'debounce', debounceTime:1000, mode:'trailing', wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../debounce.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        n2.on('input', msg => {
+          try { msg.payload.should.equal('A'); done(); } catch (e) { done(e); }
+        });
+        n1.receive({ payload: 'A' });
+        n1.receive({ flush: true });
+      });
+    });
+  });
 });
