@@ -8,16 +8,20 @@ module.exports = function(RED) {
         node.persistent = config.persistent !== false;
 
         if (node.persistent) {
-            node.min   = node.context().get('min')   || null;
-            node.max   = node.context().get('max')   || null;
-            node.avg   = node.context().get('avg')   || null;
-            node.count = node.context().get('count') || 0;
+            // Stored values can be 0, so only missing values fall back
+            node.min   = stored('min', null);
+            node.max   = stored('max', null);
+            node.avg   = stored('avg', null);
+            node.count = stored('count', 0);
         } else {
             node.min = null; node.max = null; node.avg = null; node.count = 0;
         }
 
+        function stored(key, fallback) {
+            var v = node.context().get(key);
+            return (v === undefined || v === null) ? fallback : v;
+        }
         updateStatus(node);
-
         node.on('input', function(msg, send, done) {
             if (msg.reset === true) {
                 node.min = null; node.max = null; node.avg = null; node.count = 0;

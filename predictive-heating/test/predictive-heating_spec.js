@@ -119,4 +119,26 @@ describe("predictive-heating Node", function() {
       });
     });
   });
+
+  describe('stored forecast of 0', function () {
+    it('should reuse a stored forecast of 0 °C instead of the current temperature', function (done) {
+      const flow = [
+        { id:'n1', type:'predictive-heating', wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../predictive-heating.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var outputs = [];
+        n2.on('input', msg => {
+          outputs.push(msg.payload.at_predictive);
+          if (outputs.length === 2) {
+            try { outputs[1].should.equal(outputs[0]); done(); } catch (e) { done(e); }
+          }
+        });
+        n1.receive({ at_current: 5, avg_day0: 0, avg_day1: 0, avg_day2: 0 });
+        n1.receive({ at_current: 5 });
+      });
+    });
+  });
 });

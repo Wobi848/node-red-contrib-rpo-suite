@@ -46,4 +46,32 @@ describe('rate-limiter node', function() {
       }, 100);
     });
   });
+
+  describe('small steps', function () {
+    it('should not stall when the step per message is below the rounding resolution', function (done) {
+      const flow = [
+        { id:'n1', type:'rate-limiter', maxRate:4, maxRateUnit:'per_s', decimals:0, wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../rate-limiter.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var last;
+        n2.on('input', msg => { last = msg; });
+        n1.receive({ payload: 0 });
+        var i = 0;
+        var timer = setInterval(() => {
+          n1.receive({ payload: 10 });
+          if (++i === 6) {
+            clearInterval(timer);
+            try {
+              last.payload.should.be.aboveOrEqual(1);
+              last.rateLimiter.dt.should.be.above(0);
+              done();
+            } catch (e) { done(e); }
+          }
+        }, 100);
+      });
+    });
+  });
 });

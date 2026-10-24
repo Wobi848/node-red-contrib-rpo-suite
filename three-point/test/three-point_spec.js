@@ -130,4 +130,30 @@ describe('three-point node', function() {
       }, 150);
     });
   });
+
+  describe('interrupted movement', function () {
+    it('should account for the partial movement when a new setpoint interrupts it', function (done) {
+      const flow = [
+        { id:'n1', type:'three-point', runtime:1, deadband:0, minPulse:0, initPos:0, wires:[['n2'],['n3']] },
+        { id:'n2', type:'helper' },
+        { id:'n3', type:'helper' }
+      ];
+      helper.load(require('../three-point.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var opens = [];
+        n2.on('input', msg => { if (msg.payload === true && msg.threePoint) opens.push(msg.threePoint); });
+        n1.receive({ payload: 100 });
+        setTimeout(() => n1.receive({ payload: 50 }), 300);
+        setTimeout(() => {
+          try {
+            opens.length.should.equal(2);
+            // 300 ms of a 1 s full stroke ≈ 30 % travelled before the new setpoint
+            opens[1].position.should.be.approximately(30, 12);
+            done();
+          } catch (e) { done(e); }
+        }, 450);
+      });
+    });
+  });
 });

@@ -33,7 +33,6 @@ module.exports = function(RED) {
                     done();
                     return;
                 }
-                node.lastValue = cur;
             }
 
             if (node.blocked) {
@@ -43,6 +42,8 @@ module.exports = function(RED) {
             }
 
             node.blocked = true;
+            // Compare against the last forwarded value, not one that the window blocked
+            if (node.mode === 'changed') node.lastValue = msg.payload;
             node.status({ fill:'green', shape:'dot', text:'Forwarded (window: ' + wRaw + wUnit + ')' });
             send(msg);
 

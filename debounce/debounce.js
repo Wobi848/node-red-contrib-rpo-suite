@@ -16,11 +16,13 @@ module.exports = function(RED) {
 
             if (msg.flush === true) {
                 if (node.pendingMsg) {
+                    var pending = node.pendingMsg;
                     clearTimeout(node.timer);
                     node.timer      = null;
                     node.pendingMsg = null;
+                    node.inCooldown = false;
                     node.status({ fill:'green', shape:'dot', text:'Forwarded (flush)' });
-                    send(msg);
+                    send(pending);
                 }
                 done();
                 return;
@@ -39,6 +41,7 @@ module.exports = function(RED) {
             } else if (node.mode === 'leading') {
                 if (!node.inCooldown) {
                     node.inCooldown = true;
+                    node.pendingMsg = null; // forwarded now; flush only sends a blocked message
                     node.status({ fill:'green', shape:'dot', text:'Forwarded (leading)' });
                     send(msg);
                     node.timer = setTimeout(function() {
@@ -50,16 +53,21 @@ module.exports = function(RED) {
                 }
 
             } else if (node.mode === 'both') {
+                // Leading edge sends immediately; the trailing edge only sends messages that
+                // arrived after it, so a single message is not sent twice
                 if (!node.inCooldown) {
                     node.inCooldown = true;
+                    node.pendingMsg = null;
                     send(msg);
                 }
                 clearTimeout(node.timer);
                 node.timer = setTimeout(function() {
                     node.inCooldown = false;
-                    node.status({ fill:'green', shape:'dot', text:'Forwarded (both)' });
-                    node.send(node.pendingMsg);
-                    node.pendingMsg = null;
+                    if (node.pendingMsg) {
+                        node.status({ fill:'green', shape:'dot', text:'Forwarded (both)' });
+                        node.send(node.pendingMsg);
+                        node.pendingMsg = null;
+                    }
                 }, debounceTime);
             }
             done();

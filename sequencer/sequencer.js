@@ -19,6 +19,7 @@ module.exports = function(RED) {
         node.runtimes  = new Array(node.channels).fill(0);
         node.lastChange= new Array(node.channels).fill(0);
         node.demand    = 0;
+        node.pending   = false; // a channel change was blocked by min on/off time
 
         var ctx = node.context();
         var saved = ctx.get('runtimes');
@@ -31,6 +32,7 @@ module.exports = function(RED) {
                 if (on) node.runtimes[i] += 1;
             });
             ctx.set('runtimes', node.runtimes);
+            if (node.pending) applyDemand(node.demand, undefined, true);
         }, 1000);
 
         node.status({ fill: 'grey', shape: 'ring', text: 'Waiting...' });
@@ -42,8 +44,11 @@ module.exports = function(RED) {
             return Math.ceil(demand / step);
         }
 
-        function applyDemand(demand, forceChannels) {
+        // retry = called from the ticker for blocked channels; then only send if something changed
+        function applyDemand(demand, forceChannels, retry) {
             var now = Date.now();
+            var changed = false;
+            node.pending = false;
             var needed = forceChannels !== undefined ? forceChannels.filter(Boolean).length : requiredChannels(demand);
             var current = node.states.filter(Boolean).length;
 
@@ -61,6 +66,9 @@ module.exports = function(RED) {
                     if ((now - node.lastChange[c.i]) / 1000 >= node.minOffTime) {
                         node.states[c.i] = true;
                         node.lastChange[c.i] = now;
+                        changed = true;
+                    } else {
+                        node.pending = true;
                     }
                 });
             } else {
@@ -73,10 +81,14 @@ module.exports = function(RED) {
                     if ((now - node.lastChange[c.i]) / 1000 >= node.minOnTime) {
                         node.states[c.i] = false;
                         node.lastChange[c.i] = now;
+                        changed = true;
+                    } else {
+                        node.pending = true;
                     }
                 });
             }
 
+            if (retry && !changed) return;
             var activeCount = node.states.filter(Boolean).length;
             var info = {
                 demand:         demand,

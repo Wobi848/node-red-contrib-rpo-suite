@@ -46,4 +46,25 @@ describe('edge-filter node', function() {
       }, 150);
     });
   });
+
+  describe('changed mode', function () {
+    it('should forward a value that was blocked by the window when it arrives again', function (done) {
+      const flow = [
+        { id:'n1', type:'edge-filter', mode:'changed', window:100, windowUnit:'ms', wires:[['n2']] },
+        { id:'n2', type:'helper' }
+      ];
+      helper.load(require('../edge-filter.js'), flow, function () {
+        var n1 = helper.getNode('n1');
+        var n2 = helper.getNode('n2');
+        var outputs = [];
+        n2.on('input', msg => outputs.push(msg.payload));
+        n1.receive({ payload: 'A' });
+        n1.receive({ payload: 'B' }); // blocked by the window
+        setTimeout(() => n1.receive({ payload: 'B' }), 150);
+        setTimeout(() => {
+          try { outputs.should.eql(['A', 'B']); done(); } catch (e) { done(e); }
+        }, 250);
+      });
+    });
+  });
 });

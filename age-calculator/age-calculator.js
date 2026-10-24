@@ -26,8 +26,10 @@ module.exports = function(RED) {
             }
 
             // Support German date format DD.MM.YYYY and DD.MM.YYYY HH:MM[:SS]
+            // Timestamps (e.g. from an inject node) and Date objects are used directly
+            var isText = typeof birthdateStr === 'string';
             var parsedDate = birthdateStr;
-            var germanDateMatch = birthdateStr.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
+            var germanDateMatch = isText && birthdateStr.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
             if (germanDateMatch) {
                 var day = germanDateMatch[1].padStart(2, '0');
                 var month = germanDateMatch[2].padStart(2, '0');
@@ -39,7 +41,7 @@ module.exports = function(RED) {
             }
 
             // Support ISO format with space: YYYY-MM-DD HH:MM[:SS]
-            var isoSpaceMatch = birthdateStr.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+            var isoSpaceMatch = isText && birthdateStr.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
             if (isoSpaceMatch) {
                 var isoYear = isoSpaceMatch[1];
                 var isoMonth = isoSpaceMatch[2];
