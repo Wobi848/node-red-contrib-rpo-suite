@@ -1,7 +1,7 @@
 # node-red-contrib-multi-stat
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-multi-stat`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-multi-stat`.
 <!-- rpo-suite-note:end -->
 
 Node-RED Multi-Source Statistics - calculates Min/Max/Avg across multiple topics.

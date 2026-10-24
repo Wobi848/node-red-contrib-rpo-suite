@@ -1,7 +1,7 @@
 # node-red-contrib-predictive-heating
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-predictive-heating`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-predictive-heating`.
 <!-- rpo-suite-note:end -->
 
 Predictive outdoor temperature node for heating and cooling curve control. Uses weather forecast and solar UV correction to calculate a more realistic outdoor temperature — saving energy without sacrificing comfort.

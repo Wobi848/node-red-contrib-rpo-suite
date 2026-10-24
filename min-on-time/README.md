@@ -1,7 +1,7 @@
 # node-red-contrib-min-on-time
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-min-on-time`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-min-on-time`.
 <!-- rpo-suite-note:end -->
 
 Ensures output stays ON for a minimum duration. Even if input turns OFF early, output remains ON until the minimum time has elapsed.

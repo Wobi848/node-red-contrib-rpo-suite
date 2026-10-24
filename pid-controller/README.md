@@ -1,7 +1,7 @@
 # node-red-contrib-pid-controller-isa
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-pid-controller-isa`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-pid-controller-isa`.
 <!-- rpo-suite-note:end -->
 
 Industrial-grade PID controller for Node-RED using the ISA standard algorithm. Comparable to Siemens FB41, Beckhoff Tc2_Pid, and Allen-Bradley PIDE.

@@ -32,7 +32,8 @@
       "logic-combiner",
       "hysteresis",
       "deadband",
-      "comparator"
+      "comparator",
+      "alarm"
     ]
   },
   "math": {

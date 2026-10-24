@@ -2,7 +2,7 @@
 
 One-line install for the complete sr.rpo building automation node suite for Node-RED.
 
-**v1.4.16** — bundles 63 nodes across 8 palette categories.
+**v1.5.0** — bundles 64 nodes across 8 palette categories.
 
 ## Installation
 
@@ -15,7 +15,7 @@ Or via Node-RED Palette Manager: Search for `rpo-suite`
 ## Palette Categories
 
 - `rpo-control` — Control & Regulation (10)
-- `rpo-logic` — Logic & Boolean (10)
+- `rpo-logic` — Logic & Boolean (11)
 - `rpo-math` — Math & Numeric (10)
 - `rpo-time` — Time & Signal (13)
 - `rpo-hvac` — HVAC & Building (10)
@@ -23,7 +23,7 @@ Or via Node-RED Palette Manager: Search for `rpo-suite`
 - `rpo-flow` — Flow Control (5)
 - `rpo-misc` — Miscellaneous (1)
 
-## Included Nodes (63)
+## Included Nodes (64)
 
 ### Control & Regulation `rpo-control`
 
@@ -58,6 +58,7 @@ Boolean logic, latches, edge detection, and state comparison.
 | hysteresis | [node-red-contrib-threshold-hysteresis](https://www.npmjs.com/package/node-red-contrib-threshold-hysteresis) | Node-RED node for hysteresis logic - outputs boolean based on high/low thresholds |
 | deadband | [node-red-contrib-deadband](https://www.npmjs.com/package/node-red-contrib-deadband) | Node-RED deadband filter - only passes values when change exceeds threshold |
 | comparator | [node-red-contrib-comparator](https://www.npmjs.com/package/node-red-contrib-comparator) | Compares two numeric values with configurable operator and outputs boolean result |
+| alarm | [node-red-contrib-rpo-alarm](https://www.npmjs.com/package/node-red-contrib-rpo-alarm) | Node-RED alarm with acknowledgement: stays active until the fault is gone and the alarm is acknowledged; on/off delay, inhibit, alarm object for notifications |
 
 ### Math & Numeric `rpo-math`
 

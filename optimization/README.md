@@ -1,7 +1,7 @@
 # node-red-contrib-optimization
 
 <!-- rpo-suite-note:start -->
-> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-optimization`.
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (64 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-optimization`.
 <!-- rpo-suite-note:end -->
 
 Optimal start time calculator for heating/cooling systems. Calculates when pre-heating must begin to reach the setpoint by the scheduled occupancy time, taking into account room temperature, outdoor temperature and building thermal mass.

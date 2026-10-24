@@ -1,0 +1,14 @@
+{
+  "rpo-alarm": {
+    "label": {
+      "name": "Name",
+      "topicAlarm": "Fault topic",
+      "topicAck": "Acknowledge topic",
+      "topicInhibit": "Inhibit topic",
+      "delayOn": "Delay on (s)",
+      "delayOff": "Delay off (s)",
+      "ackRequired": "Acknowledge required",
+      "persistent": "Keep state on restart"
+    }
+  }
+}
