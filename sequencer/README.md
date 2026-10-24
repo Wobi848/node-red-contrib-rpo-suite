@@ -1,5 +1,9 @@
 # node-red-contrib-rpo-sequencer
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-rpo-sequencer`.
+<!-- rpo-suite-note:end -->
+
 Multi-channel sequencer for boiler/chiller staging with wear leveling. Distributes load across 2–8 channels and activates/deactivates them based on demand percentage, respecting minimum on/off times.
 
 ## Install

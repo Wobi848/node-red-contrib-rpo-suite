@@ -1,5 +1,9 @@
 # node-red-contrib-heat-curve
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-heat-curve`.
+<!-- rpo-suite-note:end -->
+
 Node-RED Heating Curve Node - calculates flow temperature setpoint based on outdoor temperature (Heizkurve).
 
 ## Features

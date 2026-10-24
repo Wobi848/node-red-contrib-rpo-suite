@@ -1,5 +1,9 @@
 # node-red-contrib-free-cooling
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-free-cooling`.
+<!-- rpo-suite-note:end -->
+
 Free cooling controller for HVAC systems. Enables free cooling when outdoor air is cool enough to reduce indoor temperature without mechanical cooling.
 
 ## Install

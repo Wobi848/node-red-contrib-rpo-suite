@@ -1,5 +1,9 @@
 # node-red-contrib-thermal-valve
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-thermal-valve`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED PWM controller for thermal actuator valves (Thermostellantrieb). Converts a 0-100% analog input to a timed ON/OFF signal.
 
 ## Installation

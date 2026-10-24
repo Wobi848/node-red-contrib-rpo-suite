@@ -1,5 +1,9 @@
 # node-red-contrib-rpo-limit-counter
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-limit-counter`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED node: **Limit Counter**
 
 Counts rising-edge crossings of a threshold (with hysteresis) and triggers an alarm when a configurable count is reached.

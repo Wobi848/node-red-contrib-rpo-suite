@@ -1,5 +1,9 @@
 # node-red-contrib-adaptive-curve
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-adaptive-curve`.
+<!-- rpo-suite-note:end -->
+
 Self-learning heating curve shift for HVAC systems. Continuously adjusts the curve shift based on room temperature error to compensate for building-specific characteristics.
 
 ## Install

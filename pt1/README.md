@@ -1,5 +1,9 @@
 # node-red-contrib-pt1
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-pt1`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED PT1 first-order low-pass filter for smoothing noisy measurement values.
 
 Formula: y(t) = y(t-1) + (dt / (T1 + dt)) * (x(t) - y(t-1))

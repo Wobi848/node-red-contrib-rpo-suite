@@ -1,5 +1,9 @@
 # node-red-contrib-setpoint-shift
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-setpoint-shift`.
+<!-- rpo-suite-note:end -->
+
 Outdoor temperature compensated setpoint shift. Increases the setpoint linearly as outdoor temperature drops — used for flow temperature compensation in heating systems.
 
 ## Install
