@@ -46,9 +46,13 @@ module.exports = function(RED) {
         }
 
         node.ticker = setInterval(function() {
-            if (node.running || node.exercising) return;
+            if (node.exercising) {
+                node.remainingExercise = Math.max(0, node.remainingExercise - 1);
+                node.status({ fill: 'blue', shape: 'dot', text: 'EXERCISING (' + node.remainingExercise + 's left)' });
+                return;
+            }
+            if (node.running) return;
             node.idleTime++;
-            if (node.exercising) node.remainingExercise--;
             if (node.persistent) ctx.set('idleTime', node.idleTime);
             if (node.idleTime >= node.exerciseInterval) startExercise();
             var remaining = Math.max(0, node.exerciseInterval - node.idleTime);

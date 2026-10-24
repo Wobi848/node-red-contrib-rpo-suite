@@ -327,4 +327,16 @@ describe('hysteresis Node', function() {
         });
     });
 
+  describe('numeric strings', function () {
+    it('should accept a number sent as text (e.g. from MQTT)', function (done) {
+      const flow = [{ id:'n1', type:'hysteresis', setpoint:20, hysteresis:2, mode:'high', wires:[['n2']] }, { id:'n2', type:'helper' }];
+      helper.load(require('../hysteresis.js'), flow, function () {
+        var n1 = helper.getNode('n1'), n2 = helper.getNode('n2');
+        n2.on('input', msg => {
+          try { msg.payload.should.equal(true); msg.value.should.equal(21.5); done(); } catch (e) { done(e); }
+        });
+        n1.receive({ payload: '21.5' });
+      });
+    });
+  });
 });

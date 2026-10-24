@@ -129,4 +129,18 @@ describe('adaptive-curve node', function() {
       });
     });
   });
+
+  describe('Config zero values (decimal defaults)', function () {
+    it('should keep deadband and adaptationRate of 0', function (done) {
+      const flow = [{ id:'n1', type:'adaptive-curve', deadband:0, adaptationRate:0 }];
+      helper.load(require('../adaptive-curve.js'), flow, function () {
+        try {
+          var n1 = helper.getNode('n1');
+          n1.should.have.property('deadband', 0);
+          n1.should.have.property('adaptationRate', 0);
+          done();
+        } catch (e) { done(e); }
+      });
+    });
+  });
 });

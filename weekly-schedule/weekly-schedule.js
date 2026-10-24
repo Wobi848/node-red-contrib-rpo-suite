@@ -10,6 +10,23 @@ module.exports = function(RED) {
 
         node.override  = null; // null = no override, true = forced on, false = forced off
         node.lastState = null;
+        // Day (0=Sun) and HH:MM now, in the configured timezone or the system timezone
+        var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var tzFormat = null;
+        if (node.timezone) {
+            try {
+                tzFormat = new Intl.DateTimeFormat('en-US', { timeZone: node.timezone, weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+            } catch (e) {
+                node.warn('Unknown timezone "' + node.timezone + '", using system timezone');
+            }
+        }
+        function nowInZone() {
+            var now = new Date();
+            if (!tzFormat) return { day: now.getDay(), hhmm: pad(now.getHours()) + ':' + pad(now.getMinutes()) };
+            var p = {};
+            tzFormat.formatToParts(now).forEach(function(part) { p[part.type] = part.value; });
+            return { day: DAYS.indexOf(p.weekday), hhmm: p.hour + ':' + p.minute };
+        }
 
         updateStatus(node);
 
@@ -53,9 +70,9 @@ module.exports = function(RED) {
         });
 
         function isActive(n) {
-            var now  = new Date();
-            var day  = now.getDay();                   // 0=Sun, 6=Sat
-            var hhmm = pad(now.getHours()) + ':' + pad(now.getMinutes());
+            var z    = nowInZone();
+            var day  = z.day;                          // 0=Sun, 6=Sat
+            var hhmm = z.hhmm;
 
             for (var i = 0; i < n.schedule.length; i++) {
                 var entry = n.schedule[i];
@@ -75,15 +92,14 @@ module.exports = function(RED) {
         }
 
         function buildMsg(n, active, current) {
-            var now     = new Date();
-            var hhmm    = pad(now.getHours()) + ':' + pad(now.getMinutes());
+            var z       = nowInZone();
             var payload = current ? n.onValue : n.offValue;
             return {
                 payload:  payload,
                 schedule: {
                     active:   active,
-                    day:      now.getDay(),
-                    time:     hhmm,
+                    day:      z.day,
+                    time:     z.hhmm,
                     override: n.override !== null ? n.override : false
                 }
             };

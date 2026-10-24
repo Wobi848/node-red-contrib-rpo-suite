@@ -3,7 +3,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        node.bits  = parseInt(config.bits, 10) || 8;
+        node.bits  = Math.min(32, parseInt(config.bits, 10) || 8); // 32-bit integer operations
         node.order = config.order || 'lsb';
 
         node.status({ fill:'grey', shape:'dot', text:'Ready (' + node.bits + ' bits, ' + node.order + ')' });
@@ -11,7 +11,9 @@ module.exports = function(RED) {
         node.on('input', function(msg, send, done) {
             if (Array.isArray(msg.payload)) {
                 // bits-to-int: array [1,0,1,...] LSB or MSB first
-                var arr = msg.payload.slice();
+                var inputBits = msg.payload.slice();
+                if (inputBits.length > 32) node.warn('Only the first 32 bits are used');
+                var arr = inputBits.slice(0, 32);
                 if (node.order === 'msb') arr.reverse();
                 var result = 0;
                 for (var j = 0; j < arr.length; j++) {
@@ -19,7 +21,7 @@ module.exports = function(RED) {
                 }
                 result = result >>> 0;
                 msg.payload = result;
-                msg.intBits = { mode:'bits-to-int', bits:msg.payload, result:result, bitCount:node.bits, order:node.order };
+                msg.intBits = { mode:'bits-to-int', bits:inputBits, result:result, bitCount:node.bits, order:node.order };
                 node.status({ fill:'green', shape:'dot', text:'[…] → ' + result });
             } else {
                 // int-to-bits

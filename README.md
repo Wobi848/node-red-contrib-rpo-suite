@@ -57,9 +57,9 @@ Boolean logic, latches, edge detection, and state comparison.
 | change-detect | node-red-contrib-rpo-change-detect | 1.0.5 | Forwards messages only when the value has changed (supports tolerance for numbers) |
 | edge-filter | node-red-contrib-edge-filter | 1.0.6 | Edge filter - forwards only first event in a time window (re-trigger protection) |
 | logic-combiner | node-red-contrib-logic-combiner | 1.0.3 | Node-RED logic combiner - combines multiple boolean inputs with AND/OR |
-| hysteresis | node-red-contrib-threshold-hysteresis | 1.0.4 | Node-RED node for hysteresis logic - outputs boolean based on high/low thresholds |
+| hysteresis | node-red-contrib-threshold-hysteresis | 1.0.5 | Node-RED node for hysteresis logic - outputs boolean based on high/low thresholds |
 | deadband | node-red-contrib-deadband | 1.0.5 | Node-RED deadband filter - only passes values when change exceeds threshold |
-| comparator | node-red-contrib-comparator | 1.0.5 | Compares two numeric values with configurable operator and outputs boolean result |
+| comparator | node-red-contrib-comparator | 1.0.6 | Compares two numeric values with configurable operator and outputs boolean result |
 
 ### Math & Numeric `rpo-math`
 
@@ -73,8 +73,8 @@ Arithmetic, formulas, scaling, clamping, and statistical calculations.
 | scale | node-red-contrib-scale | 1.0.3 | Node-RED scale node - maps values from one range to another using linear interpolation |
 | clamp | node-red-contrib-clamp | 1.0.3 | Node-RED clamp node - limits values to a min/max range |
 | difference | node-red-contrib-difference | 1.0.3 | Node-RED difference calculator - calculates the difference between two numeric inputs |
-| gradient | node-red-contrib-gradient | 1.0.5 | Gradient calculator - computes rate of change of numeric values over time |
-| int-bits | node-red-contrib-int-bits | 1.0.5 | Integer to bits converter - bidirectional integer and boolean array conversion |
+| gradient | node-red-contrib-gradient | 1.0.6 | Gradient calculator - computes rate of change of numeric values over time |
+| int-bits | node-red-contrib-int-bits | 1.0.6 | Integer to bits converter - bidirectional integer and boolean array conversion |
 | average | node-red-contrib-avg | 1.0.3 | Node-RED average node - calculates moving average over count or time window |
 | multi-stat | node-red-contrib-multi-stat | 1.0.6 | Node-RED multi-source statistics - calculates min/max/avg across multiple topics |
 
@@ -84,7 +84,7 @@ Timers, counters, rate limiting, signal generation, and scheduling.
 
 | Folder | Package | Version | Description |
 |--------|---------|---------|-------------|
-| counter | node-red-contrib-rpo-counter | 1.0.5 | Up/down counter with configurable limits, step, wrap and alarm modes |
+| counter | node-red-contrib-rpo-counter | 1.0.6 | Up/down counter with configurable limits, step, wrap and alarm modes |
 | limit-counter | node-red-contrib-limit-counter | 1.0.5 | Limit counter - counts threshold crossings and outputs alarm at configured limit |
 | ring-counter | node-red-contrib-ring-counter | 1.0.5 | Ring counter - cycles through N slots sequentially with wrap-around |
 | debounce | node-red-contrib-rpo-debounce | 1.0.6 | Debounce filter - waits until input is stable before forwarding message |
@@ -96,7 +96,7 @@ Timers, counters, rate limiting, signal generation, and scheduling.
 | operating-hours | node-red-contrib-operating-hours | 1.0.4 | Operating hours counter with maintenance alarm for Node-RED |
 | watchdog | node-red-contrib-rpo-watchdog | 1.0.4 | Watchdog timer - triggers alarm when no message received within timeout |
 | time-shift | node-red-contrib-time-shift | 1.0.5 | Signal time delay / buffer for Node-RED |
-| weekly-schedule | node-red-contrib-weekly-schedule | 1.0.5 | Weekly scheduler with configurable time windows per day of week |
+| weekly-schedule | node-red-contrib-weekly-schedule | 1.0.6 | Weekly scheduler with configurable time windows per day of week |
 
 ### HVAC & Building `rpo-hvac`
 
@@ -110,7 +110,7 @@ Domain-specific nodes for heating, cooling, and building operation modes.
 | free-cooling | node-red-contrib-free-cooling | 1.0.6 | Free cooling / night cooling recommendation for HVAC systems |
 | co2-controller | node-red-contrib-co2-controller | 1.0.7 | CO2-based ventilation controller for HVAC systems (SIA 382.1 / EN 13779) |
 | standby | node-red-contrib-standby | 1.0.5 | Operating mode manager: Comfort / Standby / Frost for HVAC |
-| idle-mode | node-red-contrib-idle-mode | 1.0.5 | Periodic exercise runner for idle pumps and valves |
+| idle-mode | node-red-contrib-idle-mode | 1.0.6 | Periodic exercise runner for idle pumps and valves |
 | priority | node-red-contrib-priority | 1.0.5 | Priority-based input selector for DDC control (Hand/Remote/Auto) |
 | sequencer | node-red-contrib-rpo-sequencer | 1.0.7 | Sequential channel switching with wear leveling for HVAC |
 | startup | node-red-contrib-startup | 1.0.6 | Startup sequence with ramp-up and pre/post-run for pumps and fans |

@@ -141,4 +141,23 @@ describe("predictive-heating Node", function() {
       });
     });
   });
+
+  describe('Config zero values (decimal defaults)', function () {
+    it('should keep weightDay2 of 0', function (done) {
+      const flow = [{ id:'n1', type:'predictive-heating', weightDay2:0 }];
+      helper.load(require('../predictive-heating.js'), flow, function () {
+        try { helper.getNode('n1').should.have.property('weightDay2', 0); done(); } catch (e) { done(e); }
+      });
+    });
+    it('should fall back to the current temperature when all weights are 0', function (done) {
+      const flow = [{ id:'n1', type:'predictive-heating', weightCurrent:0, weightDay0:0, weightDay1:0, weightDay2:0, uvMaxOffset:0, wires:[['n2']] }, { id:'n2', type:'helper' }];
+      helper.load(require('../predictive-heating.js'), flow, function () {
+        var n1 = helper.getNode('n1'), n2 = helper.getNode('n2');
+        n2.on('input', msg => {
+          try { msg.payload.at_predictive.should.equal(5); done(); } catch (e) { done(e); }
+        });
+        n1.receive({ at_current: 5, avg_day0: 1, avg_day1: 2, avg_day2: 3 });
+      });
+    });
+  });
 });

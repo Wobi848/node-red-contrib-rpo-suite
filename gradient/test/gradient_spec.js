@@ -83,4 +83,18 @@ describe('gradient node', function() {
       }, 50);
     });
   });
+
+  describe('previous value', function () {
+    it('should report the previous value in msg.gradient.previous', function (done) {
+      const flow = [{ id:'n1', type:'gradient', unit:'per_s', wires:[['n2']] }, { id:'n2', type:'helper' }];
+      helper.load(require('../gradient.js'), flow, function () {
+        var n1 = helper.getNode('n1'), n2 = helper.getNode('n2');
+        n2.on('input', msg => {
+          try { msg.gradient.previous.should.equal(10); msg.gradient.current.should.equal(12); done(); } catch (e) { done(e); }
+        });
+        n1.receive({ payload: 10 });
+        setTimeout(() => n1.receive({ payload: 12 }), 50);
+      });
+    });
+  });
 });

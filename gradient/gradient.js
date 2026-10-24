@@ -55,7 +55,7 @@ module.exports = function(RED) {
             node.gradBuffer.push(gradOut);
             if (node.gradBuffer.length > node.smoothing) node.gradBuffer.shift();
             var smoothed = node.gradBuffer.reduce(function(a,b){ return a+b; }, 0) / node.gradBuffer.length;
-
+            var previous = node.lastValue;
             node.lastValue = x;
             node.lastTime  = now;
 
@@ -66,7 +66,7 @@ module.exports = function(RED) {
             msg.payload  = smoothed;
             msg.gradient = {
                 current:   x,
-                previous:  node.lastValue,
+                previous:  previous,
                 gradient:  gradOut,
                 unit:      node.unit,
                 dt:        parseFloat(dt.toFixed(3)),

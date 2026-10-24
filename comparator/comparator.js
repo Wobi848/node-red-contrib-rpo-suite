@@ -1,4 +1,10 @@
 module.exports = function(RED) {
+    // Number from config; keeps an explicit 0 (unlike `parseFloat(x) || fallback`)
+    function configNumber(value, fallback) {
+        var n = parseFloat(value);
+        return isNaN(n) ? fallback : n;
+    }
+
     function ComparatorNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
@@ -6,7 +12,7 @@ module.exports = function(RED) {
         node.topicA    = config.topicA    || 'a';
         node.topicB    = config.topicB    || 'b';
         node.operator  = config.operator  || '>';
-        node.tolerance = parseFloat(config.tolerance) || 0.01;
+        node.tolerance = configNumber(config.tolerance, 0.01);
 
         node.valueA = undefined;
         node.valueB = undefined;
