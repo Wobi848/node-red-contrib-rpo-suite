@@ -174,6 +174,70 @@ describe("pid-controller Node", function () {
     });
   });
 
+  describe("Bumpless Transfer", function () {
+    // Sends msgs one after another, each after the previous output arrived,
+    // and hands all outputs (output 1) to check().
+    function runSequence(nodeConfig, msgs, check, done) {
+      var flow = [
+        Object.assign({ id: "n1", type: "pid-controller", name: "test", wires: [["n2"], ["n3"]] }, nodeConfig),
+        { id: "n2", type: "helper" },
+        { id: "n3", type: "helper" },
+      ];
+      helper.load(pidNode, flow, function () {
+        var n1 = helper.getNode("n1");
+        var n2 = helper.getNode("n2");
+        var outputs = [];
+        n2.on("input", function (msg) {
+          outputs.push(msg);
+          if (outputs.length < msgs.length) {
+            n1.receive(msgs[outputs.length]);
+            return;
+          }
+          try {
+            check(outputs);
+            done();
+          } catch (err) {
+            done(err);
+          }
+        });
+        n1.receive(msgs[0]);
+      });
+    }
+
+    it("should keep output at manualValue in Xp mode with a control error (issue #1)", function (done) {
+      // Setup from issue #1: Xp 33 → Kp ≈ 3.03, PV 25 / SP 23 reverse acting → error 2, P ≈ 6
+      var config = { setpoint: 23, useXp: true, Kp: 33, Ti: 3600, Td: 360, outMin: 0, outMax: 100,
+        reverseActing: true, manualMode: true, manualValue: 50, decimals: 1 };
+      runSequence(config, [{ payload: 25 }, { payload: 25, manual: false }, { payload: 25 }], function (out) {
+        out[0].payload.should.equal(50);
+        out[1].pid.manual.should.equal(false);
+        out[1].payload.should.equal(50);
+        out[1].pid.P.should.be.approximately(6.1, 0.1);
+        out[1].pid.I.should.be.approximately(43.9, 0.1);
+        // Next cycle continues smoothly from 50 instead of jumping to P only
+        out[2].payload.should.be.approximately(50, 0.5);
+      }, done);
+    });
+
+    it("should keep output at manualValue in Kp mode with centered band", function (done) {
+      var config = { setpoint: 20, Kp: 2, Ti: 60, Td: 0, outMin: 0, outMax: 100,
+        centeredBand: true, manualMode: true, manualValue: 30, decimals: 1 };
+      runSequence(config, [{ payload: 18 }, { payload: 18, manual: false }], function (out) {
+        out[1].payload.should.equal(30);
+        out[1].pid.P.should.equal(4);
+      }, done);
+    });
+
+    it("should account for feed-forward on the switch message", function (done) {
+      var config = { setpoint: 20, Kp: 2, Ti: 60, Td: 0, outMin: 0, outMax: 100,
+        ffEnable: true, ffGain: 1, manualMode: true, manualValue: 50, decimals: 1 };
+      runSequence(config, [{ payload: 18 }, { payload: 18, manual: false, ff: 10 }], function (out) {
+        out[1].payload.should.equal(50);
+        out[1].pid.FF.should.equal(10);
+      }, done);
+    });
+  });
+
   describe("Setpoint Override", function () {
     it("should override setpoint via msg.setpoint", function (done) {
       var flow = [

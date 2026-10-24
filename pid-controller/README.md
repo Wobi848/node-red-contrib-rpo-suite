@@ -204,7 +204,7 @@ The integrator is limited to ±(outputSpan/Ki) to prevent extreme values during 
 
 ## Bumpless Transfer
 
-When switching from manual to auto mode, the integral term is pre-loaded so the output continues smoothly from the current manual value.
+When switching from manual to auto mode, the integral term is pre-loaded so the output continues smoothly from the current manual value. This works in Kp and Xp mode and also when there is a control error at the switch moment (the P part is taken into account), including centered band and feed-forward. It needs an integral part (Ti > 0); a P-only controller jumps to its P output.
 
 ## Safety Features
 

@@ -103,34 +103,13 @@ module.exports = function (RED) {
       var centeredBias = (outMax + outMin) / 2;
 
       // Handle manual mode switching
+      // Bumpless transfer (manual -> auto) is applied in the first auto cycle below,
+      // once P and FF for this message are known.
+      var bumplessTransfer = false;
       if (msg.manual !== undefined) {
         var wasManual = state.manual;
         state.manual = msg.manual === true;
-
-        // Bumpless transfer: manual -> auto
-        if (wasManual && !state.manual) {
-          // Pre-load integral so output starts at current manualValue
-          if (Ti > 0 && Kp !== 0) {
-            // Account for centered band bias AND feed-forward in bumpless transfer
-            // Auto output = P + I + D + bias + FF, we want output = manualValue
-            // At switch moment P≈0, D≈0, so: manualValue = I + bias + FF
-            // Therefore: I = manualValue - bias - FF
-            var ffContrib = 0;
-            var ffBumpless = msg.ff !== undefined ? msg.ff : msg.feedForward;
-            if (node.ffEnable && ffBumpless !== undefined) {
-              var ffVal = parseFloat(ffBumpless);
-              if (!isNaN(ffVal)) {
-                ffContrib = node.ffGain * ffVal;
-              }
-            }
-            var targetOutput = node.centeredBand
-              ? state.manualValue - centeredBias - ffContrib
-              : state.manualValue - ffContrib;
-            state.integral = targetOutput / Kp;
-            // Sync lastOutput to prevent rate-limit jump after bumpless transfer
-            state.lastOutput = state.manualValue;
-          }
-        }
+        bumplessTransfer = wasManual && !state.manual && Ti > 0 && Kp !== 0;
       }
 
       // Update manual value if provided
@@ -198,8 +177,24 @@ module.exports = function (RED) {
           }
         }
 
-        // First message: initialize only (no FF on first cycle for stability)
-        if (!state.initialized) {
+        if (bumplessTransfer) {
+          // Bumpless transfer: output continues at manualValue. The integrator absorbs
+          // the difference, including P from an existing control error:
+          // manualValue = P + I + D + bias + FF with D = 0 → I = manualValue - P - bias - FF
+          var KiTransfer = Kp / Ti;
+          var biasTransfer = node.centeredBand ? centeredBias : 0;
+          P = Kp * error;
+          state.integral = (state.manualValue - P - biasTransfer - FF) / KiTransfer;
+          // Same soft clamp as normal integration
+          var integralMaxTransfer = outputSpan / KiTransfer;
+          state.integral = Math.max(-integralMaxTransfer, Math.min(integralMaxTransfer, state.integral));
+          I = KiTransfer * state.integral;
+          output = P + I + biasTransfer + FF;
+          state.lastError = error;
+          state.smoothedPV = processValue;
+          state.initialized = true;
+        } else if (!state.initialized) {
+          // First message: initialize only (no FF on first cycle for stability)
           state.lastError = error;
           state.smoothedPV = processValue;
           state.initialized = true;
@@ -252,6 +247,8 @@ module.exports = function (RED) {
           // Tracking forces integrator to follow external value (for cascade control)
           if (Ti > 0 && Kp !== 0) {
             var Ki = Kp / Ti;
+            // Current integral contribution; also used when dt = 0 (no integration step)
+            I = Ki * state.integral;
 
             if (trackingInput !== undefined) {
               // Tracking Mode: force integrator to match external output
