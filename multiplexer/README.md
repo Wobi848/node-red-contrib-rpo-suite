@@ -1,5 +1,9 @@
 # node-red-contrib-rpo-multiplexer
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-multiplexer`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED node: **Multiplexer**
 
 Routes one of 8 input channels (ch0–ch7) to a single output. Switch the active channel by sending a message with topic `select` and payload `ch0`–`ch7`.

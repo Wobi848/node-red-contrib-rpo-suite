@@ -1,5 +1,9 @@
 # node-red-contrib-three-point
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-three-point`.
+<!-- rpo-suite-note:end -->
+
 Three-point actuator controller for motorized mixing valves and dampers. Calculates open/close pulse duration based on the difference between setpoint and current position, with deadband and minimum pulse time.
 
 ## Install

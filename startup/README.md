@@ -1,5 +1,9 @@
 # node-red-contrib-startup
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-startup`.
+<!-- rpo-suite-note:end -->
+
 Motor/fan startup controller with pre-run, ramp-up, ramp-down and post-run phases. Designed for controlled starting and stopping of fans, pumps and motors.
 
 ## Install

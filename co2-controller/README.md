@@ -1,5 +1,9 @@
 # node-red-contrib-co2-controller
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-co2-controller`.
+<!-- rpo-suite-note:end -->
+
 CO2-based ventilation controller for demand-controlled ventilation (DCV). Calculates ventilation output (0–100%) based on measured CO2 level. Supports override and triggers an alarm above a configurable alarm level.
 
 ## Install

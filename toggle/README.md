@@ -1,5 +1,9 @@
 # node-red-contrib-toggle
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-rpo-toggle`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED node that toggles a boolean output on every truthy input. Acts like a push button converting to a latching switch.
 
 ## Installation

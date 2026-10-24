@@ -1,5 +1,9 @@
 # node-red-contrib-rpo-mmm-store
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-mmm-store`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED node: **Min/Max/Mean Store**
 
 Maintains running minimum, maximum, and mean statistics over a sliding window of numeric values.

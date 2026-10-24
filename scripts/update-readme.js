@@ -153,4 +153,31 @@ MIT
 
   fs.writeFileSync(path.join(base, 'rpo-suite', 'README.md'), suiteReadme);
   console.log('rpo-suite/README.md regenerated with ' + totalNodes + ' nodes.');
+
+  // Each node README gets a note pointing to the suite, right below its title.
+  // The block between the markers is replaced on every run, so it never duplicates.
+  const NOTE_START = '<!-- rpo-suite-note:start -->';
+  const NOTE_END = '<!-- rpo-suite-note:end -->';
+  const suiteUrl = `https://www.npmjs.com/package/${suitePkg.name}`;
+  let notes = 0;
+  for (const cat of Object.values(cats)) {
+    for (const folder of cat.nodes) {
+      const pkg = loadPkg(folder);
+      const readmePath = path.join(base, folder, 'README.md');
+      if (!pkg || !fs.existsSync(readmePath)) continue;
+      const note = `${NOTE_START}
+> Part of the **[rpo-suite](${suiteUrl})** (${totalNodes} building automation nodes). Install everything with \`npm install ${suitePkg.name}\`, or only this node with \`npm install ${pkg.name}\`.
+${NOTE_END}`;
+      let readme = fs.readFileSync(readmePath, 'utf8');
+      const existing = new RegExp(`${NOTE_START}[\\s\\S]*?${NOTE_END}`);
+      if (existing.test(readme)) {
+        readme = readme.replace(existing, note);
+      } else {
+        readme = readme.replace(/^(# .*\r?\n)/, `$1\n${note}\n`);
+      }
+      fs.writeFileSync(readmePath, readme);
+      notes++;
+    }
+  }
+  console.log('rpo-suite note updated in ' + notes + ' node READMEs.');
 }

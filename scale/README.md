@@ -1,5 +1,9 @@
 # node-red-contrib-scale
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-scale`.
+<!-- rpo-suite-note:end -->
+
 Node-RED Scale Node - maps values from one range to another using linear interpolation.
 
 ## Features

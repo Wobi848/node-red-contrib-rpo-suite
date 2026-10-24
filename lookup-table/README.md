@@ -1,5 +1,9 @@
 # node-red-contrib-lookup-table
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-lookup-table`.
+<!-- rpo-suite-note:end -->
+
 Piecewise linear interpolation lookup table for Node-RED. Maps an input value to an output value using configurable X/Y point pairs. Values outside the defined range are clamped to the nearest endpoint.
 
 ## Install

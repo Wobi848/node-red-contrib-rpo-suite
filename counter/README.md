@@ -1,5 +1,9 @@
 # node-red-contrib-rpo-counter
 
+<!-- rpo-suite-note:start -->
+> Part of the **[rpo-suite](https://www.npmjs.com/package/node-red-contrib-rpo-suite)** (63 building automation nodes). Install everything with `npm install node-red-contrib-rpo-suite`, or only this node with `npm install node-red-contrib-rpo-counter`.
+<!-- rpo-suite-note:end -->
+
 A Node-RED node: **Counter**
 
 Counts up or down with configurable step, limits, and wrap/alarm behaviour. Topic-based control for direction, reset, and set.
