@@ -28,7 +28,7 @@
     {"id":"e1e0427f2f97c53e","type":"heat-curve","z":"hvac_tab","name":"Heat Curve","x":770,"y":600,"wires":[["dd500b1ad60db592","f6df7cc1678d725b"],[]]},
     {"id":"2963704153506cd8","type":"function","z":"hvac_tab","name":"room → adaptive","func":"msg.topic='room'; return msg;","outputs":1,"x":790,"y":660,"wires":[["90553c8dfdab05e3"]]},
     {"id":"e252273f592ea3a1","type":"function","z":"hvac_tab","name":"outdoor → adaptive","func":"msg.topic='outdoor'; return msg;","outputs":1,"x":790,"y":700,"wires":[["90553c8dfdab05e3"]]},
-    {"id":"90553c8dfdab05e3","type":"adaptive-curve","z":"hvac_tab","name":"Adaptive Curve Shift","roomSetpoint":22,"heatingLimit":15,"adaptationRate":0.005,"maxShift":8,"deadband":0.3,"topicRoom":"room","topicOutdoor":"outdoor","persistent":true,"decimals":2,"x":1060,"y":660,"wires":[["932712f026fcea7a"],[]]},
+    {"id":"90553c8dfdab05e3","type":"adaptive-curve","z":"hvac_tab","name":"Adaptive Curve Shift","roomSetpoint":22,"heatingLimit":15,"adaptationRate":0.005,"maxShift":8,"deadband":0.3,"topicRoom":"room","topicOutdoor":"outdoor","persistent":true,"decimals":2,"x":1060,"y":660,"wires":[["932712f026fcea7a"]]},
     {"id":"f6df7cc1678d725b","type":"debug","z":"hvac_tab","name":"Flow Temp SP","active":true,"tosidebar":true,"complete":"payload","x":1280,"y":600,"wires":[]},
     {"id":"932712f026fcea7a","type":"debug","z":"hvac_tab","name":"Curve Shift K","active":true,"tosidebar":true,"complete":"payload","x":1270,"y":660,"wires":[]},
 
@@ -44,7 +44,7 @@
     {"id":"105e793a327166fd","type":"debug","z":"hvac_tab","name":"Service Alarm","active":true,"tosidebar":true,"complete":"payload","x":1420,"y":980,"wires":[]},
 
     {"id":"e25b210b987c9307","type":"comment","z":"hvac_tab","name":"── 7. MIXING VALVE ──","info":"","x":1030,"y":1060,"wires":[]},
-    {"id":"dd500b1ad60db592","type":"three-point","z":"hvac_tab","name":"Mixing Valve","runTime":120,"deadband":2,"initPos":50,"x":990,"y":1100,"wires":[["baec806c33df0ba8"],["2998662756da1be3"]]},
+    {"id":"dd500b1ad60db592","type":"three-point","z":"hvac_tab","name":"Mixing Valve","runtime":120,"deadband":2,"initPos":50,"x":990,"y":1100,"wires":[["baec806c33df0ba8"],["2998662756da1be3"]]},
     {"id":"baec806c33df0ba8","type":"debug","z":"hvac_tab","name":"Valve OPEN","active":true,"tosidebar":true,"complete":"payload","x":1270,"y":1080,"wires":[]},
     {"id":"2998662756da1be3","type":"debug","z":"hvac_tab","name":"Valve CLOSE","active":true,"tosidebar":true,"complete":"payload","x":1280,"y":1120,"wires":[]},
 

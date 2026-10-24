@@ -42,7 +42,7 @@
         "type": "average",
         "z": "flow_avg",
         "name": "Smooth Temperature",
-        "windowSize": "10",
+        "window": 10,
         "x": 570,
         "y": 120,
         "wires": [["avg_debug"]]

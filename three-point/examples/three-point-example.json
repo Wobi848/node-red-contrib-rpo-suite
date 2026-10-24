@@ -4,7 +4,7 @@
     {"id":"tp_i1","type":"inject","z":"tp_tab","name":"Open 75%","props":[{"p":"payload","v":"75","vt":"num"}],"repeat":"","once":false,"payload":"75","payloadType":"num","x":120,"y":100,"wires":[["tp_n"]]},
     {"id":"tp_i2","type":"inject","z":"tp_tab","name":"Close 25%","props":[{"p":"payload","v":"25","vt":"num"}],"repeat":"","once":false,"payload":"25","payloadType":"num","x":120,"y":140,"wires":[["tp_n"]]},
     {"id":"tp_i3","type":"inject","z":"tp_tab","name":"Close 0%","props":[{"p":"payload","v":"0","vt":"num"}],"repeat":"","once":false,"payload":"0","payloadType":"num","x":120,"y":180,"wires":[["tp_n"]]},
-    {"id":"tp_n","type":"three-point","z":"tp_tab","name":"","runTime":120,"deadband":2,"initPos":50,"decimals":1,"wires":[["tp_d1"],["tp_d2"]],"x":330,"y":140},
+    {"id":"tp_n","type":"three-point","z":"tp_tab","name":"","runtime":120,"deadband":2,"initPos":50,"wires":[["tp_d1"],["tp_d2"]],"x":330,"y":140},
     {"id":"tp_d1","type":"debug","z":"tp_tab","name":"OPEN pulse","active":true,"tosidebar":true,"complete":"payload","x":510,"y":120,"wires":[]},
     {"id":"tp_d2","type":"debug","z":"tp_tab","name":"CLOSE pulse","active":true,"tosidebar":true,"complete":"payload","x":510,"y":160,"wires":[]}
 ]

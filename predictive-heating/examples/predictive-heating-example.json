@@ -40,9 +40,7 @@
         "weightDay0": 2,
         "weightDay1": 1,
         "weightDay2": 0.5,
-        "maxDeltaDown": 3,
         "uvMaxOffset": 2,
-        "asymmetric": true,
         "x": 570,
         "y": 100,
         "wires": [["ph_debug"]]

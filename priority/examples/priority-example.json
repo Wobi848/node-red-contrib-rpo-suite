@@ -6,7 +6,6 @@
     {"id":"pr_i3","type":"inject","z":"pr_tab","name":"Auto = 19°C","props":[{"p":"payload","v":"19","vt":"num"},{"p":"topic","v":"auto","vt":"str"}],"repeat":"","once":false,"payload":"19","payloadType":"num","topic":"auto","x":120,"y":180,"wires":[["pr_n"]]},
     {"id":"pr_i4","type":"inject","z":"pr_tab","name":"Deactivate Hand","props":[{"p":"payload","v":"","vt":"str"},{"p":"topic","v":"hand","vt":"str"}],"repeat":"","once":false,"payload":"","payloadType":"str","topic":"hand","x":120,"y":220,"wires":[["pr_n"]]},
     {"id":"pr_i5","type":"inject","z":"pr_tab","name":"Reset all","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","once":false,"payload":"","payloadType":"str","x":110,"y":260,"wires":[["pr_n"]]},
-    {"id":"pr_n","type":"priority","z":"pr_tab","name":"","topics":"[{\"topic\":\"hand\",\"label\":\"Hand\",\"priority\":1,\"nullValue\":\"\"},{\"topic\":\"remote\",\"label\":\"Remote\",\"priority\":2,\"nullValue\":\"\"},{\"topic\":\"auto\",\"label\":\"Auto\",\"priority\":3,\"nullValue\":\"\"}]","defaultValue":"","wires":[["pr_d1"],["pr_d2"]],"x":330,"y":180},
-    {"id":"pr_d1","type":"debug","z":"pr_tab","name":"winner value","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":160,"wires":[]},
-    {"id":"pr_d2","type":"debug","z":"pr_tab","name":"no winner","active":true,"tosidebar":true,"complete":"payload","x":510,"y":200,"wires":[]}
+    {"id":"pr_n","type":"priority","z":"pr_tab","name":"","topics":"[{\"topic\":\"hand\",\"label\":\"Hand\",\"priority\":1,\"nullValue\":\"\"},{\"topic\":\"remote\",\"label\":\"Remote\",\"priority\":2,\"nullValue\":\"\"},{\"topic\":\"auto\",\"label\":\"Auto\",\"priority\":3,\"nullValue\":\"\"}]","defaultValue":"","wires":[["pr_d1"]],"x":330,"y":180},
+    {"id":"pr_d1","type":"debug","z":"pr_tab","name":"winner value","active":true,"tosidebar":true,"complete":"true","targetType":"full","x":510,"y":160,"wires":[]}
 ]
